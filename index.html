@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clio · Istorie pentru elevi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: un ghid de istorie prietenos și clar pentru elevi, serios dar nu sobru
+   IDEA: drumul prin timp, ca o frescă/bandă cronologică dintr-un atlas școlar
+   PICTURE: panoramă cu patru monumente (piramidă, cetate, corabie, oraș) pe o linie a timpului; fiecare e un buton de epocă
+   COLOUR and TYPE: albastru lapis (cer), teracotă (pământ), auriu ca accent; Cinzel ca inscripțiile romane + Source Sans 3
+   LAYOUT: titlu sus, panorama pe toată lățimea, apoi lecții, cronologie, test, fișe, sfaturi */
+:root{color-scheme:light dark;--bg:light-dark(#ffffff,#10131b);--ink:light-dark(#1b1f2a,#eef0f5);--mute:light-dark(#5a6070,#a7adbd);
+--sky:light-dark(#2f55b8,#152452);--sky2:light-dark(#4f73d0,#22397a);--earth:light-dark(#c2582d,#8a3a1a);--earth2:light-dark(#9b4220,#5e260f);
+--gold:#e8b53a;--card:light-dark(#f3f5fa,#191d29);--line:light-dark(#dde1ea,#2b3142);--ok:light-dark(#1f7a4d,#5fd39a);--bad:light-dark(#b3261e,#ff8a80)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 "Source Sans 3",system-ui,sans-serif;overflow-x:clip}
+h1,h2,h3{font-family:Cinzel,Georgia,serif;line-height:1.1;text-wrap:balance;margin:0 0 .4em}
+h1{font-size:clamp(32px,5.2vw,52px)}h2{font-size:clamp(26px,3.4vw,36px)}h3{font-size:20px}
+.band{padding:clamp(28px,4vw,64px) max(5vw,16px)}.wrap{max-width:1240px;margin:0 auto}
+.scroll{overflow-x:auto}.scroll a{flex:none}html{scroll-padding-top:72px;scroll-behavior:smooth}
+.top{background:var(--sky);color:#fff;padding:10px max(5vw,16px);position:sticky;top:0;z-index:5}
+.top .wrap{display:flex;gap:18px;align-items:center}
+.logo{font:700 20px Cinzel,serif;white-space:nowrap}
+.top nav{display:flex;gap:6px}.top a{color:#fff;text-decoration:none;padding:10px 12px;border-radius:8px;white-space:nowrap}
+.top a:hover,.top a:focus-visible{background:rgba(255,255,255,.16)}
+.hero{background:var(--sky);color:#fff;padding-bottom:0}
+.hero p{max-width:62ch;font-size:18px;opacity:.92;margin:0 0 20px}
+.pano{display:block;width:100%;height:auto;margin-top:8px}
+.eras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--earth2)}
+.eras button{background:none;border:0;color:#fff;font:600 16px "Source Sans 3",sans-serif;padding:14px 6px;min-height:52px;cursor:pointer;border-top:4px solid transparent}
+.eras button[aria-pressed=true]{border-top-color:var(--gold);background:rgba(0,0,0,.18)}
+.eras small{display:block;font-weight:400;opacity:.85;font-size:13px}
+.all{background:var(--earth2);text-align:center;padding:0 0 12px}
+.all button{background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:99px;padding:8px 16px;font:600 15px "Source Sans 3";min-height:44px;cursor:pointer}
+.all button[aria-pressed=true]{background:var(--gold);color:#1b1f2a;border-color:var(--gold)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.sets,.chips{display:flex;flex-wrap:wrap;gap:8px}
+.sets button,.chips button{font:600 15px "Source Sans 3";padding:9px 14px;min-height:44px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.sets button[aria-pressed=true]{background:var(--sky);color:#fff;border-color:var(--sky)}
+.chips button[aria-pressed=true]{background:var(--earth);color:#fff;border-color:var(--earth)}
+.sets button:disabled{opacity:.5;cursor:not-allowed}.chips span{opacity:.7;font-weight:400}
+.wk{margin:0;font-size:15px;background:light-dark(#fff7e0,#2a2414);border-radius:10px;padding:10px 12px}.wk b{color:var(--earth)}
+.lqrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:auto}
+.modal{position:fixed;inset:0;z-index:30;background:rgba(8,12,22,.62);display:flex;justify-content:center;align-items:flex-start;overflow:auto;padding:max(14px,env(safe-area-inset-top)) 10px 24px}
+.modal[hidden]{display:none}
+.mbox{background:var(--bg);color:var(--ink);border-radius:18px;width:100%;max-width:680px;padding:clamp(16px,3vw,28px);margin:auto 0;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.mhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:8px}.mhead h3{margin:4px 0 0}
+.qq{font-family:"Source Sans 3",sans-serif;font-size:20px;line-height:1.3;margin:8px 0 0}
+.big{font:700 44px Cinzel,serif;margin:8px 0}
+.ctrl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:12px 0 20px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{background:var(--card);color:var(--ink);border:0;padding:10px 16px;font:600 16px "Source Sans 3";min-height:44px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--sky);color:#fff}
+.chk{display:flex;gap:8px;align-items:center;min-height:44px;cursor:pointer}.chk input{width:20px;height:20px;accent-color:var(--earth)}
+input[type=search]{font:16px "Source Sans 3";padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);min-height:44px;flex:1 1 220px;max-width:360px}
+.prog{display:flex;gap:12px;align-items:center;color:var(--mute);font-size:15px}
+.bar{flex:0 0 160px;height:10px;background:var(--card);border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--earth)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:16px}
+.card{background:var(--card);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.tag{font-size:13px;color:var(--mute)}.ro{color:var(--earth);font-weight:700}
+.card ul{margin:0;padding-left:0;list-style:none;font-size:15px}.card li{display:flex;gap:10px;padding:3px 0;border-top:1px solid var(--line)}
+.done{margin-top:4px}.card li b{flex:0 0 7.2em;white-space:nowrap;color:var(--sky2)}
+.ext{border-left:3px solid var(--gold);padding-left:12px;font-size:15.5px}
+.terms{display:flex;flex-wrap:wrap;gap:6px}.terms span{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:2px 10px;font-size:13.5px}
+.empty{color:var(--mute);padding:20px 0}
+.tl{list-style:none;margin:0;padding:0;border-left:3px solid var(--earth);max-width:820px}
+.tl li{position:relative;padding:8px 0 8px 22px;display:grid;grid-template-columns:9em minmax(0,1fr);gap:12px}
+.tl li::before{content:"";position:absolute;left:-8px;top:15px;width:13px;height:13px;border-radius:50%;background:var(--gold);border:2px solid var(--bg)}
+.tl b{white-space:nowrap}.tl em{display:block;font-style:normal;font-size:13.5px;color:var(--mute)}
+.alt{background:var(--card)}.alt .card{background:var(--bg)}
+.quiz{max-width:760px;background:var(--bg);border-radius:16px;padding:clamp(18px,3vw,32px);border:1px solid var(--line)}
+.opts{display:grid;gap:10px;margin:16px 0}
+.opts button{text-align:left;font:16px "Source Sans 3";padding:12px 16px;min-height:48px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);cursor:pointer}
+.opts button.ok{border-color:var(--ok);color:var(--ok);font-weight:700}.opts button.no{border-color:var(--bad);color:var(--bad)}
+.fb{min-height:1.5em}.btn{font:700 16px "Source Sans 3";background:var(--earth);color:#fff;border:0;border-radius:10px;padding:12px 20px;min-height:44px;cursor:pointer}
+.btn.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.flash{max-width:560px;min-height:230px;perspective:1000px;cursor:pointer;margin:10px 0 14px}
+.inner{position:relative;min-height:230px;transition:transform .5s;transform-style:preserve-3d}
+.flash.f .inner{transform:rotateY(180deg)}
+.side{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;padding:24px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.front{background:var(--sky);color:#fff}.front h3{font-size:clamp(24px,4vw,32px)}.back{background:var(--earth);color:#fff;transform:rotateY(180deg)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tips{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:16px}
+footer{background:var(--earth2);color:#fff;font-size:14px}footer p{margin:0 0 6px;max-width:80ch}
+@media(max-width:600px){.eras small{display:none}.tl li{grid-template-columns:minmax(0,1fr);gap:0}.top .wrap{gap:8px}}
+@media(prefers-reduced-motion:reduce){.inner{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><span class="logo">Clio</span>
+<nav class="scroll" aria-label="Secțiuni"><a href="#lectii">Lecții</a><a href="#cronologie">Cronologie</a><a href="#test">Test</a><a href="#fise">Fișe</a><a href="#sfaturi">Cum înveți</a></nav></div></header>
+
+<section class="hero band"><div class="wrap">
+<h1>Istoria, epocă cu epocă</h1>
+<p>Lecții pentru gimnaziu și liceu, de la piramide la Uniunea Europeană. Clasa a V-a are deja 301 de lecții; celelalte clase urmează. Alege o epocă din imagine sau o clasă, citește, apoi verifică-te cu testul și fișele.</p></div>
+<svg class="pano" viewBox="0 0 1200 380" role="img" aria-label="Patru monumente pe o linie a timpului: o piramidă, o cetate medievală, o corabie și un oraș modern">
+<defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--sky)"/><stop offset="1" stop-color="var(--sky2)"/></linearGradient></defs>
+<rect width="1200" height="380" fill="url(#sk)"/>
+<circle cx="1040" cy="80" r="38" fill="var(--gold)" opacity=".9"/>
+<g data-e="ant"><polygon points="40,300 160,140 280,300" fill="#e9c46a"/><polygon points="160,140 280,300 190,300" fill="#b98c2f"/><line x1="160" y1="140" x2="190" y2="300" stroke="#fff3c4" stroke-width="3"/>
+<polygon points="215,300 255,248 295,300" fill="#d6ae52"/><polygon points="255,248 295,300 265,300" fill="#a67a25"/></g>
+<g data-e="med"><rect x="350" y="200" width="200" height="100" fill="#8d8f9c"/><rect x="330" y="160" width="52" height="140" fill="#a3a6b3"/><rect x="518" y="160" width="52" height="140" fill="#74768a"/>
+<g fill="#a3a6b3"><rect x="330" y="146" width="12" height="16"/><rect x="350" y="146" width="12" height="16"/><rect x="370" y="146" width="12" height="16"/></g>
+<g fill="#74768a"><rect x="518" y="146" width="12" height="16"/><rect x="538" y="146" width="12" height="16"/><rect x="558" y="146" width="12" height="16"/></g>
+<g fill="#8d8f9c"><rect x="392" y="188" width="14" height="14"/><rect x="424" y="188" width="14" height="14"/><rect x="456" y="188" width="14" height="14"/><rect x="488" y="188" width="14" height="14"/></g>
+<path d="M425 300v-50a25 25 0 0 1 50 0v50z" fill="#2b2433"/><line x1="350" y1="200" x2="518" y2="200" stroke="#c9cbd6" stroke-width="3"/>
+<path d="M544 160v-40" stroke="#fff" stroke-width="3"/><path d="M544 120l30 9-30 9z" fill="var(--earth)"/></g>
+<g data-e="mod"><rect x="600" y="282" width="300" height="20" fill="#1d3f8f"/>
+<path d="M640 270h220l-30 32h-160z" fill="#6b3a1e"/><path d="M640 270h220l-6 8h-208z" fill="#a0602f"/>
+<line x1="750" y1="270" x2="750" y2="130" stroke="#4a2a14" stroke-width="5"/><line x1="690" y1="270" x2="690" y2="170" stroke="#4a2a14" stroke-width="4"/>
+<path d="M756 140q50 40 0 110z" fill="#f4efe2"/><path d="M756 140q22 40 0 110z" fill="#d7cfbb"/><path d="M696 178q36 30 0 80z" fill="#f4efe2"/>
+<path d="M750 130l24 8-24 8z" fill="var(--earth)"/><circle cx="757" cy="195" r="9" fill="var(--earth)"/></g>
+<g data-e="con"><rect x="920" y="190" width="70" height="110" fill="#5e7fc9"/><rect x="990" y="120" width="80" height="180" fill="#3c5aa6"/><rect x="1070" y="170" width="90" height="130" fill="#2c437f"/>
+<line x1="1030" y1="120" x2="1030" y2="80" stroke="#c9d3ee" stroke-width="4"/><circle cx="1030" cy="76" r="5" fill="var(--gold)"/>
+<g fill="#ffe7a3" opacity=".9"><rect x="1002" y="140" width="14" height="10"/><rect x="1028" y="140" width="14" height="10"/><rect x="1002" y="166" width="14" height="10"/><rect x="1028" y="190" width="14" height="10"/><rect x="1002" y="214" width="14" height="10"/><rect x="1086" y="190" width="14" height="10"/><rect x="1112" y="214" width="14" height="10"/><rect x="934" y="210" width="12" height="10"/><rect x="958" y="236" width="12" height="10"/></g>
+<line x1="990" y1="120" x2="1070" y2="120" stroke="#a9bbea" stroke-width="3"/></g>
+<rect y="300" width="1200" height="80" fill="var(--earth)"/>
+<line x1="0" y1="338" x2="1200" y2="338" stroke="var(--gold)" stroke-width="4" stroke-dasharray="2 10" stroke-linecap="round"/>
+<g fill="var(--gold)" stroke="#fff" stroke-width="3"><circle cx="150" cy="338" r="10"/><circle cx="450" cy="338" r="10"/><circle cx="750" cy="338" r="10"/><circle cx="1050" cy="338" r="10"/></g>
+</svg>
+<div class="eras" id="eras"></div>
+<div class="all"><button id="allBtn" aria-pressed="true">Toate epocile</button></div>
+</section>
+
+<section id="lectii" class="band"><div class="wrap">
+<h2>Lecții</h2>
+<p class="tag" style="margin:0 0 8px">Alege clasa</p>
+<div class="sets" id="sets" role="group" aria-label="Clasa"></div>
+<h3 id="setName" style="margin-top:18px"></h3>
+<div class="chips" id="chaps" role="group" aria-label="Capitol"></div>
+<div class="ctrl">
+<span id="lvlWrap"><span class="seg" role="group" aria-label="Nivel"><button data-l="g" aria-pressed="true">Gimnaziu</button><button data-l="l" aria-pressed="false">Liceu</button></span></span>
+<label class="chk"><input type="checkbox" id="onlyRo"> Doar istoria românilor</label>
+<input type="search" id="q" placeholder="Caută: Ștefan cel Mare, 1918, Bizanț…" aria-label="Caută în lecții">
+</div>
+<div class="prog"><span id="progT"></span><span class="bar"><i id="progB"></i></span><span id="count"></span></div>
+<p class="tag">În Recapitulare, la „Liceu” apare și un paragraf de aprofundare. Împărțirea pe clase e orientativă; verifică programa și manualul tău.</p>
+<div class="grid" id="lessons"></div>
+</div></section>
+
+<section id="cronologie" class="band alt"><div class="wrap">
+<h2>Cronologie</h2>
+<p class="tag">Datele din lecțiile afișate, în ordine. Filtrele de mai sus se aplică și aici.</p>
+<ol class="tl" id="tl"></ol>
+</div></section>
+
+<section id="test" class="band"><div class="wrap">
+<h2>Testează-te</h2>
+<p class="tag">10 întrebări din <b id="quizSet"></b> și capitolul ales, cu explicații după fiecare răspuns.</p>
+<div class="quiz" id="quiz"></div>
+</div></section>
+
+<section id="fise" class="band alt"><div class="wrap">
+<h2>Fișe cu termeni</h2>
+<p class="tag">Termeni din <b id="flashSet"></b>. Atinge fișa ca să vezi definiția.</p>
+<div class="flash" id="flash" tabindex="0" role="button" aria-label="Întoarce fișa"><div class="inner"><div class="side front" id="ff"></div><div class="side back" id="fb"></div></div></div>
+<div class="row"><button class="btn sec" id="fp">Înapoi</button><span id="fc" class="tag"></span><button class="btn" id="fn">Următoarea</button></div>
+</div></section>
+
+<section id="sfaturi" class="band"><div class="wrap">
+<h2>Cum înveți istoria mai ușor</h2>
+<div class="tips">
+<div class="card"><h3>Cauză și efect</h3><p>Pentru fiecare eveniment întreabă: de ce s-a întâmplat și ce a schimbat? Datele se rețin mai ușor când știi povestea din spatele lor.</p></div>
+<div class="card"><h3>Puține date, bine fixate</h3><p>Învață întâi datele-reper (1359, 1600, 1859, 1918, 1989) și leagă celelalte evenimente de ele.</p></div>
+<div class="card"><h3>Repetă la intervale</h3><p>Fă testul azi, mâine și peste o săptămână. Răspunsurile greșite îți arată ce să recitești.</p></div>
+<div class="card"><h3>Lucrează cu sursa</h3><p>La liceu se cere analiza surselor: cine a scris textul, când, cu ce scop și ce informație istorică poți scoate din el.</p></div>
+</div></div></section>
+
+<div class="modal" id="lq" hidden role="dialog" aria-modal="true" aria-labelledby="lqTitle"><div class="mbox">
+<div class="mhead"><div><span class="tag">Mini-test</span><h3 id="lqTitle"></h3></div><button class="btn sec" id="lqClose" aria-label="Închide testul">Închide</button></div>
+<div class="row" style="margin-bottom:12px"><span class="tag">Număr de întrebări:</span><span class="chips" id="lqN"></span></div>
+<div id="lqBody"></div></div></div>
+<footer class="band"><div class="wrap"><p>Clio este un ajutor de învățare, nu înlocuiește manualul sau explicațiile profesorului.</p><p>Unele date antice sunt aproximative („c.” = circa); unde istoricii nu sunt de acord, am folosit varianta din manualele uzuale.</p></div></footer>
+
+<script>
+{
+const ERAS=[["ant","Antichitate","până în 476"],["med","Evul Mediu","476–1492"],["mod","Epoca modernă","1492–1918"],["con","Contemporană","după 1918"]];
+const L=[
+{e:"ant",g:"V",l:"IX",t:"Preistoria",s:"Cea mai lungă perioadă a omenirii, înainte de apariția scrisului. Oamenii au trecut de la vânătoare și cules la agricultură și creșterea animalelor (revoluția neolitică), apoi au învățat să prelucreze metalele.",x:"Pe teritoriul României, cultura Cucuteni e cunoscută pentru ceramica pictată, iar cultura Hamangia pentru statuetele „Gânditorul” și „Femeia șezând”.",d:[[-10000,"Începutul agriculturii în Orientul Apropiat","c. 10000 î.Hr."],[-5000,"Cultura Hamangia: „Gânditorul de la Hamangia”","mil. V î.Hr."]],k:["paleolitic","neolitic","epoca metalelor","sedentarism"]},
+{e:"ant",g:"V",l:"IX",t:"Orientul antic: Egipt și Mesopotamia",s:"Primele civilizații au apărut pe văile marilor râuri: Nil, Tigru și Eufrat. Sumerienii au inventat scrierea cuneiformă, egiptenii hieroglifele, iar faraonii au construit piramide ca morminte.",x:"Codul lui Hammurabi este una dintre cele mai vechi culegeri de legi scrise; arată o societate împărțită pe categorii, cu pedepse diferite.",d:[[-3200,"Apare scrierea cuneiformă la sumerieni","c. 3200 î.Hr."],[-3100,"Unificarea Egiptului","c. 3100 î.Hr."],[-2560,"Marea Piramidă a lui Keops, la Giza","c. 2560 î.Hr."],[-1750,"Codul lui Hammurabi, în Babilon","c. 1750 î.Hr."]],k:["faraon","hieroglife","scriere cuneiformă","politeism"]},
+{e:"ant",g:"V",l:"IX",t:"Grecia antică",s:"Grecii au trăit în orașe-stat (polis), precum Atena și Sparta. Atena a dezvoltat democrația, iar grecii au dat lumii filosofia, teatrul și Jocurile Olimpice. Alexandru cel Mare a creat un imperiu până în India.",x:"Democrația ateniană era directă, dar limitată: femeile, sclavii și străinii (metecii) nu aveau drepturi politice.",d:[[-776,"Primele Jocuri Olimpice"],[-508,"Reformele lui Clistene la Atena","508/507 î.Hr."],[-490,"Bătălia de la Maraton (războaiele medice)"],[-480,"Bătălia navală de la Salamina"],[-336,"Domnia lui Alexandru cel Mare","336–323 î.Hr."]],k:["polis","democrație","colonizare","elenism"]},
+{e:"ant",g:"V",l:"IX",t:"Roma antică",s:"Roma a fost regat, apoi republică și imperiu. A cucerit tot bazinul Mării Mediterane și a lăsat moștenire dreptul roman, limba latină și creștinismul ca religie oficială. Imperiul de Apus a căzut în 476.",x:"Trecerea de la Republică la Imperiu a avut loc după războaiele civile; Augustus a păstrat formal instituțiile republicane (Principatul).",d:[[-753,"Fondarea legendară a Romei"],[-509,"Începutul Republicii"],[-44,"Asasinarea lui Iulius Cezar"],[-27,"Augustus, primul împărat"],[313,"Edictul de la Milano: libertate de cult pentru creștini"],[395,"Împărțirea Imperiului Roman"],[476,"Căderea Imperiului Roman de Apus"]],k:["republică","senat","imperiu","dreptul roman"]},
+{e:"ant",ro:1,g:"V, VIII",l:"IX, XII",t:"Geto-dacii",s:"Geto-dacii erau ramura nordică a tracilor. Herodot i-a numit pe geți „cei mai viteji și mai drepți dintre traci”. Burebista a unit triburile, iar Decebal s-a opus Romei până la cucerirea Daciei de către Traian.",x:"Columna lui Traian din Roma este o sursă istorică în imagini pentru războaiele daco-romane.",d:[[-514,"Herodot îi menționează pe geți (expediția lui Darius)"],[-82,"Domnia lui Burebista","c. 82–44 î.Hr."],[87,"Domnia lui Decebal","87–106"],[101,"Primul război daco-roman","101–102"],[105,"Al doilea război; Dacia devine provincie romană","105–106"],[113,"Inaugurarea Columnei lui Traian"]],k:["Sarmizegetusa Regia","Zalmoxis","tarabostes","comati"]},
+{e:"ant",ro:1,g:"V, VIII",l:"IX, XII",t:"Romanizarea și etnogeneza românilor",s:"După 106, coloniștii romani și dacii au trăit împreună; dacii au preluat limba latină și obiceiurile romane (romanizare). Retragerea aureliană (271–275) nu a dus la plecarea populației. Din acest amestec, plus migratori, s-a format poporul român.",x:"Etnogeneza românească are două etape: romanizarea daco-geților și formarea poporului român prin asimilarea migratorilor (mai ales slavii). Creștinismul s-a răspândit în limba latină.",d:[[106,"Începutul provinciei Dacia"],[271,"Retragerea aureliană","271–275"]],k:["romanizare","etnogeneză","limba latină","continuitate"]},
+{e:"med",g:"VI",l:"IX",t:"Imperiul Bizantin și lumea islamică",s:"Imperiul Roman de Răsărit (Bizanțul) a durat până în 1453. Iustinian a reunit legile romane și a construit Hagia Sofia. În Arabia, Mahomed a întemeiat islamul, iar arabii au creat un imperiu întins.",x:"Marea Schismă din 1054 a despărțit Biserica Răsăriteană (ortodoxă) de cea Apuseană (catolică).",d:[[527,"Domnia lui Iustinian","527–565"],[537,"Sfințirea bisericii Hagia Sofia"],[622,"Hegira, începutul calendarului islamic"],[1054,"Marea Schismă"],[1453,"Cucerirea Constantinopolului de către otomani"]],k:["bizantin","ortodoxie","islam","schismă"]},
+{e:"med",g:"VI",l:"IX",t:"Europa feudală",s:"În Occident, societatea s-a organizat pe relații de vasalitate: seniorul dădea pământ (feud), vasalul îi datora credință și ajutor militar. Carol cel Mare a fost încoronat împărat în 800. Cruciadele au urmărit cucerirea Ierusalimului.",x:"Magna Carta (1215) a limitat puterea regelui Angliei și e considerată un început al ideii că și conducătorul respectă legea.",d:[[800,"Carol cel Mare încoronat împărat"],[1096,"Prima cruciadă","1096–1099"],[1215,"Magna Carta, în Anglia"]],k:["feudalism","vasal","senior","cruciadă"]},
+{e:"med",ro:1,g:"VI, VIII",l:"IX, XII",t:"Statele medievale românești",s:"Românii s-au organizat în cnezate și voievodate. Basarab I a câștigat independența Țării Românești la Posada (1330), iar Bogdan I pe cea a Moldovei (în jurul anului 1359). Transilvania a fost voievodat în Regatul Ungariei.",x:"Instituțiile principale erau domnia, Sfatul domnesc și Biserica. Scrisoarea lui Neacșu (1521) este cel mai vechi document păstrat scris în limba română.",d:[[1330,"Bătălia de la Posada: Basarab I îl învinge pe Carol Robert de Anjou"],[1359,"Bogdan I și independența Moldovei","c. 1359"],[1521,"Scrisoarea lui Neacșu din Câmpulung"]],k:["voievod","domn","Sfatul domnesc","boieri"]},
+{e:"med",ro:1,g:"VI, VIII",l:"IX, XII",t:"Lupta împotriva Imperiului Otoman",s:"Mircea cel Bătrân, Iancu de Hunedoara, Vlad Țepeș, Ștefan cel Mare și Mihai Viteazul s-au luptat cu otomanii pentru a păstra autonomia țărilor lor. Mihai Viteazul a unit pentru scurt timp Țara Românească, Transilvania și Moldova (1600).",x:"Statutul de autonomie sub suzeranitate otomană a permis Țărilor Române să-și păstreze instituțiile, spre deosebire de statele din sudul Dunării.",d:[[1395,"Bătălia de la Rovine (Mircea cel Bătrân)"],[1456,"Iancu de Hunedoara apără Belgradul"],[1457,"Domnia lui Ștefan cel Mare","1457–1504"],[1475,"Bătălia de la Vaslui"],[1595,"Bătălia de la Călugăreni"],[1600,"Mihai Viteazul unește cele trei țări"]],k:["suzeranitate","tribut","autonomie","cruciadă târzie"]},
+{e:"mod",g:"VII",l:"X",t:"Descoperiri, Renaștere și Reformă",s:"Marile descoperiri geografice au deschis drumul spre America și India. Renașterea a pus omul în centru (umanism), iar tiparul a răspândit cărțile. Martin Luther a început Reforma protestantă în 1517.",x:"În Țările Române, Coresi a tipărit la Brașov, în secolul al XVI-lea, cărți religioase în limba română.",d:[[1450,"Tiparul lui Gutenberg","c. 1450"],[1492,"Cristofor Columb ajunge în America"],[1498,"Vasco da Gama ajunge în India pe mare"],[1517,"Cele 95 de teze ale lui Luther"],[1519,"Expediția lui Magellan în jurul lumii","1519–1522"]],k:["Renaștere","umanism","Reformă","colonie"]},
+{e:"mod",g:"VII",l:"X",t:"Revoluțiile moderne",s:"Revoluțiile din Anglia, America și Franța au limitat puterea regilor și au afirmat drepturile omului și suveranitatea poporului. Revoluția industrială a adus mașina cu abur, fabricile și căile ferate.",x:"Ideile iluministe (separarea puterilor, contractul social) au stat la baza constituțiilor moderne.",d:[[1688,"Glorioasa Revoluție în Anglia"],[1769,"Brevetul lui James Watt pentru mașina cu abur"],[1776,"Declarația de Independență a SUA (4 iulie)"],[1789,"Revoluția Franceză: căderea Bastiliei (14 iulie)"],[1804,"Napoleon devine împărat"],[1815,"Bătălia de la Waterloo"]],k:["iluminism","constituție","suveranitate","revoluție industrială"]},
+{e:"mod",ro:1,g:"VII, VIII",l:"X, XII",t:"Românii de la Horea la 1848",s:"Românii au cerut drepturi politice și naționale: răscoala lui Horea, Cloșca și Crișan (1784), Supplex Libellus Valachorum (1791), mișcarea lui Tudor Vladimirescu (1821) și revoluția de la 1848 din toate cele trei țări.",x:"Programele de la 1848 (Proclamația de la Islaz, Adunarea de la Blaj) au cerut desființarea clăcii, egalitate în fața legii și drepturi naționale.",d:[[1784,"Răscoala lui Horea, Cloșca și Crișan"],[1791,"Supplex Libellus Valachorum"],[1821,"Mișcarea lui Tudor Vladimirescu"],[1848,"Revoluția de la 1848 (Blaj, Islaz, Iași)"]],k:["Regulamentele Organice","pașoptiști","clacă","emancipare"]},
+{e:"mod",ro:1,g:"VII, VIII",l:"X, XII",t:"Unirea Principatelor și Independența",s:"Alexandru Ioan Cuza a fost ales domn în Moldova (5 ianuarie 1859) și în Țara Românească (24 ianuarie 1859). Carol I a venit în 1866, iar România și-a proclamat independența la 9 mai 1877, recunoscută în 1878.",x:"Reformele lui Cuza (secularizarea averilor mănăstirești, reforma agrară, legea instrucțiunii) au modernizat statul; Constituția din 1866 a introdus monarhia constituțională.",d:[[1859,"Dubla alegere a lui Alexandru Ioan Cuza"],[1866,"Carol I domn; prima constituție modernă"],[1877,"Proclamarea independenței (9 mai)"],[1878,"Congresul de la Berlin recunoaște independența"],[1881,"România devine regat"]],k:["unire","independență","monarhie constituțională","secularizare"]},
+{e:"con",ro:1,g:"VII, VIII",l:"XI, XII",t:"Primul Război Mondial și Marea Unire",s:"Primul Război Mondial (1914–1918) a opus Antanta Puterilor Centrale. România a intrat în război în 1916. În 1918, Basarabia, Bucovina și Transilvania s-au unit cu România.",x:"Unirea a fost recunoscută prin tratatele de pace de la Paris (1919–1920), între care Tratatul de la Trianon (1920).",d:[[1914,"Începe Primul Război Mondial"],[1916,"România intră în război (august)"],[1917,"Revoluția bolșevică în Rusia"],[1918,"Unirea Basarabiei (27 martie)","27 mar. 1918"],[1918.1,"Unirea Bucovinei (28 noiembrie)","28 nov. 1918"],[1918.2,"Marea Unire la Alba Iulia (1 Decembrie)","1 dec. 1918"],[1920,"Tratatul de la Trianon"]],k:["Antanta","Puterile Centrale","Marea Unire","autodeterminare"]},
+{e:"con",g:"VII",l:"XI",t:"Totalitarism și Al Doilea Război Mondial",s:"În perioada interbelică s-au impus regimuri totalitare: comunismul în URSS, fascismul în Italia (din 1922) și, după marea criză din 1929, nazismul în Germania (din 1933). Al Doilea Război Mondial (1939–1945) a fost cel mai devastator conflict, cu Holocaustul ca crimă fără precedent.",x:"În 1940 România a pierdut Basarabia și nordul Bucovinei (ultimatumul sovietic), nord-vestul Transilvaniei (Dictatul de la Viena) și Cadrilaterul. La 23 august 1944 a trecut de partea Aliaților.",d:[[1929,"Marea criză economică"],[1933,"Hitler devine cancelar"],[1939,"Începe Al Doilea Război Mondial (1 septembrie)"],[1940,"Dictatul de la Viena (30 august)"],[1944,"Actul de la 23 august"],[1945,"Sfârșitul războiului"]],k:["totalitarism","Holocaust","nazism","Aliați"]},
+{e:"con",ro:1,g:"VII, VIII",l:"XI, XII",t:"Războiul Rece și comunismul în România",s:"După 1945 lumea s-a împărțit între blocul occidental (NATO) și cel sovietic. În România, comuniștii au preluat puterea, regele Mihai a fost forțat să abdice (30 decembrie 1947), iar opozanții au fost închiși.",x:"Colectivizarea agriculturii (1949–1962), naționalizarea și cultul personalității lui Nicolae Ceaușescu au marcat regimul. Zidul Berlinului a devenit simbolul despărțirii Europei.",d:[[1947,"Abdicarea regelui Mihai I"],[1949,"Înființarea NATO"],[1961,"Construirea Zidului Berlinului"],[1965,"Nicolae Ceaușescu ajunge la putere"],[1989.1,"Căderea Zidului Berlinului (9 noiembrie)","nov. 1989"]],k:["Războiul Rece","colectivizare","naționalizare","Cortina de Fier"]},
+{e:"con",ro:1,g:"VIII",l:"XI, XII",t:"România după 1989",s:"Revoluția din decembrie 1989, începută la Timișoara, a dus la căderea regimului comunist. România a revenit la democrație și economie de piață, a adoptat o nouă constituție și a intrat în NATO și în Uniunea Europeană.",x:"Constituția din 1991 a fost revizuită în 2003, pentru a permite integrarea în NATO și UE.",d:[[1989.2,"Revoluția Română (16–25 decembrie)","dec. 1989"],[1991,"Constituția adoptată prin referendum"],[2004,"România intră în NATO"],[2007,"România intră în Uniunea Europeană"]],k:["democrație","pluralism","stat de drept","integrare europeană"]}
+];
+const Q=[
+{e:"ant",q:"Ce scriere au inventat sumerienii?",o:["Cuneiformă","Hieroglifică","Alfabetul latin","Runele"],a:0,x:"Sumerienii scriau cu un bețișor pe tăblițe de lut, semnele având formă de cui."},
+{e:"ant",q:"În ce oraș a fost dat Codul lui Hammurabi?",o:["Atena","Babilon","Memphis","Roma"],a:1,x:"Hammurabi a fost rege al Babilonului, în Mesopotamia."},
+{e:"ant",q:"Când au avut loc primele Jocuri Olimpice?",o:["476 î.Hr.","753 î.Hr.","776 î.Hr.","490 î.Hr."],a:2,x:"Anul 776 î.Hr. este data tradițională a primelor Jocuri Olimpice."},
+{e:"ant",q:"Ce a stabilit Edictul de la Milano (313)?",o:["Împărțirea imperiului","Libertatea de cult pentru creștini","Cucerirea Daciei","Fondarea Constantinopolului"],a:1,x:"Prin edict, creștinii au putut să-și practice liber religia."},
+{e:"ant",q:"Ce împărat roman a cucerit Dacia?",o:["Augustus","Aurelian","Constantin","Traian"],a:3,x:"Traian l-a învins pe Decebal în războaiele din 101–102 și 105–106."},
+{e:"ant",q:"Care era centrul politic și religios al Daciei lui Decebal?",o:["Sarmizegetusa Regia","Apulum","Histria","Tomis"],a:0,x:"Sarmizegetusa Regia, în Munții Orăștiei, era capitala regatului dac."},
+{e:"ant",q:"Ce împărat a retras administrația și armata romană din Dacia?",o:["Traian","Aurelian","Iustinian","Hadrian"],a:1,x:"Retragerea aureliană a avut loc între 271 și 275; populația a rămas."},
+{e:"med",q:"Ce împărat a construit Hagia Sofia?",o:["Constantin cel Mare","Carol cel Mare","Iustinian","Mahomed al II-lea"],a:2,x:"Iustinian a construit-o; biserica a fost sfințită în 537."},
+{e:"med",q:"În ce an a avut loc Marea Schismă?",o:["1054","1453","800","1096"],a:0,x:"În 1054 s-au despărțit Biserica Răsăriteană și cea Apuseană."},
+{e:"med",q:"Cine a câștigat bătălia de la Posada (1330)?",o:["Mircea cel Bătrân","Basarab I","Bogdan I","Vlad Țepeș"],a:1,x:"Basarab I l-a învins pe regele Ungariei, Carol Robert de Anjou."},
+{e:"med",q:"Ce domn a învins otomanii la Vaslui, în 1475?",o:["Mihai Viteazul","Iancu de Hunedoara","Ștefan cel Mare","Petru Rareș"],a:2,x:"Ștefan cel Mare a domnit în Moldova între 1457 și 1504."},
+{e:"med",q:"În ce an a realizat Mihai Viteazul unirea celor trei țări?",o:["1595","1600","1601","1599"],a:1,x:"În 1600 Mihai a stăpânit Țara Românească, Transilvania și Moldova."},
+{e:"med",q:"Care este cel mai vechi document păstrat scris în limba română?",o:["Scrisoarea lui Neacșu","Cazania lui Varlaam","Letopisețul lui Ureche","Biblia de la București"],a:0,x:"Scrisoarea lui Neacșu din Câmpulung datează din 1521."},
+{e:"med",q:"Când a căzut Constantinopolul sub otomani?",o:["1204","1389","1453","1526"],a:2,x:"Mahomed al II-lea a cucerit orașul în 1453, punând capăt Imperiului Bizantin."},
+{e:"mod",q:"Cine a început Reforma protestantă?",o:["Jean Calvin","Martin Luther","Erasmus","Galileo Galilei"],a:1,x:"Luther și-a făcut publice cele 95 de teze în 1517."},
+{e:"mod",q:"Ce eveniment marchează începutul Revoluției Franceze?",o:["Încoronarea lui Napoleon","Căderea Bastiliei","Bătălia de la Waterloo","Congresul de la Viena"],a:1,x:"Bastilia a căzut la 14 iulie 1789."},
+{e:"mod",q:"Când a fost ales Alexandru Ioan Cuza domn în ambele principate?",o:["1848","1859","1866","1877"],a:1,x:"Pe 5 ianuarie 1859 în Moldova și pe 24 ianuarie 1859 în Țara Românească."},
+{e:"mod",q:"Cine a proclamat independența României în Parlament, la 9 mai 1877?",o:["Mihail Kogălniceanu","Ion C. Brătianu","Carol I","Nicolae Bălcescu"],a:0,x:"Kogălniceanu, ministru de externe, a citit declarația de independență."},
+{e:"mod",q:"Ce document au trimis românii transilvăneni împăratului în 1791?",o:["Proclamația de la Islaz","Supplex Libellus Valachorum","Regulamentele Organice","Convenția de la Paris"],a:1,x:"Prin Supplex, românii cereau drepturi egale cu ale celorlalte națiuni din Transilvania."},
+{e:"con",q:"Unde s-a proclamat unirea Transilvaniei cu România, la 1 decembrie 1918?",o:["Cluj","Sibiu","Alba Iulia","Blaj"],a:2,x:"Marea Adunare Națională s-a ținut la Alba Iulia."},
+{e:"con",q:"Ce teritoriu a pierdut România prin Dictatul de la Viena (1940)?",o:["Basarabia","Cadrilaterul","Nordul Bucovinei","Nord-vestul Transilvaniei"],a:3,x:"Dictatul de la Viena, din 30 august 1940, a dat Ungariei nord-vestul Transilvaniei."},
+{e:"con",q:"Ce s-a întâmplat la 23 august 1944?",o:["România a intrat în război","România a trecut de partea Aliaților","Abdicarea regelui Mihai","Sfârșitul războiului"],a:1,x:"Ion Antonescu a fost arestat, iar România a întors armele împotriva Germaniei."},
+{e:"con",q:"În ce an a căzut Zidul Berlinului?",o:["1961","1985","1989","1991"],a:2,x:"Zidul a căzut pe 9 noiembrie 1989."},
+{e:"con",q:"Când a intrat România în Uniunea Europeană?",o:["2004","2007","1999","2014"],a:1,x:"La 1 ianuarie 2007; în NATO intrase în 2004."}
+];
+const F=[
+["ant","Neolitic","Epoca pietrei noi: apar agricultura, creșterea animalelor și așezările stabile."],
+["ant","Polis","Oraș-stat grec, cu propriile legi și conducere (de exemplu Atena, Sparta)."],
+["ant","Democrație","Formă de conducere în care puterea aparține cetățenilor; apărută la Atena."],
+["ant","Republică","Formă de stat în care conducătorii sunt aleși pe o perioadă limitată."],
+["ant","Romanizare","Procesul prin care populația cucerită preia limba latină și civilizația romană."],
+["ant","Etnogeneză","Procesul de formare a unui popor."],
+["med","Feudalism","Organizare bazată pe relații senior–vasal și pe stăpânirea pământului (feudul)."],
+["med","Vasal","Persoană care primește pământ de la un senior și îi datorează credință și ajutor militar."],
+["med","Suzeranitate","Dependența unui stat față de altul mai puternic, căruia îi plătește tribut, dar își păstrează instituțiile."],
+["med","Cruciadă","Expediție militară a creștinilor din Apus pentru cucerirea Țării Sfinte."],
+["med","Voievod","Conducător politic și militar la români; domnul unei țări medievale."],
+["mod","Umanism","Curent al Renașterii care pune omul și cunoașterea în centrul preocupărilor."],
+["mod","Iluminism","Curent din secolul al XVIII-lea care avea încredere în rațiune, progres și drepturi naturale."],
+["mod","Constituție","Legea fundamentală a unui stat, care stabilește instituțiile și drepturile cetățenilor."],
+["mod","Secularizare","Trecerea averilor bisericești în proprietatea statului (1863, sub Cuza)."],
+["con","Totalitarism","Regim care controlează toate aspectele vieții, fără libertăți și cu un singur partid."],
+["con","Holocaust","Exterminarea sistematică a evreilor și a altor grupuri de către regimul nazist și aliații săi."],
+["con","Război Rece","Conflictul fără luptă directă dintre SUA și URSS, între 1947 și 1991."],
+["con","Colectivizare","Desființarea proprietății țărănești și crearea gospodăriilor colective, sub comunism."],
+["con","Stat de drept","Stat în care toți, inclusiv conducătorii, respectă legea, iar justiția e independentă."]
+];
+const $=s=>document.querySelector(s);
+const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
+const SETS={rec:{name:"Recapitulare pe epoci",short:"Recapitulare",chapters:ERAS.map(e=>[e[0],e[1]]),lessons:L.map(x=>({...x,c:x.e})),quiz:Q.map(x=>({c:x.e,q:x.q,o:x.o,a:x.a,x:x.x})),flash:F}};
+const CLS=[["5","a V-a"],["6","a VI-a"],["7","a VII-a"],["8","a VIII-a"],["9","a IX-a"],["10","a X-a"],["11","a XI-a"],["12","a XII-a"]];
+const READY=["5"];
+const st={set:"rec",ch:"all",lvl:"g",ro:false,q:""};
+const cur=()=>SETS[st.set];
+let done={};try{done=JSON.parse(localStorage.getItem("clio-done2")||"{}")}catch(e){}
+const save=()=>{try{localStorage.setItem("clio-done2",JSON.stringify(done))}catch(e){}};
+const yr=(d)=>d[2]||(d[0]<0?(-d[0])+" î.Hr.":Math.floor(d[0])+"");
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
+const chName=c=>(cur().chapters.find(x=>x[0]===c)||["",""])[1];
+function fromData(j,s){const ls=j.lessons.map(x=>({...x,ro:x.c==="dac"||/român/i.test(x.t+" "+x.s)?1:0}));
+ return {name:j.title,short:"Clasa "+CLS.find(c=>c[0]===s)[1],chapters:j.chapters,lessons:ls,
+ quiz:ls.flatMap(x=>[x.q,x.q2,x.q3].filter(Boolean).map(q=>({c:x.c,q:q[0],o:q[1],a:q[2],x:q[3]}))),flash:ls.filter(x=>x.f).map(x=>[x.c,x.f[0],x.f[1]])}}
+const vis=()=>cur().lessons.map((x,i)=>[x,i]).filter(([x])=>(st.ch==="all"||x.c===st.ch)&&(!st.ro||x.ro)&&(!st.q||norm(x.t+" "+x.s+" "+(x.x||"")+" "+(x.w||"")+" "+x.d.map(d=>yr(d)+" "+d[1]).join(" ")+" "+x.k.join(" ")).includes(norm(st.q))));
+$("#eras").innerHTML=ERAS.map(e=>`<button data-e="${e[0]}" aria-pressed="false">${e[1]}<small>${e[2]}</small></button>`).join("");
+$("#sets").innerHTML=`<button data-s="rec" aria-pressed="true">Recapitulare</button>`+CLS.map(c=>`<button data-s="${c[0]}" aria-pressed="false" ${READY.includes(c[0])?"":"disabled title=\"În curând\""}>Clasa ${c[1]}${READY.includes(c[0])?"":" · în curând"}</button>`).join("");
+function renderChaps(){const s=cur();$("#chaps").innerHTML=[["all","Toate capitolele"],...s.chapters].map(c=>{const n=c[0]==="all"?s.lessons.length:s.lessons.filter(x=>x.c===c[0]).length;return `<button data-c="${c[0]}" aria-pressed="${st.ch===c[0]}">${c[1]} <span>${n}</span></button>`}).join("");
+ document.querySelectorAll("#eras button").forEach(b=>b.setAttribute("aria-pressed",st.set==="rec"&&b.dataset.e===st.ch));$("#allBtn").setAttribute("aria-pressed",st.set==="rec"&&st.ch==="all");
+ $("#lvlWrap").hidden=st.set!=="rec";$("#setName").textContent=s.name;$("#quizSet").textContent=s.short;$("#flashSet").textContent=s.short}
+function renderLessons(){
+ const s=cur(),v=vis(),rec=st.set==="rec";
+ $("#lessons").innerHTML=v.length?v.map(([x,i])=>{const key=st.set+":"+x.t;return `<article class="card"><span class="tag">${x.ro?'<span class="ro">Istoria românilor</span> · ':''}${rec?`Gimnaziu: cl. ${x.g} · Liceu: cl. ${x.l}`:`Lecția ${i+1} · ${chName(x.c)}`}</span><h3>${x.t}</h3><p style="margin:0">${x.s}</p>${rec&&st.lvl==="l"?`<p class="ext" style="margin:0"><b>Aprofundare:</b> ${x.x}</p>`:""}${x.d.length?`<ul>${x.d.map(d=>`<li><b>${yr(d)}</b><span>${d[1]}</span></li>`).join("")}</ul>`:""}${x.w?`<p class="wk"><b>Știai că?</b> ${x.w}</p>`:""}<div class="terms">${x.k.map(k=>`<span>${k}</span>`).join("")}</div><div class="lqrow"><button class="btn" data-q="${i}">Mini-test la lecție</button>${best[key]?`<span class="tag">Cel mai bun scor: ${best[key][0]}/${best[key][1]}</span>`:""}</div><label class="chk done"><input type="checkbox" data-k="${key}" ${done[key]?"checked":""}> Am învățat lecția</label></article>`}).join(""):'<p class="empty">Nicio lecție nu se potrivește. Încearcă alt cuvânt sau „Toate capitolele”.</p>';
+ const n=s.lessons.filter(x=>done[st.set+":"+x.t]).length;
+ $("#progT").textContent=`${s.short}: ai învățat ${n} din ${s.lessons.length} lecții`;$("#progB").style.width=(n/s.lessons.length*100)+"%";
+ $("#count").textContent=`${v.length} ${v.length===1?"lecție afișată":"lecții afișate"}`;
+ const ds=v.flatMap(([x])=>x.d.map(d=>[d[0],yr(d),d[1],x.t])).sort((a,b)=>a[0]-b[0]);
+ $("#tl").innerHTML=ds.length?ds.map(d=>`<li><b>${d[1]}</b><span>${d[2]}<em>${d[3]}</em></span></li>`).join(""):'<li><span class="empty">Nicio dată pentru filtrele alese.</span></li>';
+}
+function renderAll(){renderChaps();renderLessons();startQuiz();fi=0;renderFlash()}
+async function setSet(s,ch){
+ if(!SETS[s]){$("#lessons").innerHTML='<p class="empty">Se încarcă lecțiile…</p>';
+  try{let r=await fetch("data/"+s+".json");if(!r.ok)r=await fetch(s+".json");if(!r.ok)throw new Error(r.status);SETS[s]=fromData(await r.json(),s)}
+  catch(e){$("#lessons").innerHTML='<p class="empty">Lecțiile nu s-au putut încărca. Reîncarcă pagina.</p>';return}}
+ st.set=s;st.ch=ch||"all";document.querySelectorAll("#sets button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.s===s));
+ try{localStorage.setItem("clio-set",s)}catch(e){}
+ renderAll()}
+$("#sets").addEventListener("click",ev=>{const b=ev.target.closest("button");if(b&&!b.disabled)setSet(b.dataset.s)});
+$("#chaps").addEventListener("click",ev=>{const b=ev.target.closest("button");if(b){st.ch=b.dataset.c;renderChaps();renderLessons();startQuiz();fi=0;renderFlash()}});
+$("#lessons").addEventListener("change",ev=>{const k=ev.target.dataset.k;if(k){done[k]=ev.target.checked;save();renderLessons()}});
+const pickEra=e=>{setSet("rec",e);$("#lectii").scrollIntoView()};
+$("#eras").addEventListener("click",ev=>{const b=ev.target.closest("button");if(b)pickEra(b.dataset.e)});
+$("#allBtn").addEventListener("click",()=>setSet("rec"));
+document.querySelectorAll(".pano g[data-e]").forEach(g=>{g.style.cursor="pointer";g.addEventListener("click",()=>pickEra(g.dataset.e))});
+document.querySelectorAll(".seg[aria-label=Nivel] button").forEach(b=>b.addEventListener("click",()=>{st.lvl=b.dataset.l;document.querySelectorAll(".seg[aria-label=Nivel] button").forEach(c=>c.setAttribute("aria-pressed",c===b));renderLessons()}));
+$("#onlyRo").addEventListener("change",e=>{st.ro=e.target.checked;renderLessons()});
+$("#q").addEventListener("input",e=>{st.q=e.target.value.trim();renderLessons()});
+let qz={};
+function startQuiz(){const pool=shuffle(cur().quiz.filter(x=>st.ch==="all"||x.c===st.ch)).slice(0,10).map(c=>{const ord=shuffle([0,1,2,3]);return {...c,o:ord.map(j=>c.o[j]),a:ord.indexOf(c.a)}});qz={qs:pool,i:0,sc:0,ans:false};renderQuiz()}
+function renderQuiz(){const box=$("#quiz");
+ if(!qz.qs.length){box.innerHTML='<p class="empty">Nu există întrebări pentru acest capitol.</p>';return}
+ if(qz.i>=qz.qs.length){const p=qz.sc/qz.qs.length;box.innerHTML=`<h3>Rezultat: ${qz.sc} din ${qz.qs.length}</h3><p>${p>=.9?"Excelent! Stăpânești bine materia.":p>=.6?"Bine! Recitește lecțiile la întrebările greșite.":"Mai citește o dată lecțiile și încearcă din nou."}</p><button class="btn" id="qr">Încă un test</button>`;$("#qr").onclick=startQuiz;return}
+ const c=qz.qs[qz.i];
+ box.innerHTML=`<span class="tag">Întrebarea ${qz.i+1} din ${qz.qs.length} · ${chName(c.c)} · scor ${qz.sc}</span><h3 style="font-family:'Source Sans 3';font-size:21px;margin-top:8px">${c.q}</h3><div class="opts">${c.o.map((o,j)=>`<button data-j="${j}">${o}</button>`).join("")}</div><p class="fb" id="qf"></p><button class="btn" id="qn" hidden>${qz.i+1<qz.qs.length?"Următoarea":"Vezi rezultatul"}</button>`;
+ box.querySelectorAll(".opts button").forEach(b=>b.onclick=()=>{if(qz.ans)return;qz.ans=true;const j=+b.dataset.j;const ok=j===c.a;if(ok)qz.sc++;
+  box.querySelectorAll(".opts button")[c.a].classList.add("ok");if(!ok)b.classList.add("no");
+  $("#qf").innerHTML=`<b style="color:var(${ok?"--ok":"--bad"})">${ok?"Corect!":"Nu chiar."}</b> ${c.x}`;$("#qn").hidden=false;$("#qn").focus()});
+ $("#qn").onclick=()=>{qz.i++;qz.ans=false;renderQuiz()};
+}
+let fi=0;const fl=()=>cur().flash.filter(f=>st.ch==="all"||f[0]===st.ch);
+function renderFlash(){const a=fl();$("#flash").classList.remove("f");
+ if(!a.length){$("#ff").innerHTML="<h3>Fără fișe</h3>";$("#fb").innerHTML="";$("#fc").textContent="";return}
+ const f=a[fi%a.length];
+ $("#ff").innerHTML=`<span style="opacity:.8;font-size:14px">${chName(f[0])}</span><h3>${f[1]}</h3><span style="opacity:.8;font-size:14px">Atinge pentru definiție</span>`;
+ $("#fb").innerHTML=`<h3 style="font-size:20px">${f[1]}</h3><p style="margin:0;font-size:18px">${f[2]}</p>`;$("#fc").textContent=`${fi%a.length+1} / ${a.length}`}
+const flip=()=>$("#flash").classList.toggle("f");
+$("#flash").addEventListener("click",flip);$("#flash").addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();flip()}});
+$("#fn").onclick=()=>{const n=fl().length||1;fi=(fi+1)%n;renderFlash()};$("#fp").onclick=()=>{const n=fl().length||1;fi=(fi-1+n)%n;renderFlash()};
+
+/* ---- Mini-test pe lecție ---- */
+let best={};try{best=JSON.parse(localStorage.getItem("clio-best")||"{}")}catch(e){}
+const saveBest=()=>{try{localStorage.setItem("clio-best",JSON.stringify(best))}catch(e){}};
+const sents=s=>{const P=s.replace(/î\.Hr\./g,"î§Hr§").replace(/d\.Hr\./g,"d§Hr§").replace(/\b(c|sec|mil|cl|n|aprox|ș\.a)\./g,"$1§");
+ return (P.match(/[^.!?]+[.!?]+(?=\s+[A-ZĂÂÎȘȚ„(]|\s*$)/g)||[]).map(z=>z.trim().replace(/§/g,".")).filter(z=>z.length>30&&/^[A-ZĂÂÎȘȚ„]/.test(z)&&!/^(El|Ea|Ei|Ele|Aici|Apoi|Atunci|Acolo|Tot|De aici|Dar|Mai târziu|Așa|Acesta|Aceasta)\b/.test(z))};
+const keysOf=x=>{const w=new Set();(x.t+" "+x.s+" "+(x.x||"")+" "+(x.w||"")).replace(/[„”"(),.;:!?]/g," ").split(/\s+/).forEach(t=>{if(t.length>=4&&/^[A-ZĂÂÎȘȚ]/.test(t))w.add(norm(t).slice(0,6))});x.k.forEach(k=>k.split(/\s+/).forEach(t=>{if(t.length>=5)w.add(norm(t).slice(0,6))}));return [...w]};
+const clash=(z,keys)=>{const n=norm(z);return keys.some(k=>n.includes(k))};
+function span(d){const lab=d[2]||"";let a=d[0],b=d[0];
+ const m=lab.match(/(\d+)\s*(?:î\.Hr\.)?\s*–\s*(\d+)/);
+ if(m){const p=+m[1],q=+m[2];if(/î\.Hr\..*d\.Hr\./.test(lab))b=q;else if(d[0]<0)b=-q;else b=q}
+ let mg=0;if(/c\.|sec\.|mil\./.test(lab))mg=Math.max(60,Math.abs(d[0])*.04);else if(d[0]<-1000)mg=Math.abs(d[0])*.03;
+ if(/sec\./.test(lab))mg=Math.max(mg,110);
+ return [Math.min(a,b),Math.max(a,b),mg]}
+const apart=(d,e)=>{const A=span(d),B=span(e),g=Math.max(A[2],B[2],.5);return B[0]>A[1]+g||A[0]>B[1]+g};
+function mk(q,ok,pool,x){const seen=new Set([norm(ok)]),w=[];
+ for(const p of pool){const k=norm(p);if(p&&!seen.has(k)){seen.add(k);w.push(p)}if(w.length===3)break}
+ if(w.length<3)return null;const o=shuffle([ok,...w]);return {q,o,a:o.indexOf(ok),x}}
+function genQuiz(setKey,i){
+ const S=SETS[setKey],x=S.lessons[i],others=S.lessons.filter((_,j)=>j!==i);
+ const diff=others.filter(o=>o.c!==x.c),txt=norm(x.t+" "+x.s+" "+(x.x||"")+" "+x.k.join(" "));
+ const allD=others.flatMap(o=>o.d),qs=[];
+ [x.q,x.q2,x.q3].filter(Boolean).forEach(Q=>{const sh=shuffle(Q[1].map((v,j)=>[v,j]));qs.push({q:Q[0],o:sh.map(v=>v[0]),a:sh.findIndex(v=>v[1]===Q[2]),x:Q[3]})});
+ x.d.forEach(d=>{const lab=yr(d);
+  const far=allD.filter(e=>x.d.every(z=>apart(z,e))).sort((a,b)=>Math.abs(a[0]-d[0])-Math.abs(b[0]-d[0]));
+  qs.push(mk(`Care este data pentru: „${d[1]}”?`,lab,shuffle(far.slice(0,12)).map(yr),`${d[1]}: ${lab}.`));
+  qs.push(mk(`Ce eveniment corespunde datei ${lab}?`,d[1],shuffle(far.slice(0,14)).map(e=>e[1]),`${lab}: ${d[1]}.`))});
+ const fl=S.flash.filter(f=>f[1]!==(x.f||[])[0]);
+ if(x.f){qs.push(mk(`Ce înseamnă „${x.f[0]}”?`,x.f[1],shuffle(fl).map(f=>f[2]),`${x.f[0]}: ${x.f[1]}`));
+  qs.push(mk(`Ce termen se potrivește definiției: „${x.f[1]}”?`,x.f[0],shuffle(fl).filter(f=>!txt.includes(norm(f[1]))).map(f=>f[1]),`Termenul este „${x.f[0]}”.`))}
+ const badK=new Set(x.k.map(norm)),dk=shuffle(diff.flatMap(o=>o.k)).filter(k=>!badK.has(norm(k))&&!txt.includes(norm(k))&&!clash(k,keysOf(x)));
+ shuffle(x.k).slice(0,2).forEach((k,n)=>qs.push(mk(`Care termen ține de lecția „${x.t}”?`,k,dk.slice(n*5,n*5+10),`„${k}” este un termen-cheie al lecției.`)));
+ const KY=keysOf(x),ds=shuffle(diff.flatMap(o=>sents(o.s))).filter(z=>!clash(z,KY));
+ shuffle(sents(x.s+" "+(x.x||"")+" "+(x.w||""))).slice(0,3).forEach((z,n)=>qs.push(mk(`Care afirmație este despre „${x.t}”?`,z,ds.slice(n*4,n*4+8),"Celelalte afirmații sunt despre alte subiecte.")));
+ const out=qs.filter(Boolean);const first=x.q?out.shift():null;const rest=shuffle(out);if(first)rest.splice(Math.floor(Math.random()*Math.min(4,rest.length+1)),0,first);return rest}
+let lq={};
+function openLQ(i){lq={set:st.set,i,n:10};$("#lq").hidden=false;document.body.style.overflow="hidden";startLQ()}
+function closeLQ(){$("#lq").hidden=true;document.body.style.overflow="";renderLessons()}
+function startLQ(){const all=genQuiz(lq.set,lq.i);lq.all=all.length;lq.qs=all.slice(0,lq.n==="all"?all.length:lq.n);lq.k=0;lq.sc=0;lq.ans=false;drawLQ()}
+function drawLQ(){const x=SETS[lq.set].lessons[lq.i],box=$("#lqBody"),key=lq.set+":"+x.t;
+ $("#lqTitle").textContent=x.t;
+ $("#lqN").innerHTML=[5,10,"all"].map(n=>`<button data-n="${n}" aria-pressed="${lq.n===n}">${n==="all"?`Toate (${lq.all})`:n}</button>`).join("");
+ if(lq.k>=lq.qs.length){const t=lq.qs.length,p=lq.sc/t,prev=best[key];
+  if(!prev||lq.sc/t>prev[0]/prev[1])best[key]=[lq.sc,t];saveBest();
+  if(p>=.8&&!done[key]){done[key]=true;save()}
+  box.innerHTML=`<p class="big">${lq.sc} / ${t}</p><p>${p>=.9?"Excelent! Știi foarte bine lecția.":p>=.8?"Foarte bine! Am bifat lecția ca învățată.":p>=.5?"Bine. Recitește lecția și încearcă din nou.":"Mai citește o dată lecția, apoi reia testul."}</p><p class="tag">Cel mai bun scor la această lecție: ${best[key][0]} / ${best[key][1]}</p><div class="row"><button class="btn" id="lqAgain">Reia testul (întrebări amestecate)</button><button class="btn sec" id="lqClose2">Închide</button></div>`;
+  $("#lqAgain").onclick=startLQ;$("#lqClose2").onclick=closeLQ;$("#lqAgain").focus();return}
+ const c=lq.qs[lq.k];
+ box.innerHTML=`<div class="bar" style="flex:none;margin-bottom:10px"><i style="width:${lq.k/lq.qs.length*100}%"></i></div><span class="tag">Întrebarea ${lq.k+1} din ${lq.qs.length} · scor ${lq.sc}</span><h3 class="qq"></h3><div class="opts"></div><p class="fb" id="lqF"></p><button class="btn" id="lqNext" hidden>${lq.k+1<lq.qs.length?"Următoarea":"Vezi rezultatul"}</button>`;
+ box.querySelector(".qq").textContent=c.q;
+ const op=box.querySelector(".opts");c.o.forEach((o,j)=>{const b=document.createElement("button");b.textContent=o;b.onclick=()=>{if(lq.ans)return;lq.ans=true;const ok=j===c.a;if(ok)lq.sc++;
+  op.children[c.a].classList.add("ok");if(!ok)b.classList.add("no");
+  const f=$("#lqF");f.innerHTML=`<b style="color:var(${ok?"--ok":"--bad"})">${ok?"Corect!":"Nu chiar."}</b> `;f.append(document.createTextNode(ok?c.x:`Răspunsul corect: ${c.o[c.a]}. ${c.x}`));
+  $("#lqNext").hidden=false;$("#lqNext").focus()};op.append(b)});
+ $("#lqNext").onclick=()=>{lq.k++;lq.ans=false;drawLQ()};
+ op.children[0].focus()}
+$("#lqN").addEventListener("click",ev=>{const b=ev.target.closest("button");if(b){lq.n=b.dataset.n==="all"?"all":+b.dataset.n;startLQ()}});
+$("#lqClose").onclick=closeLQ;
+$("#lq").addEventListener("click",ev=>{if(ev.target.id==="lq")closeLQ()});
+document.addEventListener("keydown",ev=>{if(ev.key==="Escape"&&!$("#lq").hidden)closeLQ()});
+$("#lessons").addEventListener("click",ev=>{const b=ev.target.closest("[data-q]");if(b)openLQ(+b.dataset.q)});
+
+let first="rec";try{first=localStorage.getItem("clio-set")||"rec"}catch(e){}
+if(!SETS[first]&&!READY.includes(first))first="rec";
+renderAll();if(first!=="rec")setSet(first);
+}
+</script>
+</body>
+</html>
