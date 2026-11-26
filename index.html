@@ -255,6 +255,71 @@ body{padding-bottom:92px}
 .mbox{border-radius:26px 26px 0 0;min-height:100%;margin:max(10px,env(safe-area-inset-top)) 0 0}.modal{padding:0;align-items:stretch}
 .unit{padding:14px 16px}.unit .uc{display:none}.bar{flex-basis:130px}.t-prog{grid-template-columns:auto minmax(0,1fr)}.ring{width:96px;height:96px}}
 @media(prefers-reduced-motion:reduce){.inner,.lc,.acard,.btn,.ring .fg{transition:none}html{scroll-behavior:auto}}
+/* ---- Asistentul Clio: butonul rotund din colț și panoul lui ---- */
+:root{--brandT:light-dark(#3355ff,#93a5ff)}
+.fab{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:max(20px,env(safe-area-inset-bottom));z-index:35;width:58px;height:58px;border-radius:50%;border:0;background:var(--brand);color:#fff;display:grid;place-items:center;cursor:pointer;box-shadow:0 4px 0 var(--brand2),0 16px 30px -12px rgba(51,85,255,.75);transition:transform .12s,box-shadow .12s;-webkit-tap-highlight-color:transparent}
+.fab:hover{transform:translateY(-2px)}
+.fab:active{transform:translateY(3px);box-shadow:0 1px 0 var(--brand2),0 8px 18px -10px rgba(51,85,255,.7)}
+.fab:focus-visible{outline:3px solid var(--sun);outline-offset:3px}
+.fab svg{width:28px;height:28px}
+.fab[aria-expanded=true] .fi1,.fab[aria-expanded=false] .fi2{display:none}
+.ast{position:fixed;right:max(20px,env(safe-area-inset-right));bottom:calc(max(20px,env(safe-area-inset-bottom)) + 74px);z-index:60;width:min(396px,calc(100vw - 24px));height:min(620px,calc(100dvh - 130px));background:var(--card);color:var(--ink);border-radius:26px;box-shadow:0 30px 70px -20px rgba(10,12,30,.5),0 0 0 1px var(--line);display:flex;flex-direction:column;overflow:hidden;transform-origin:100% 100%;animation:astIn .18s ease-out}
+.ast[hidden],.ast [hidden]{display:none!important}
+@keyframes astIn{from{opacity:0;transform:translateY(10px) scale(.97)}}
+@media (prefers-reduced-motion:reduce){.ast{animation:none}.fab{transition:none}}
+.ast-h{display:flex;align-items:center;gap:12px;padding:14px 14px 10px 16px}
+.ast-av{width:40px;height:40px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font:900 21px Nunito,sans-serif;flex:none}
+.ast-h b{display:block;font-weight:900;font-size:17px;line-height:1.2}
+.ast-h small{display:block;color:var(--mute);font-weight:600;font-size:13px;line-height:1.3}
+.ast-x{margin-left:auto;width:38px;height:38px;border-radius:50%;border:0;background:var(--card2);color:var(--ink);cursor:pointer;display:grid;place-items:center;flex:none}
+.ast-x svg{width:18px;height:18px}
+.ast-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;margin:0 14px 6px;background:var(--card2);border-radius:14px;padding:4px}
+.ast-tabs button{border:0;background:transparent;color:var(--mute);font:800 14px Nunito,sans-serif;padding:8px 4px;border-radius:10px;cursor:pointer}
+.ast-tabs button[aria-selected=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ast-x:focus-visible,.ast-tabs button:focus-visible,.ast button:focus-visible,.ast textarea:focus-visible,.ast input:focus-visible{outline:3px solid var(--brandT);outline-offset:2px}
+.ast-b{position:relative;flex:1;overflow:auto;padding:6px 14px 14px;overscroll-behavior:contain}
+.msg{max-width:90%;width:fit-content;padding:10px 13px;border-radius:18px;margin:8px 0;font-size:15px;line-height:1.45;overflow-wrap:anywhere}
+.msg.bot{background:var(--card2);border-bottom-left-radius:6px}
+.msg.me{background:var(--brand);color:#fff;margin-left:auto;border-bottom-right-radius:6px}
+.msg p{margin:0 0 .5em}.msg p:last-child{margin-bottom:0}
+.msg .src{color:var(--mute);font-size:13px;font-weight:700}
+.hit{display:block;width:100%;text-align:left;background:var(--card);border:0;border-radius:14px;padding:10px 12px;margin:8px 0 0;box-shadow:0 0 0 1px var(--line);cursor:pointer;color:var(--ink);font:inherit}
+.hit:hover{box-shadow:0 0 0 2px var(--brandT)}
+.hit b{display:flex;align-items:center;gap:8px;font-weight:800;font-size:14.5px;line-height:1.3}
+.hit b i{width:10px;height:10px;border-radius:50%;flex:none}
+.hit span{display:block;color:var(--mute);font-size:13.5px;margin-top:3px;line-height:1.4}
+.hit em{font-style:normal;color:var(--brandT);font-weight:800;font-size:13px;display:block;margin-top:5px}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 8px}
+.sugg button{border:0;background:var(--card);box-shadow:0 0 0 1px var(--line);color:var(--ink);font:700 13.5px Nunito,sans-serif;padding:7px 12px;border-radius:99px;cursor:pointer;text-align:left}
+.sugg button:hover{box-shadow:0 0 0 2px var(--brandT)}
+.ast-f{display:flex;gap:8px;padding:10px 12px max(10px,env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+.ast-f input{flex:1;border:0;background:var(--card2);color:var(--ink);font:600 16px Nunito,sans-serif;border-radius:14px;padding:11px 14px}
+.ast-f input::placeholder{color:var(--mute)}
+.ast-send{width:46px;height:46px;border-radius:50%;border:0;background:var(--brand);color:#fff;display:grid;place-items:center;cursor:pointer;flex:none;box-shadow:0 3px 0 var(--brand2)}
+.ast-send svg{width:20px;height:20px}
+.ast-form h4{font-size:17px;font-weight:900;margin:8px 0 4px}
+.ast-form>p{color:var(--mute);font-size:14px;margin:0 0 10px}
+.pick{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px;border:0;padding:0}
+.pick legend{font-weight:800;font-size:14.5px;margin-bottom:6px;padding:0}
+.pick label{cursor:pointer}
+.pick input{position:absolute;opacity:0;pointer-events:none}
+.pick span{display:inline-block;background:var(--card2);color:var(--ink);font:700 14px Nunito,sans-serif;padding:8px 13px;border-radius:99px;box-shadow:0 0 0 1px var(--line)}
+.pick input:checked+span{background:var(--brand);color:#fff;box-shadow:0 0 0 1px var(--brand)}
+.pick input:focus-visible+span{outline:3px solid var(--brandT);outline-offset:2px}
+.ast-form label.big{display:block;color:var(--ink);font-weight:800;font-size:14.5px;margin:0 0 6px}
+.ast-form textarea{width:100%;min-height:118px;resize:vertical;border:0;background:var(--card2);color:var(--ink);font:600 15.5px/1.45 Nunito,sans-serif;border-radius:14px;padding:11px 13px}
+.ast-form small.ctx{display:block;color:var(--mute);font-size:13px;font-weight:600;margin:6px 0 12px}
+.ast-form .btn{width:100%}
+.ast-form .btn[disabled]{opacity:.5;cursor:not-allowed;box-shadow:none}
+.ast-st{font-weight:800;font-size:14.5px;margin:10px 0 0;min-height:1.4em}
+.ast-st.ok{color:var(--ok)}.ast-st.err{color:var(--bad)}
+.ast-off{background:color-mix(in srgb,var(--sun) 22%,var(--card));border-radius:14px;padding:10px 12px;font-size:14px;font-weight:700;margin:4px 0 12px}
+.ast-rep{display:block;margin:12px auto 0;border:0;background:none;color:var(--mute);font:700 14px Nunito,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
+.ast-rep:hover{color:var(--ink)}
+@media (max-width:699px){
+ .fab{right:14px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 80px);width:54px;height:54px}
+ .ast{left:8px;right:8px;top:max(10px,env(safe-area-inset-top));bottom:max(8px,env(safe-area-inset-bottom));width:auto;height:auto;border-radius:24px}
+}
 </style>
 </head>
 <body>
@@ -343,10 +408,31 @@ body{padding-bottom:92px}
 <div class="mhead"><div><span class="tag" id="lrMeta"></span><h3 id="lrTitle"></h3></div><button class="btn sec sm" id="lrClose" aria-label="Închide lecția">Închide</button></div>
 <div id="lrBody" class="art"></div>
 <div class="mfoot"><div class="lqrow"><button class="btn" id="lrQuiz">Fă mini-testul</button><label class="chk"><input type="checkbox" id="lrDone"> Am învățat lecția</label></div>
-<div class="lqrow nav"><button class="btn sec" id="lrPrev">← Anterioara</button><button class="btn sec" id="lrNext">Următoarea →</button></div></div>
+<div class="lqrow nav"><button class="btn sec" id="lrPrev">← Anterioara</button><button class="btn sec" id="lrNext">Următoarea →</button></div><button class="ast-rep" id="lrRep" type="button" hidden>Ai găsit o greșeală în lecție? Spune-ne</button></div>
 </div></div>
 <nav class="tabbar" aria-label="Navigare rapidă"><a href="#lectii"><span data-i="intro"></span>Lecții</a><a href="#articole"><span data-i="scroll"></span>Articole</a><a href="#dictionar"><span data-i="dict"></span>Dicționar</a><a href="#test"><span data-i="mit"></span>Test</a></nav>
 <footer class="band"><div class="wrap"><div class="tile"><a class="logo" href="#"><i>C</i>Clio</a><p>Clio este un ajutor de învățare, nu înlocuiește manualul sau explicațiile profesorului. Unele date antice sunt aproximative („c.” înseamnă circa); unde istoricii nu sunt de acord, am folosit varianta din manualele uzuale.</p></div></div></footer>
+<button class="fab" id="astBtn" type="button" aria-expanded="false" aria-controls="ast" aria-label="Asistentul Clio: întrebări, feedback și probleme"><svg class="fi1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.5a8.5 8.5 0 0 1-12.4 7.6L3.5 20.5l1.4-4.4a8.5 8.5 0 1 1 15.6-4.6z"/><path d="M8.6 11.6h.01M12 11.6h.01M15.4 11.6h.01" stroke-width="2.8"/></svg><svg class="fi2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+<section class="ast" id="ast" hidden role="dialog" aria-labelledby="astName">
+<div class="ast-h"><span class="ast-av" aria-hidden="true">C</span><div><b id="astName">Asistentul Clio</b><small>Caută în lecții, dicționar și articole</small></div><button class="ast-x" id="astX" type="button" aria-label="Închide asistentul"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+<div class="ast-tabs" role="tablist" aria-label="Ce vrei să faci"><button type="button" role="tab" id="tb-ask" data-t="ask" aria-controls="astAsk" aria-selected="true">Întreabă</button><button type="button" role="tab" id="tb-fb" data-t="fb" aria-controls="astFb" aria-selected="false" tabindex="-1">Feedback</button><button type="button" role="tab" id="tb-bug" data-t="bug" aria-controls="astBug" aria-selected="false" tabindex="-1">Problemă</button></div>
+<div class="ast-b" id="astAsk" role="tabpanel" aria-labelledby="tb-ask"><div id="astLog" aria-live="polite"></div></div>
+<form class="ast-f" id="astQ" data-for="ask"><input id="astIn" type="text" placeholder="Scrie o întrebare…" autocomplete="off" enterkeyhint="send" maxlength="200" aria-label="Întrebarea ta"><button class="ast-send" type="submit" aria-label="Trimite întrebarea"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h13M12 5l7 7-7 7"/></svg></button></form>
+<div class="ast-b" id="astFb" role="tabpanel" aria-labelledby="tb-fb" hidden><form class="ast-form" id="fbForm">
+<h4>Cum ți se pare Clio?</h4><p>Spune-ne ce îți place și ce ai schimba. Citim fiecare mesaj.</p>
+<p class="ast-off" data-off>Trimiterea mesajelor se pornește în curând. Până atunci poți folosi „Întreabă”.</p>
+<fieldset class="pick"><legend>Părerea ta</legend><label><input type="radio" name="fbr" value="Îmi place mult" required><span>Îmi place mult</span></label><label><input type="radio" name="fbr" value="E în regulă"><span>E în regulă</span></label><label><input type="radio" name="fbr" value="Nu prea"><span>Nu prea</span></label></fieldset>
+<label class="big" for="fbText">Ce ai adăuga sau ai schimba?</label><textarea id="fbText" maxlength="1000" placeholder="De exemplu: o lecție care lipsește sau ceva greu de găsit"></textarea>
+<small class="ctx">Nu scrie numele, emailul sau alte date personale.</small>
+<button class="btn" type="submit">Trimite feedback</button><p class="ast-st" role="status"></p></form></div>
+<div class="ast-b" id="astBug" role="tabpanel" aria-labelledby="tb-bug" hidden><form class="ast-form" id="bugForm">
+<h4>Raportează o problemă</h4><p>Ai găsit o greșeală sau ceva nu merge? Spune-ne și o reparăm.</p>
+<p class="ast-off" data-off>Trimiterea mesajelor se pornește în curând. Până atunci poți folosi „Întreabă”.</p>
+<fieldset class="pick"><legend>Ce fel de problemă?</legend><label><input type="radio" name="bgr" value="Greșeală într-o lecție" required><span>Greșeală într-o lecție</span></label><label><input type="radio" name="bgr" value="Testul nu merge bine"><span>Testul nu merge bine</span></label><label><input type="radio" name="bgr" value="Ceva nu se vede bine"><span>Ceva nu se vede bine</span></label><label><input type="radio" name="bgr" value="Altceva"><span>Altceva</span></label></fieldset>
+<label class="big" for="bugText">Ce s-a întâmplat?</label><textarea id="bugText" maxlength="1000" required placeholder="Scrie unde ai văzut problema și ce ar trebui să fie"></textarea>
+<small class="ctx" id="bugCtx"></small>
+<button class="btn" type="submit">Trimite raportul</button><p class="ast-st" role="status"></p></form></div>
+</section>
 <script>
 {
 const ERAS=[["ant","Antichitate","până în 476"],["med","Evul Mediu","476–1492"],["mod","Epoca modernă","1492–1918"],["con","Contemporană","după 1918"]];
@@ -669,6 +755,99 @@ if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostnam
 let first="rec";try{first=localStorage.getItem("clio-set")||"rec"}catch(e){}
 if(!SETS[first]&&!READY.includes(first))first="rec";
 renderAll();if(first!=="rec")setSet(first);
+/* ---- Asistentul Clio ---- */
+/* Unde ajung mesajele de feedback: un formular Google. url = adresa „formResponse”, iar tip/msg/ctx = codurile entry.N ale celor trei întrebări. Gol = trimiterea e oprită. */
+const ASTFORM={url:"",tip:"",msg:"",ctx:""};
+const astOn=!!(ASTFORM.url&&ASTFORM.tip&&ASTFORM.msg);
+const astEl=$("#ast"),astBtn=$("#astBtn"),astLog=$("#astLog"),astIn=$("#astIn");
+let astTab="ask",astCtx="",astGreeted=false,astIdx=null;
+const ASTSTOP=new Set(`a ai al ale am ar are as asa au ca care cat cata cate cati ce cei cel cele cine cum cu da dar de despre din dintre e ei el ele era erau este esti eu fi fie fost fac face facut faceau i ii il in inca intr intre isi la le li lor lui ma mai mi mie mult ne ni nu o ori pe pentru poti prin s sa sau se si sunt spune spunemi te ti tu un una unde unei unor unui va vor explica explicami vreau stii poate rog cand inseamna adica numit numeste numea ceva cineva fel asta acesta aceasta acest aceste acei avea aveau hei salut buna an ani anul anii secol secolul perioada perioadei loc locul intamplat lectia lectie lectii azi astazi acum cuvant cuvantul termen termenul`.split(/\s+/));
+const astStem=w=>{if(w.length<4)return w;const m=w.match(/^(.{3,}?)(ilor|elor|ului|lor|ul|ii|ei|ele|ile|le|ia|ie|a|e|i|u)$/);return m?m[1]:w};
+const astToks=q=>[...new Set(nrm(q).replace(/[^a-z0-9]+/g," ").split(" ").filter(w=>w.length>1&&!ASTSTOP.has(w)))];
+const astStems=s=>nrm(s).replace(/[^a-z0-9]+/g," ").split(" ").filter(w=>w.length>1).map(astStem);
+const astM=(ds,q)=>ds===q||(q.length>=3&&ds.startsWith(q))||(ds.length>=4&&q.length-ds.length<=2&&q.startsWith(ds));
+const astCount=(arr,q)=>{let n=0;for(const w of arr)if(astM(w,q))n++;return n};
+function astBuild(){const S=SETS["5"];if(!S)return null;
+ const ls=S.lessons.map((x,i)=>({i,x,T:astStems(x.t),K:astStems([...(x.k||[]),...(x.f?[x.f[0]]:[])].join(" ")),B:astStems([x.s,...(x.p||[]),x.w||""].join(" "))}));
+ const as=ARTS.map((a,i)=>({i,a,T:astStems(a.t),B:astStems(a.p.join(" "))}));
+ const ds=DICT.map(d=>({d,T:astToks(d.t).map(astStem)})).filter(d=>d.T.length);
+ return {ls,as,ds}}
+function astScore(doc,qs){let sc=0,m=0;for(const q of qs){if(doc.T.some(w=>astM(w,q))){sc+=6;m++}else if(doc.K&&doc.K.some(w=>astM(w,q))){sc+=5;m++}else{const c=astCount(doc.B,q);if(c){sc+=1+Math.min(2,Math.log2(c));m++}}}
+ if(!m)return 0;const need=qs.length<=2?qs.length:Math.ceil(qs.length/2);if(m<need)return 0;return sc*(m/qs.length)**2}
+function astSent(x,qs,when){const sp=t=>String(t||"").split(/(?<=[.!?…])\s+(?=[A-ZĂÂÎȘȚ„(])/).filter(Boolean);const ss=[...sp(x.s).map(s=>[s,.6]),...sp((x.p||[]).join(" ")).map(s=>[s,0]),...sp(x.w).map(s=>[s,-1.6])];let best=ss[0][0],bs=-1;
+ ss.forEach(([s,bon],k)=>{const st=astStems(s);let v=0,hit=0;qs.forEach(q=>{if(st.some(w=>astM(w,q))){v+=2;hit++}});if(!hit)return;if(when&&/\d/.test(s))v+=1.5;if(/\b(este|era|erau|sunt|înseamnă|a fost|au fost|numit)\b/i.test(s))v+=.8;v+=bon-k*.01;if(v>bs){bs=v;best=s}});
+ return best.length>260?best.slice(0,250).replace(/\s+\S*$/,"")+"…":best}
+const astH=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
+function astSay(who,html,extra){const m=astH("div","msg "+who,html);if(extra)extra.forEach(e=>m.append(e));astLog.append(m);const b=$("#astAsk");b.scrollTop=who==="bot"?Math.max(0,m.offsetTop-(m.previousElementSibling&&m.previousElementSibling.classList.contains("me")?m.previousElementSibling.offsetHeight+18:10)):b.scrollHeight;return m}
+function astSugg(list){const w=astH("div","sugg");list.forEach(([t,fn])=>{const b=astH("button","",esc(t));b.type="button";b.onclick=fn||(()=>astAsk(t));w.append(b)});return w}
+function astHit(color,title,sub,act,fn){const b=astH("button","hit",`<b><i style="background:${color}"></i>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:""}<em>${esc(act)}</em>`);b.type="button";b.onclick=fn;return b}
+const astGo=id=>{astClose(false);if(!$("#lr").hidden)closeLR();if(!$("#ar").hidden)closeArt();$(id).scrollIntoView()};
+async function astOpenL(i){if(!$("#ar").hidden)closeArt();await setSet("5");openLR(i);if(!lr.list.includes(i)){lr.list=SETS["5"].lessons.map((_,k)=>k);drawLR()}astClose(false)}
+function astOpenA(i){if(!$("#lr").hidden)closeLR();openArt(i);astClose(false)}
+function astOpenD(t){astGo("#dictionar");$("#dq").value=t;renderDict()}
+const ASTEX=[["Cine a fost Burebista?"],["Ce este o mumie?"],["Ce erau Jocurile Olimpice?"],["Cum bifez o lecție?"]];
+function astGreet(){if(astGreeted)return;astGreeted=true;
+ astSay("bot","<p>Salut! Sunt asistentul Clio. Întreabă-mă despre un personaj, un popor, o construcție sau un cuvânt din lecțiile de clasa a V-a.</p><p>Caut răspunsul în lecțiile, dicționarul și articolele Clio și îți arăt lecția din care vine.</p>",[astSugg(ASTEX)])}
+function astIntent(q){const n=" "+nrm(q).replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ")+" ";const t=r=>r.test(n);
+ if(t(/ (multumesc|mersi|merci|ms|mulțumesc) /))return["<p>Cu plăcere! Mai întreabă-mă oricând.</p>"];
+ if(t(/ (esti|ești) (un |o )?(ai|robot|om|inteligenta|chatgpt|bot) | cine esti | ce esti | chatgpt /))return["<p>Sunt asistentul site-ului Clio. Nu sunt o inteligență artificială care compune răspunsuri singură: caut în lecțiile, dicționarul și articolele Clio și îți arăt de unde e informația.</p>"];
+ if(t(/ (raport\w*|semnal\w*|eroare|bug|nu merge|nu functioneaza|nu se (vede|incarca|deschide)|am gasit o greseala|greseala in) /))return["<p>Îmi pare rău că ceva nu merge. Spune-ne ce s-a întâmplat și o reparăm.</p>",[["Raportează o problemă",()=>astShow("bug")]]];
+ if(t(/ (feedback|parere\w*|sugesti\w*|propunere\w*) /))return["<p>Ne bucurăm să aflăm ce crezi despre Clio.</p>",[["Lasă un feedback",()=>astShow("fb")]]];
+ if(t(/ (salut|buna|hei|hello|hi|servus|neata|ziua) $/)||t(/^ (salut|buna|hei|hello|hi|servus) $/))return["<p>Salut! Ce vrei să afli astăzi?</p>",ASTEX];
+ if(t(/ (ce (poti|stii)|ajutor|help|cum te folosesc|ce faci) /))return["<p>Pot să caut în cele 310 lecții de clasa a V-a, în dicționar și în articole. Scrie un nume sau o întrebare scurtă, de exemplu „Cine a fost Decebal?”. Pot să-ți explic și cum folosești site-ul.</p>",[["Cum bifez o lecție?"],["Cum instalez aplicația?"],["Unde e testul?"]]];
+ if(t(/ (bifez|bifa|marchez|am invatat|progres\w*|seria|zile la rand|streak) /))return["<p>Deschide o lecție și bifează „Am învățat lecția”, jos în fereastra lecției. Poți bifa și direct pe cartonașul lecției.</p><p>Progresul și seria de zile apar sus, în panoul de progres. Se păstrează doar pe acest dispozitiv și în acest browser.</p>"];
+ if(t(/ (unde|cum).*(test|quiz|intrebari)| (testul|quiz|teste) /))return["<p>La secțiunea Test găsești un test din toată materia și fișe pentru recapitulare. Fiecare lecție are și un mini-test, cu butonul „Fă mini-testul”.</p>",[["Mergi la Test",()=>astGo("#test")]]];
+ if(t(/ (fise|fisele|flashcard\w*|cartonase) /))return["<p>Fișele sunt la secțiunea Test: vezi un termen, întorci fișa și afli explicația.</p>",[["Deschide fișele",()=>astGo("#test")]]];
+ if(t(/ (instal\w*|aplicati\w*|offline|fara internet|ecranul de pornire) /))return["<p>Pe Android, în Chrome, apasă butonul „Instalează aplicația” de sus sau alege din meniu „Adaugă pe ecranul de pornire”. Pe iPhone, în Safari, apasă Partajează și apoi „Adaugă pe ecranul principal”.</p><p>După ce ai deschis Clio o dată, lecțiile încărcate se pot citi și fără internet.</p>"];
+ if(t(/ (clasa (a )?(vi|vii|viii|ix|x|xi|xii|6|7|8|9|10|11|12)|liceu|alte clase) /))return["<p>Deocamdată Clio are lecțiile pentru clasa a V-a. Celelalte clase vor veni pe rând.</p>"];
+ if(t(/ lecti\w* (zilei|de azi|e azi|azi|de astazi) | ce (invat|citesc) azi /))return["<p>Lecția zilei se schimbă în fiecare zi. Uite-o:</p>",[["Deschide lecția zilei",()=>{openToday();astClose(false)}]]];
+ return null}
+function astAnswer(q){const it=astIntent(q);if(it){const [html,s]=it;astSay("bot",html,s?[astSugg(s)]:null);return}
+ if(!SETS["5"]){astSay("bot","<p>Lecțiile încă se încarcă. Încearcă din nou în câteva secunde.</p>");return}
+ if(!astIdx||astIdx.as.length!==ARTS.length||!astIdx.ds.length&&DICT.length)astIdx=astBuild();
+ const qs=astToks(q).map(astStem);const when=/\b(cand|ce an|ce secol|in ce perioada)\b/.test(nrm(q));
+ if(!qs.length){astSay("bot","<p>Scrie-mi un cuvânt-cheie, de exemplu un nume sau un popor, și caut în lecții.</p>",[astSugg(ASTEX)]);return}
+ const dh=astIdx.ds.filter(d=>d.T.every(t=>qs.some(q=>astM(t,q)||astM(q,t)))&&qs.filter(q=>d.T.some(t=>astM(t,q)||astM(q,t))).length*2>qs.length).sort((a,b)=>b.T.length-a.T.length||b.d.t.length-a.d.t.length)[0];
+ let lh=astIdx.ls.map(l=>[astScore(l,qs),l]).filter(v=>v[0]>=1).sort((a,b)=>b[0]-a[0]).slice(0,3);if(lh.length&&lh[0][0]>=6)lh=lh.filter(v=>v[0]>=2.5);
+ const ah=astIdx.as.map(a=>[astScore(a,qs),a]).filter(v=>v[0]>=6).sort((a,b)=>b[0]-a[0])[0];
+ if(!dh&&!lh.length&&!ah){astSay("bot",`<p>N-am găsit nimic despre „${esc(q)}” în lecțiile Clio. Încearcă alt cuvânt, de exemplu un nume sau un loc.</p><p>Dacă vrei o lecție despre asta, spune-ne.</p>`,[astSugg([["Propune o lecție nouă",()=>{astShow("fb");$("#fbText").value="Aș vrea o lecție despre: "+q}],...ASTEX.slice(0,2)])]);return}
+ const S=SETS["5"],cards=[];let html="";
+ if(dh){const li=S.lessons.findIndex(x=>x.t===dh.d.l);html+=`<p><b>${esc(dh.d.t)}</b>: ${esc(dh.d.d)}</p>`;
+  cards.push(astHit("var(--sun)",`Dicționar: ${dh.d.t}`,`Din lecția „${dh.d.l}”`,"Vezi în dicționar",()=>astOpenD(dh.d.t)))}
+ lh.forEach(([,l],k)=>{const snip=astSent(l.x,qs,when),full=k===0&&qs.every(q=>l.T.some(w=>astM(w,q)));if(!html&&k===0)html=`<p>${esc(full&&!when?l.x.s:snip)}</p><p class="src">Din lecția „${esc(l.x.t)}”</p>`;
+  cards.push(astHit(col(l.x.c),l.x.t,k===0&&!dh?(full&&!when?"Citește toată lecția și fă mini-testul.":l.x.s.split(/(?<=[.!?])\s/)[0]):snip,"Deschide lecția",()=>astOpenL(l.i)))});
+ if(ah)cards.push(astHit(col(ah[1].a.c),"Articol: "+ah[1].a.t,ah[1].a.min+" min de citit","Citește articolul",()=>astOpenA(ah[1].i)));
+ astSay("bot",html,cards)}
+function astAsk(q){q=String(q).trim().slice(0,200);if(!q)return;astSay("me",`<p>${esc(q)}</p>`);astIn.value="";setTimeout(()=>astAnswer(q),180)}
+function astShow(t){astTab=t;document.querySelectorAll("#ast .ast-st").forEach(s=>{s.textContent="";s.className="ast-st"});["ask","fb","bug"].forEach(k=>{const on=k===t,b=$("#tb-"+k);b.setAttribute("aria-selected",on);b.tabIndex=on?0:-1;$({ask:"#astAsk",fb:"#astFb",bug:"#astBug"}[k]).hidden=!on});
+ $("#astQ").hidden=t!=="ask";
+ if(t==="bug")$("#bugCtx").textContent="Împreună cu mesajul trimitem: "+(astCtx||"pagina principală")+" și dacă folosești telefon sau calculator. Nu scrie numele, emailul sau alte date personale.";
+ const fine=matchMedia("(pointer:fine)").matches;if(t==="ask"){astGreet();if(fine)astIn.focus({preventScroll:true})}else if(fine){const f=$(t==="fb"?"#fbForm":"#bugForm").querySelector("input");f&&f.focus({preventScroll:true})}}
+function astOpen(t,ctx){astCtx=ctx||"";astEl.hidden=false;astBtn.setAttribute("aria-expanded","true");astShow(t||astTab)}
+function astClose(focus=true){astEl.hidden=true;astBtn.setAttribute("aria-expanded","false");if(focus){const r=$("#lrRep");(!$("#lr").hidden&&r&&!r.hidden?r:astBtn).focus()}}
+astBtn.onclick=()=>astEl.hidden?astOpen(astTab):astClose();
+$("#astX").onclick=()=>astClose();
+astEl.addEventListener("keydown",e=>{e.stopPropagation();if(e.key==="Escape"){e.preventDefault();astClose()}});
+$(".ast-tabs").addEventListener("click",e=>{const b=e.target.closest("[data-t]");if(b)astShow(b.dataset.t)});
+$(".ast-tabs").addEventListener("keydown",e=>{const o=["ask","fb","bug"],k=o.indexOf(astTab);if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();const n=o[(k+(e.key==="ArrowRight"?1:2))%3];astShow(n);$("#tb-"+n).focus()}});
+$("#astQ").addEventListener("submit",e=>{e.preventDefault();astAsk(astIn.value)});
+document.querySelectorAll("#ast [data-off]").forEach(p=>p.hidden=astOn);
+document.querySelectorAll("#fbForm .btn,#bugForm .btn").forEach(b=>b.disabled=!astOn);
+async function astSend(form,tip,msg){const st=form.querySelector(".ast-st"),btn=form.querySelector(".btn");st.className="ast-st";
+ if(!astOn){st.textContent="Trimiterea nu e pornită încă.";return}
+ let last=0;try{last=+localStorage.getItem("clio-sent")||0}catch(e){}
+ if(Date.now()-last<20000){st.className="ast-st err";st.textContent="Ai trimis un mesaj chiar acum. Așteaptă câteva secunde.";return}
+ const dev=matchMedia("(max-width:699px)").matches?"telefon":"calculator";
+ const b=new URLSearchParams();b.append(ASTFORM.tip,tip);b.append(ASTFORM.msg,msg.slice(0,1000));if(ASTFORM.ctx)b.append(ASTFORM.ctx,(astCtx||"pagina principală")+"; "+dev);
+ btn.disabled=true;st.textContent="Se trimite…";
+ try{await fetch(ASTFORM.url,{method:"POST",mode:"no-cors",body:b});try{localStorage.setItem("clio-sent",Date.now())}catch(e){}
+  form.reset();st.className="ast-st ok";st.textContent="Mulțumim! Mesajul a fost trimis."}
+ catch(e){st.className="ast-st err";st.textContent="Mesajul nu s-a trimis. Verifică internetul și încearcă din nou."}
+ finally{btn.disabled=false}}
+$("#fbForm").addEventListener("submit",e=>{e.preventDefault();const f=e.target,r=f.querySelector("[name=fbr]:checked");astSend(f,"Feedback: "+(r?r.value:"fără notă"),f.querySelector("textarea").value.trim()||"(fără text)")});
+$("#bugForm").addEventListener("submit",e=>{e.preventDefault();const f=e.target,r=f.querySelector("[name=bgr]:checked"),t=f.querySelector("textarea").value.trim();
+ if(!t){const st=f.querySelector(".ast-st");st.className="ast-st err";st.textContent="Scrie pe scurt ce s-a întâmplat.";return}astSend(f,"Problemă: "+(r?r.value:"Altceva"),t)});
+const lrRep=$("#lrRep");if(lrRep){lrRep.hidden=!astOn;lrRep.onclick=()=>{const x=SETS[lr.set].lessons[lr.i];astOpen("bug","lecția „"+x.t+"”");const r=$("#bugForm [value='Greșeală într-o lecție']");if(r)r.checked=true;$("#bugText").focus()}}
 }
 </script>
 </body>
