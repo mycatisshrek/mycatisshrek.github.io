@@ -44,6 +44,8 @@ button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid var(-
 .chips button[aria-pressed=true]{background:var(--earth);color:#fff;border-color:var(--earth)}
 .sets button:disabled{opacity:.5;cursor:not-allowed}.chips span{opacity:.7;font-weight:400}
 .wk{margin:0;font-size:15px;background:light-dark(#fff7e0,#2a2414);border-radius:10px;padding:10px 12px}.wk b{color:var(--earth)}
+.art p{margin:0 0 14px;font-size:17px;line-height:1.65;max-width:68ch}.art h4{font:700 20px Cinzel,serif;margin:22px 0 8px}
+.aq{border-top:1px solid var(--line);padding:12px 0}.aq .opts{margin:10px 0 6px}
 .lqrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:auto}
 .modal{position:fixed;inset:0;z-index:30;background:rgba(8,12,22,.62);display:flex;justify-content:center;align-items:flex-start;overflow:auto;padding:max(14px,env(safe-area-inset-top)) 10px 24px}
 .modal[hidden]{display:none}
@@ -92,11 +94,11 @@ footer{background:var(--earth2);color:#fff;font-size:14px}footer p{margin:0 0 6p
 </head>
 <body>
 <header class="top"><div class="wrap"><span class="logo">Clio</span>
-<nav class="scroll" aria-label="Secțiuni"><a href="#lectii">Lecții</a><a href="#cronologie">Cronologie</a><a href="#test">Test</a><a href="#fise">Fișe</a><a href="#sfaturi">Cum înveți</a></nav></div></header>
+<nav class="scroll" aria-label="Secțiuni"><a href="#lectii">Lecții</a><a href="#articole">Articole</a><a href="#dictionar">Dicționar</a><a href="#cronologie">Cronologie</a><a href="#test">Test</a><a href="#fise">Fișe</a><a href="#sfaturi">Cum înveți</a></nav></div></header>
 
 <section class="hero band"><div class="wrap">
 <h1>Istoria, epocă cu epocă</h1>
-<p>Lecții pentru gimnaziu și liceu, de la piramide la Uniunea Europeană. Clasa a V-a are deja 301 de lecții; celelalte clase urmează. Alege o epocă din imagine sau o clasă, citește, apoi verifică-te cu testul și fișele.</p></div>
+<p>Lecții pentru gimnaziu și liceu, de la piramide la Uniunea Europeană. Clasa a V-a are deja 310 lecții; celelalte clase urmează. Alege o epocă din imagine sau o clasă, citește, apoi verifică-te cu testul și fișele.</p></div>
 <svg class="pano" viewBox="0 0 1200 380" role="img" aria-label="Patru monumente pe o linie a timpului: o piramidă, o cetate medievală, o corabie și un oraș modern">
 <defs><linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--sky)"/><stop offset="1" stop-color="var(--sky2)"/></linearGradient></defs>
 <rect width="1200" height="380" fill="url(#sk)"/>
@@ -142,26 +144,40 @@ footer{background:var(--earth2);color:#fff;font-size:14px}footer p{margin:0 0 6p
 <div class="grid" id="lessons"></div>
 </div></section>
 
-<section id="cronologie" class="band alt"><div class="wrap">
+<section id="articole" class="band alt"><div class="wrap">
+<h2>Articole</h2>
+<p class="tag">Texte mai lungi, de citit în câteva minute. La final te verifici cu câteva întrebări.</p>
+<div class="grid" id="arts"><p class="empty">Se încarcă articolele…</p></div>
+</div></section>
+
+<section id="dictionar" class="band"><div class="wrap">
+<h2>Dicționar istoric</h2>
+<p class="tag">Toți termenii din lecțiile clasei a V-a, în ordine alfabetică. Scrie un cuvânt ca să-l găsești repede.</p>
+<input type="search" id="dq" placeholder="Caută un termen: polis, tarabostes, ziggurat…" aria-label="Caută în dicționar" style="width:100%;max-width:420px">
+<p class="tag" id="dletters" style="display:flex;flex-wrap:wrap;gap:.3rem;margin:.8rem 0"></p>
+<div id="dict"><p class="empty">Se încarcă dicționarul…</p></div>
+</div></section>
+
+<section id="cronologie" class="band"><div class="wrap">
 <h2>Cronologie</h2>
 <p class="tag">Datele din lecțiile afișate, în ordine. Filtrele de mai sus se aplică și aici.</p>
 <ol class="tl" id="tl"></ol>
 </div></section>
 
-<section id="test" class="band"><div class="wrap">
+<section id="test" class="band alt"><div class="wrap">
 <h2>Testează-te</h2>
 <p class="tag">10 întrebări din <b id="quizSet"></b> și capitolul ales, cu explicații după fiecare răspuns.</p>
 <div class="quiz" id="quiz"></div>
 </div></section>
 
-<section id="fise" class="band alt"><div class="wrap">
+<section id="fise" class="band"><div class="wrap">
 <h2>Fișe cu termeni</h2>
 <p class="tag">Termeni din <b id="flashSet"></b>. Atinge fișa ca să vezi definiția.</p>
 <div class="flash" id="flash" tabindex="0" role="button" aria-label="Întoarce fișa"><div class="inner"><div class="side front" id="ff"></div><div class="side back" id="fb"></div></div></div>
 <div class="row"><button class="btn sec" id="fp">Înapoi</button><span id="fc" class="tag"></span><button class="btn" id="fn">Următoarea</button></div>
 </div></section>
 
-<section id="sfaturi" class="band"><div class="wrap">
+<section id="sfaturi" class="band alt"><div class="wrap">
 <h2>Cum înveți istoria mai ușor</h2>
 <div class="tips">
 <div class="card"><h3>Cauză și efect</h3><p>Pentru fiecare eveniment întreabă: de ce s-a întâmplat și ce a schimbat? Datele se rețin mai ușor când știi povestea din spatele lor.</p></div>
@@ -174,6 +190,9 @@ footer{background:var(--earth2);color:#fff;font-size:14px}footer p{margin:0 0 6p
 <div class="mhead"><div><span class="tag">Mini-test</span><h3 id="lqTitle"></h3></div><button class="btn sec" id="lqClose" aria-label="Închide testul">Închide</button></div>
 <div class="row" style="margin-bottom:12px"><span class="tag">Număr de întrebări:</span><span class="chips" id="lqN"></span></div>
 <div id="lqBody"></div></div></div>
+<div class="modal" id="ar" hidden role="dialog" aria-modal="true" aria-labelledby="arTitle"><div class="mbox">
+<div class="mhead"><div><span class="tag" id="arMeta"></span><h3 id="arTitle" style="font-size:clamp(22px,3vw,28px)"></h3></div><button class="btn sec" id="arClose" aria-label="Închide articolul">Închide</button></div>
+<div id="arBody" class="art"></div></div></div>
 <footer class="band"><div class="wrap"><p>Clio este un ajutor de învățare, nu înlocuiește manualul sau explicațiile profesorului.</p><p>Unele date antice sunt aproximative („c.” = circa); unde istoricii nu sunt de acord, am folosit varianta din manualele uzuale.</p></div></footer>
 
 <script>
@@ -378,6 +397,42 @@ $("#lq").addEventListener("click",ev=>{if(ev.target.id==="lq")closeLQ()});
 document.addEventListener("keydown",ev=>{if(ev.key==="Escape"&&!$("#lq").hidden)closeLQ()});
 $("#lessons").addEventListener("click",ev=>{const b=ev.target.closest("[data-q]");if(b)openLQ(+b.dataset.q)});
 
+
+/* ---- Articole ---- */
+const CHN={pre:"Preistoria",viata:"Viața în Antichitate",ori:"Orientul antic",gre:"Grecia antică",rom:"Roma antică",dac:"Geto-dacii și romanizarea"};
+let ARTS=[],artDone={};try{artDone=JSON.parse(localStorage.getItem("clio-art")||"{}")}catch(e){}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function renderArts(){$("#arts").innerHTML=ARTS.length?ARTS.map((a,i)=>`<article class="card"><span class="tag">Clasa a V-a · ${esc(CHN[a.c]||"")} · ${a.min} min de citit</span><h3>${esc(a.t)}</h3><p style="margin:0">${esc(a.p[0].split(/(?<=[.!?])\s/)[0])}</p><div class="lqrow"><button class="btn" data-a="${i}">Citește articolul</button>${artDone[a.id]?`<span class="tag">Test: ${artDone[a.id]}</span>`:""}</div></article>`).join(""):'<p class="empty">Articolele nu s-au putut încărca.</p>'}
+async function loadArts(){try{let r=await fetch("data/articole.json");if(!r.ok)r=await fetch("articole.json");if(!r.ok)throw 0;ARTS=await r.json()}catch(e){ARTS=[]}renderArts()}
+function openArt(i){const a=ARTS[i];$("#arTitle").textContent=a.t;$("#arMeta").textContent=`Clasa a V-a · ${CHN[a.c]||""} · ${a.min} min de citit`;
+ const b=$("#arBody");b.innerHTML="";a.p.forEach(t=>{const p=document.createElement("p");p.textContent=t;b.append(p)});
+ const h4=document.createElement("h4");h4.textContent="Verifică-te";b.append(h4);
+ let sc=0,ans=0;
+ a.q.forEach(q=>{const box=document.createElement("div");box.className="aq";const t=document.createElement("b");t.textContent=q[0];box.append(t);
+  const op=document.createElement("div");op.className="opts";const fb=document.createElement("p");fb.className="fb";fb.style.margin="0";
+  const ord=shuffle([0,1,2,3]);let done=false;
+  ord.forEach(j=>{const bt=document.createElement("button");bt.textContent=q[1][j];bt.onclick=()=>{if(done)return;done=true;ans++;const ok=j===q[2];if(ok)sc++;
+   op.children[ord.indexOf(q[2])].classList.add("ok");if(!ok)bt.classList.add("no");
+   fb.innerHTML=`<b style="color:var(${ok?"--ok":"--bad"})">${ok?"Corect!":"Nu chiar."}</b> `;fb.append(document.createTextNode(q[3]));
+   if(ans===a.q.length){artDone[a.id]=`${sc}/${a.q.length}`;try{localStorage.setItem("clio-art",JSON.stringify(artDone))}catch(e){}
+    const r=document.createElement("p");r.className="big";r.style.fontSize="28px";r.textContent=`Scor: ${sc} din ${a.q.length}`;b.append(r)}};op.append(bt)});
+  box.append(op,fb);b.append(box)});
+ $("#ar").hidden=false;document.body.style.overflow="hidden";$("#ar").scrollTop=0;$("#arClose").focus()}
+function closeArt(){$("#ar").hidden=true;document.body.style.overflow="";renderArts()}
+$("#arts").addEventListener("click",ev=>{const b=ev.target.closest("[data-a]");if(b)openArt(+b.dataset.a)});
+$("#arClose").onclick=closeArt;$("#ar").addEventListener("click",ev=>{if(ev.target.id==="ar")closeArt()});
+document.addEventListener("keydown",ev=>{if(ev.key==="Escape"&&!$("#ar").hidden)closeArt()});
+loadArts();loadDict();$("#dq").addEventListener("input",renderDict);
+let DICT=[];
+const nrm=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+function renderDict(){const q=nrm(($("#dq")||{}).value||"").trim();const L=DICT.filter(d=>!q||nrm(d.t+" "+d.d).includes(q));
+if(!DICT.length){$("#dict").innerHTML='<p class="empty">Dicționarul nu s-a putut încărca.</p>';return}
+if(!L.length){$("#dict").innerHTML='<p class="empty">Niciun termen găsit.</p>';$("#dletters").innerHTML="";return}
+const g={};L.forEach(d=>{const k=nrm(d.t[0]).toUpperCase();(g[k]=g[k]||[]).push(d)});const ks=Object.keys(g).sort((a,b)=>a.localeCompare(b,"ro"));
+$("#dletters").innerHTML=ks.map(k=>`<a href="#dl-${k}" class="btn" style="padding:.2rem .55rem;text-decoration:none">${k}</a>`).join("")+`<span style="align-self:center">${L.length} termeni</span>`;
+$("#dict").innerHTML=ks.map(k=>`<h3 id="dl-${k}" style="margin:1.2rem 0 .4rem">${k}</h3><dl style="margin:0">${g[k].map(d=>`<dt style="font-weight:700;margin-top:.6rem">${esc(d.t)}</dt><dd style="margin:.1rem 0 0 0">${esc(d.d)} <span class="tag">· lecția „${esc(d.l)}”</span></dd>`).join("")}</dl>`).join("")}
+async function loadDict(){try{let r=await fetch("data/5.json");if(!r.ok)r=await fetch("5.json");if(!r.ok)throw 0;const j=await r.json();const seen=new Set();
+DICT=j.lessons.filter(x=>x.f).map(x=>({t:x.f[0],d:x.f[1],l:x.t})).filter(d=>{const k=nrm(d.t);if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.t.localeCompare(b.t,"ro"))}catch(e){DICT=[]}renderDict()}
 let first="rec";try{first=localStorage.getItem("clio-set")||"rec"}catch(e){}
 if(!SETS[first]&&!READY.includes(first))first="rec";
 renderAll();if(first!=="rec")setSet(first);
