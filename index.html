@@ -316,6 +316,18 @@ body{padding-bottom:92px}
 .ast-off{background:color-mix(in srgb,var(--sun) 22%,var(--card));border-radius:14px;padding:10px 12px;font-size:14px;font-weight:700;margin:4px 0 12px}
 .ast-rep{display:block;margin:12px auto 0;border:0;background:none;color:var(--mute);font:700 14px Nunito,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
 .ast-rep:hover{color:var(--ink)}
+.astq{display:grid;gap:6px;margin-top:8px}
+.astq button{text-align:left;border:0;background:var(--card);color:var(--ink);font:700 14.5px/1.35 Nunito,sans-serif;padding:10px 12px;border-radius:12px;cursor:pointer;box-shadow:0 0 0 1.5px var(--line) inset}
+.astq button:hover:not([disabled]){box-shadow:0 0 0 2px var(--brandT) inset}
+.astq button[disabled]{cursor:default}
+.astq button.ok{background:light-dark(#e3f8ec,#123222);box-shadow:0 0 0 2px var(--ok) inset;color:light-dark(#0f6b3c,#7ff0b2)}
+.astq button.no{background:light-dark(#ffe7e7,#3a1515);box-shadow:0 0 0 2px var(--bad) inset;color:light-dark(#b42318,#ff9a9a)}
+.msg.typing{padding:12px 14px}
+.dots{display:inline-flex;gap:4px}.dots i{width:7px;height:7px;border-radius:50%;background:var(--mute);animation:astDot 1s infinite ease-in-out}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes astDot{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.dots i{animation:none;opacity:.6}}
+details.alt{margin-top:8px}details.alt summary{cursor:pointer;color:var(--brandT);font-weight:800;font-size:13.5px;padding:4px 0}
 @media (max-width:699px){
  .fab{right:14px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 80px);width:54px;height:54px}
  .ast{left:8px;right:8px;top:max(10px,env(safe-area-inset-top));bottom:max(8px,env(safe-area-inset-bottom));width:auto;height:auto;border-radius:24px}
@@ -761,22 +773,74 @@ const ASTFORM={url:"",tip:"",msg:"",ctx:""};
 const astOn=!!(ASTFORM.url&&ASTFORM.tip&&ASTFORM.msg);
 const astEl=$("#ast"),astBtn=$("#astBtn"),astLog=$("#astLog"),astIn=$("#astIn");
 let astTab="ask",astCtx="",astGreeted=false,astIdx=null;
-const ASTSTOP=new Set(`a ai al ale am ar are as asa au ca care cat cata cate cati ce cei cel cele cine cum cu da dar de despre din dintre e ei el ele era erau este esti eu fi fie fost fac face facut faceau i ii il in inca intr intre isi la le li lor lui ma mai mi mie mult ne ni nu o ori pe pentru poti prin s sa sau se si sunt spune spunemi te ti tu un una unde unei unor unui va vor explica explicami vreau stii poate rog cand inseamna adica numit numeste numea ceva cineva fel asta acesta aceasta acest aceste acei avea aveau hei salut buna an ani anul anii secol secolul perioada perioadei loc locul intamplat lectia lectie lectii azi astazi acum cuvant cuvantul termen termenul`.split(/\s+/));
-const astStem=w=>{if(w.length<4)return w;const m=w.match(/^(.{3,}?)(ilor|elor|ului|lor|ul|ii|ei|ele|ile|le|ia|ie|a|e|i|u)$/);return m?m[1]:w};
-const astToks=q=>[...new Set(nrm(q).replace(/[^a-z0-9]+/g," ").split(" ").filter(w=>w.length>1&&!ASTSTOP.has(w)))];
-const astStems=s=>nrm(s).replace(/[^a-z0-9]+/g," ").split(" ").filter(w=>w.length>1).map(astStem);
-const astM=(ds,q)=>ds===q||(q.length>=3&&ds.startsWith(q))||(ds.length>=4&&q.length-ds.length<=2&&q.startsWith(ds));
-const astCount=(arr,q)=>{let n=0;for(const w of arr)if(astM(w,q))n++;return n};
+/* Creierul asistentului: înțelege tipul întrebării, ține minte subiectul, corectează greșelile de scriere și compune răspunsul din lecții. */
+const ASTPRON=new Set("el ea ei ele lui lor acesta aceasta acestia acestea asta astia ala aia acolo atunci dansul dansa dansii".split(" "));
+const ASTQW=new Set("de ce cand unde cine cum cat cata cati cate care motiv motivul motivele cauza cauzele diferenta diferente diferentele deosebire deosebiri deosebirea asemanari compara comparatie versus vs fata simplu simplu scurt detalii continua apoi dupa urmat urmeaza intreaba testeaza asculta verifica intrebare intrebari test quiz zi spui mult multe putin mare mic mica inalt inalta lung lunga greu grea aparut aparuta aparea inceput existat exista trait traia traiau".split(" "));
+const ASTSTOP=new Set(`a ai al ale am ar are as asa au ca care cat cata cate cati ce cei cel cele cine cum cu da dar de despre din dintre e ei el ele era erau este esti eu fi fie fost fac face facut faceau i ii il in inca intr intre isi la le li lor lui ma mai mi mie mult ne ni nu o ori pe pentru poti prin s sa sau se si sunt spune spunemi te ti tu un una unde unei unor unui va vor explica explicami vreau stii poate rog cand inseamna adica numit numeste numea ceva cineva fel asta acesta aceasta acest aceste acei avea aveau hei salut buna an ani anul anii secol secolul perioada perioadei loc locul intamplat lectia lectie lectii azi astazi acum cuvant cuvantul termen termenul ea aia ala acolo atunci dansul dansa oare totusi chiar foarte doar tot toti toate afla aflau aflat aflata aflate gasea gaseau gasit facea faceau facut facuta fac face situat situata folosea foloseau folosit avut putea puteau`.split(/\s+/));
+const astStem=w=>{if(w.length<4)return w;if(w.length===4&&!/(a|e|ii)$/.test(w))return w;const m=w.match(/^(.{3,}?)(ilor|elor|ului|lor|ul|ii|ei|ele|ile|le|ia|ie|a|e|i|u)$/);return m?m[1]:w};
+const astWords=s=>nrm(String(s||"")).replace(/[^a-z0-9]+/g," ").split(" ").filter(w=>w.length>1);
+const astToks=q=>[...new Set(astWords(q).filter(w=>!ASTSTOP.has(w)&&!ASTQW.has(w)))];
+const astStems=s=>astWords(s).map(astStem);
+const astM=(ds,q)=>ds===q||(q.length>=3&&ds.startsWith(q))||(ds.length>=4&&q.length-ds.length<=2&&q.startsWith(ds))||(ds.length===3&&q.length===4&&q.startsWith(ds));
+const ASTSYN=[["murit","muri","moart","mort","ucis","sinucis","asasinat","pieri"],["nascut","naste","nasc"],["construit","construi","constru","ridicat","zidit","inaltat"],["retras","retrag"],["cucerit","cucer"],["inventat","inventa","inventi","descoper","nascocit"],["fondat","fondar","fonda","intemeiat","intemei"],["condus","condu","conducator","domni","domnit"],["invins","invinge","infrang","victori"],["inceput","incep","aparut","aparu","aparit"],["scris","scrisul","scrier","scria","scrie"],["trait","traia","traiau","locuit","locuia","locuiau"]];
+const astAlts=q=>{for(const g of ASTSYN)if(g.some(m=>astM(q,m)||astM(m,q)))return g;return null};
+const astHas=(words,q)=>words.some(w=>astM(w,q))||((a)=>a&&a.some(m=>words.some(w=>astM(w,m))))(astAlts(q));
+const astCount=(arr,q)=>{const a=astAlts(q)||[q];let n=0;for(const w of arr)if(astM(w,q)||a.some(m=>astM(w,m)))n++;return n};
+const astSplit=s=>{const P=String(s||"").replace(/(\d)\.(\d)/g,"$1§$2").replace(/î\.Hr\./g,"î§Hr§").replace(/d\.Hr\./g,"d§Hr§").replace(/\b(c|sec|mil|cl|n|aprox|sf|Sf)\./g,"$1§");
+ return (P.match(/[^.!?…]+[.!?…]+(?=\s+[A-ZĂÂÎȘȚ„(]|\s*$)/g)||[P]).map(z=>z.trim().replace(/§/g,".")).filter(z=>z.length>8)};
+function astPool(x){const out=[];const add=(t,src)=>astSplit(t).forEach(s=>out.push({s,src,st:astStems(s)}));add(x.s,"s");(x.p||[]).forEach(p=>add(p,"p"));add(x.w,"w");out.forEach((o,k)=>o.k=k);return out}
 function astBuild(){const S=SETS["5"];if(!S)return null;
  const ls=S.lessons.map((x,i)=>({i,x,T:astStems(x.t),K:astStems([...(x.k||[]),...(x.f?[x.f[0]]:[])].join(" ")),B:astStems([x.s,...(x.p||[]),x.w||""].join(" "))}));
  const as=ARTS.map((a,i)=>({i,a,T:astStems(a.t),B:astStems(a.p.join(" "))}));
  const ds=DICT.map(d=>({d,T:astToks(d.t).map(astStem)})).filter(d=>d.T.length);
- return {ls,as,ds}}
-function astScore(doc,qs){let sc=0,m=0;for(const q of qs){if(doc.T.some(w=>astM(w,q))){sc+=6;m++}else if(doc.K&&doc.K.some(w=>astM(w,q))){sc+=5;m++}else{const c=astCount(doc.B,q);if(c){sc+=1+Math.min(2,Math.log2(c));m++}}}
- if(!m)return 0;const need=qs.length<=2?qs.length:Math.ceil(qs.length/2);if(m<need)return 0;return sc*(m/qs.length)**2}
-function astSent(x,qs,when){const sp=t=>String(t||"").split(/(?<=[.!?…])\s+(?=[A-ZĂÂÎȘȚ„(])/).filter(Boolean);const ss=[...sp(x.s).map(s=>[s,.6]),...sp((x.p||[]).join(" ")).map(s=>[s,0]),...sp(x.w).map(s=>[s,-1.6])];let best=ss[0][0],bs=-1;
- ss.forEach(([s,bon],k)=>{const st=astStems(s);let v=0,hit=0;qs.forEach(q=>{if(st.some(w=>astM(w,q))){v+=2;hit++}});if(!hit)return;if(when&&/\d/.test(s))v+=1.5;if(/\b(este|era|erau|sunt|înseamnă|a fost|au fost|numit)\b/i.test(s))v+=.8;v+=bon-k*.01;if(v>bs){bs=v;best=s}});
- return best.length>260?best.slice(0,250).replace(/\s+\S*$/,"")+"…":best}
+ const voc=new Map();const addV=(s,w8)=>astWords(s).forEach(w=>{if(w.length>=4&&!ASTSTOP.has(w))voc.set(w,(voc.get(w)||0)+w8)});
+ S.lessons.forEach(x=>{addV(x.t,20);addV((x.k||[]).join(" "),10);addV([x.s,...(x.p||[]),x.w||""].join(" "),1)});DICT.forEach(d=>addV(d.t,20));ARTS.forEach(a=>addV(a.t,10));
+ const stems=new Set([...voc.keys()].map(astStem));
+ return {ls,as,ds,voc,stems,pools:new Map()}}
+const astPoolOf=i=>{let p=astIdx.pools.get(i);if(!p){p=astPool(SETS["5"].lessons[i]);astIdx.pools.set(i,p)}return p};
+function astLev(a,b,max){if(Math.abs(a.length-b.length)>max)return max+1;let prev=Array.from({length:b.length+1},(_,j)=>j),pp=null;
+ for(let i=1;i<=a.length;i++){const cur=[i];let lo=i;for(let j=1;j<=b.length;j++){let v=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
+  if(pp&&i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])v=Math.min(v,pp[j-2]+1);cur.push(v);if(v<lo)lo=v}if(lo>max)return max+1;pp=prev;prev=cur}return prev[b.length]}
+/* Corectează cuvintele scrise greșit: „burebsita” devine „burebista”. */
+function astFix(toks){const fixed=[];const out=toks.map(t=>{const st=astStem(t);if(t.length<4||/\d/.test(t))return t;
+  for(const s of astIdx.stems)if(astM(s,st))return t;if(astAlts(st))return t;
+  const max=t.length<=7?1:2;let best=null,bd=max+1,bf=0;
+  for(const [w,f] of astIdx.voc){if(w[0]!==t[0])continue;const d=astLev(t,w,max);if(d<bd||(d===bd&&f>bf)){bd=d;bf=f;best=w}}
+  if(best&&bd<=max){fixed.push(best);return best}return t});return {toks:out,fixed}}
+const astLoose=(words,q)=>q.length>=6&&words.some(w=>w.length>=5&&w.slice(0,5)===q.slice(0,5));
+const astDF=new Map();function astIdf(q){if(!astDF.has(q)){let n=0;for(const l of astIdx.ls)if(astHas(l.T,q)||astHas(l.K,q)||astCount(l.B,q))n++;astDF.set(q,n)}const N=astIdx.ls.length,df=astDF.get(q);return (.5+Math.log(1+N/(1+df))/Math.log(1+N))**2}
+function astScore(doc,qs){let sc=0,m=0,strong=0;for(const q of qs){const w8=qs.length>1?astIdf(q):1,s0=sc;if(doc.T.includes(q)){sc+=9;m++;strong++}else if(astHas(doc.T,q)){sc+=7;m++;strong++}else if(doc.K&&doc.K.includes(q)){sc+=6;m++;strong++}else if(doc.K&&astHas(doc.K,q)){sc+=5;m++;strong++}else if(astLoose(doc.T,q)){sc+=4;m++;strong++}else{const c=astCount(doc.B,q);if(c){sc+=1+Math.min(1,Math.log2(c));m++}}sc=s0+(sc-s0)*w8}
+ if(!m)return [0,0];const need=qs.length<=1?1:Math.ceil(qs.length/2);if(m<need)return [0,0];return [sc*(.4+.6*m/qs.length)+(strong?1/doc.T.length:0)+(qs.length&&doc.T[0]&&astM(doc.T[0],qs[0])?1.5:0),strong]}
+function astSearch(qs){
+ const dm=(t,q)=>t===q||astM(q,t)||(t.startsWith(q)&&t.length-q.length<=2);
+ const dh=astIdx.ds.filter(d=>d.T.every(t=>qs.some(q=>dm(t,q)))&&qs.filter(q=>d.T.some(t=>dm(t,q))).length*2>qs.length).sort((a,b)=>b.T.length-a.T.length||b.d.t.length-a.d.t.length)[0];
+ let lh=astIdx.ls.map(l=>{const [v,s]=astScore(l,qs);return {v,s,l}}).filter(o=>o.v>=1).sort((a,b)=>b.v-a.v).slice(0,3);if(lh.length&&lh[0].v>=6)lh=lh.filter(o=>o.v>=2.5);
+ if(dh){const li=SETS["5"].lessons.findIndex(x=>x.t===dh.d.l);const full=lh[0]&&qs.every(q=>astHas(lh[0].l.T,q));if(li>=0&&!full){const k=lh.findIndex(o=>o.l.i===li);if(k<0)lh.unshift({v:99,s:1,l:astIdx.ls[li]});else if(k>0)lh.unshift(...lh.splice(k,1))}}
+ const ah=astIdx.as.map(a=>[astScore(a,qs)[0],a]).filter(v=>v[0]>=6).sort((a,b)=>b[0]-a[0])[0];
+ return {dh,lh:lh.slice(0,3),ah:ah&&ah[1].a}}
+const astW=(alts,flags)=>new RegExp("(?:^|[\\s,;:(„“\"-])(?:"+alts+")(?=[\\s,.;:!?)”\"-]|$)",flags||"i");
+const ASTRE={
+ why:astW("au dus|a dus|a provocat|au provocat|a cauzat|au cauzat|pentru că|pentru ca|din cauza|de aceea|ca să|ca sa|pentru a|astfel|a dus la|au dus la|duce la|duceau la|datorită|motivul|deoarece|fiindcă|așa că|ca urmare|cauza|în cinstea|ca apărare|ca să-și|ceea ce|pentru|ca să fie"),
+ when:/\d{2,}|secol/i,
+ num:/\d/,
+ where:/(?:^|\s)(?:în|la|lângă|pe malul|pe valea|pe coasta|între|din|spre|aproape de)\s+(?:nordul|sudul|estul|vestul|centrul|[A-ZĂÂÎȘȚÖ])/,
+ what:astW("este|era|erau|sunt|înseamnă|a fost|au fost|numit|numită|numiți|reprezintă|reprezentau"),
+ who:astW("a fost|era|este|rege|regele|regină|împărat|împăratul|conducător|poet|filosof|zeu|zeiță|general|arhitect"),
+ how:astW("prin|folosind|cu ajutorul|astfel|mai întâi|apoi|după ce")};
+function astRank(i,qs,type,avoid){const pool=astPoolOf(i);return pool.map(o=>{let v=0,hit=0;qs.forEach(q=>{if(astHas(o.st,q)){v+=2;hit++}});
+  const re=ASTRE[type];if(re&&re.test(o.s))v+=type==="why"?(/pentru (?!că|ca)/i.test(o.s)&&!/(cauza|de aceea|ca să|ca sa|deoarece|fiindcă|a dus|datorită|pentru că)/i.test(o.s)?1.5:3):type==="when"||type==="where"?3:1.2;
+  v+=o.src==="s"?.5:o.src==="w"?-1:0;v-=o.k*.02;if(avoid&&avoid.has(o.s))v-=50;return {o,v,hit,typed:!!(re&&re.test(o.s))}}).sort((a,b)=>b.v-a.v)}
+const astCut=s=>s.length>300?s.slice(0,290).replace(/\s+\S*$/,"")+"…":s;
+/* Caută răspunsul și în alte lecții care vorbesc despre același subiect. */
+function astGlobal(i,qs,type){return astGlobal1(i,qs,type,false)||astGlobal1(i,qs,type,true)}
+function astGlobal1(i,qs,type,wide){const L0=astIdx.ls[i],fq=new Map();L0.B.forEach(w=>{if(w.length>=3&&!ASTSTOP.has(w)&&!ASTQW.has(w))fq.set(w,(fq.get(w)||0)+1)});
+ const top3=wide?[...fq].sort((a,b)=>b[1]-a[1]).slice(0,3).filter(v=>v[1]>=3).map(v=>v[0]):[];if(wide&&!top3.length)return null;
+ const subj=[...new Set([...L0.T,...L0.K,...top3])].filter(w=>w.length>=3&&!qs.includes(w)&&!ASTSTOP.has(w));if(!subj.length||!qs.length)return null;let best=null;
+ for(const l of astIdx.ls){if(l.i===i)continue;if(!subj.some(s=>astCount(l.B,s)||l.T.some(w=>astM(w,s))))continue;
+  const pool=astPoolOf(l.i);for(const o of pool){if(!qs.every(q=>astHas(o.st,q)))continue;const sj=subj.some(s=>o.st.some(w=>astM(w,s)));if(!sj)continue;
+   let s=o.s;if(!ASTRE[type].test(s)){const pr=pool[o.k-1];if(type==="when"&&pr&&ASTRE.when.test(pr.s))s=pr.s+" "+s;else continue}
+   const v=(sj?3:0)+(o.src==="s"?1:0)+(l.T.some(w=>subj.some(s=>astM(w,s)))?1:0)-o.k*.01;if(!best||v>best.v)best={v,o:{...o,s},i:l.i}}}
+ return best}
 const astH=(tag,cls,html)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e};
 function astSay(who,html,extra){const m=astH("div","msg "+who,html);if(extra)extra.forEach(e=>m.append(e));astLog.append(m);const b=$("#astAsk");b.scrollTop=who==="bot"?Math.max(0,m.offsetTop-(m.previousElementSibling&&m.previousElementSibling.classList.contains("me")?m.previousElementSibling.offsetHeight+18:10)):b.scrollHeight;return m}
 function astSugg(list){const w=astH("div","sugg");list.forEach(([t,fn])=>{const b=astH("button","",esc(t));b.type="button";b.onclick=fn||(()=>astAsk(t));w.append(b)});return w}
@@ -785,40 +849,125 @@ const astGo=id=>{astClose(false);if(!$("#lr").hidden)closeLR();if(!$("#ar").hidd
 async function astOpenL(i){if(!$("#ar").hidden)closeArt();await setSet("5");openLR(i);if(!lr.list.includes(i)){lr.list=SETS["5"].lessons.map((_,k)=>k);drawLR()}astClose(false)}
 function astOpenA(i){if(!$("#lr").hidden)closeLR();openArt(i);astClose(false)}
 function astOpenD(t){astGo("#dictionar");$("#dq").value=t;renderDict()}
-const ASTEX=[["Cine a fost Burebista?"],["Ce este o mumie?"],["Ce erau Jocurile Olimpice?"],["Cum bifez o lecție?"]];
+const mem={i:-1,said:new Set(),quiz:null,n:0};
+const astPick=a=>a[Math.floor(Math.random()*a.length)];
+const ASTEX=[["De ce au construit egiptenii piramide?"],["Cine a fost Burebista?"],["Diferența dintre Sparta și Atena"],["Ascultă-mă din lecția despre Roma"]];
 function astGreet(){if(astGreeted)return;astGreeted=true;
- astSay("bot","<p>Salut! Sunt asistentul Clio. Întreabă-mă despre un personaj, un popor, o construcție sau un cuvânt din lecțiile de clasa a V-a.</p><p>Caut răspunsul în lecțiile, dicționarul și articolele Clio și îți arăt lecția din care vine.</p>",[astSugg(ASTEX)])}
-function astIntent(q){const n=" "+nrm(q).replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ")+" ";const t=r=>r.test(n);
- if(t(/ (multumesc|mersi|merci|ms|mulțumesc) /))return["<p>Cu plăcere! Mai întreabă-mă oricând.</p>"];
- if(t(/ (esti|ești) (un |o )?(ai|robot|om|inteligenta|chatgpt|bot) | cine esti | ce esti | chatgpt /))return["<p>Sunt asistentul site-ului Clio. Nu sunt o inteligență artificială care compune răspunsuri singură: caut în lecțiile, dicționarul și articolele Clio și îți arăt de unde e informația.</p>"];
- if(t(/ (raport\w*|semnal\w*|eroare|bug|nu merge|nu functioneaza|nu se (vede|incarca|deschide)|am gasit o greseala|greseala in) /))return["<p>Îmi pare rău că ceva nu merge. Spune-ne ce s-a întâmplat și o reparăm.</p>",[["Raportează o problemă",()=>astShow("bug")]]];
+ astSay("bot","<p>Salut! Sunt asistentul Clio. Întreabă-mă orice din lecțiile de clasa a V-a: cine, când, unde sau de ce s-a întâmplat ceva.</p><p>Țin minte despre ce vorbim, așa că poți continua cu „De ce?” sau „Spune-mi mai mult”. Pot să te și ascult din lecție.</p>",[astSugg(ASTEX)])}
+function astType(n){const t=r=>r.test(n);
+ if(t(/ (intreaba ma|testeaza ma|asculta ma|verifica ma|examineaza ma|da mi (o|niste|cateva) intrebar\w*|fa mi un test|vreau (un )?test|un quiz|quiz) /))return"quiz";
+ if(t(/ (diferent\w*|deosebir\w*|asemanar\w*|compar\w*|versus|vs|fata de) /))return"cmp";
+ if(t(/ (mai simplu|pe scurt|nu (am )?inteleg|rezuma\w*|explica simplu|pe intelesul meu) /))return"simple";
+ if(t(/^ (si )?(apoi|dupa aceea|mai mult|mai multe|continua|altceva|detalii|si) $/)||t(/ (spune mi mai (mult|multe)|mai spune|mai multe detalii|si apoi|ce s a intamplat (apoi|dupa)|ce a urmat|ce urmeaza|ce altceva|altceva interesant) /))return"more";
+ if(t(/ (de ce|din ce cauza|din ce motiv|(care|ce) (a fost|au fost|e|este|era) (cauza|motivul|cauzele|motivele)|cum de|pentru ce|la ce (folosea|foloseau|servea|serveau)) /))return"why";
+ if(t(/ (cand|in ce an|ce an|in ce secol|ce secol|in ce perioada|de cand|pana cand|ce data|in ce mileniu) /))return"when";
+ if(t(/ (unde|in ce loc|in ce tara|pe unde|de unde) /))return"where";
+ if(t(/ (cat|cata|cati|cate|cat de) /))return"num";
+ if(t(/ cine /))return"who";
+ if(t(/ (ce (este|e|era|sunt|erau|inseamna|reprezinta|reprezentau)|ce a fost|ce au fost|definiti\w*) /))return"what";
+ if(t(/ cum /))return"how";
+ return"gen"}
+function astIntent(q){const n=" "+nrm(q).replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim()+" ";const t=r=>r.test(n);
+ if(/\d\s*[-+*x:\/=]\s*\d/.test(q)||t(/ (cat face|ecuati\w*|matematic\w*) /))return["<p>Eu mă pricep doar la istorie, nu la matematică. Întreabă-mă ceva din lecții!</p>",ASTEX.slice(0,2)];
+ if(t(/ (multumesc|mersi|merci|ms|mss) /))return["<p>Cu plăcere! Mai întreabă-mă oricând.</p>"];
+ if(t(/ (esti|e) (un |o )?(ai|robot|om|inteligenta artificiala|chatgpt|bot) | cine esti | ce esti | chatgpt | cum gandesti | de unde stii /))return["<p>Sunt asistentul site-ului Clio. Nu inventez răspunsuri: înțeleg ce mă întrebi, caut în cele 310 lecții, în dicționar și în articole și compun răspunsul din ce scrie acolo. De aceea îți arăt mereu lecția din care vine informația.</p>"];
+ if(t(/ (raport\w*|semnal\w*|eroare|bug|nu merge|nu functioneaza|nu se (vede|incarca|deschide)|am gasit o greseala|greseala in (lectie|site)) /))return["<p>Îmi pare rău că ceva nu merge. Spune-ne ce s-a întâmplat și o reparăm.</p>",[["Raportează o problemă",()=>astShow("bug")]]];
  if(t(/ (feedback|parere\w*|sugesti\w*|propunere\w*) /))return["<p>Ne bucurăm să aflăm ce crezi despre Clio.</p>",[["Lasă un feedback",()=>astShow("fb")]]];
- if(t(/ (salut|buna|hei|hello|hi|servus|neata|ziua) $/)||t(/^ (salut|buna|hei|hello|hi|servus) $/))return["<p>Salut! Ce vrei să afli astăzi?</p>",ASTEX];
- if(t(/ (ce (poti|stii)|ajutor|help|cum te folosesc|ce faci) /))return["<p>Pot să caut în cele 310 lecții de clasa a V-a, în dicționar și în articole. Scrie un nume sau o întrebare scurtă, de exemplu „Cine a fost Decebal?”. Pot să-ți explic și cum folosești site-ul.</p>",[["Cum bifez o lecție?"],["Cum instalez aplicația?"],["Unde e testul?"]]];
- if(t(/ (bifez|bifa|marchez|am invatat|progres\w*|seria|zile la rand|streak) /))return["<p>Deschide o lecție și bifează „Am învățat lecția”, jos în fereastra lecției. Poți bifa și direct pe cartonașul lecției.</p><p>Progresul și seria de zile apar sus, în panoul de progres. Se păstrează doar pe acest dispozitiv și în acest browser.</p>"];
- if(t(/ (unde|cum).*(test|quiz|intrebari)| (testul|quiz|teste) /))return["<p>La secțiunea Test găsești un test din toată materia și fișe pentru recapitulare. Fiecare lecție are și un mini-test, cu butonul „Fă mini-testul”.</p>",[["Mergi la Test",()=>astGo("#test")]]];
+ if(t(/^ (salut|buna|buna ziua|hei|hello|hi|servus|neata|ziua buna|ce faci|ce mai faci) $/))return["<p>Salut! Ce vrei să afli astăzi?</p>",ASTEX];
+ if(t(/ (ce (poti|stii) (sa )?(faci)?|ajutor|help|cum te folosesc) /))return["<p>Pot să-ți răspund la întrebări despre lecțiile de clasa a V-a: cine, ce, când, unde, de ce. Țin minte subiectul, deci poți continua cu „De ce?”, „Când?” sau „Spune-mi mai mult”.</p><p>Mai pot compara două subiecte, îți pot explica mai simplu și te pot asculta din lecție.</p>",[["Diferența dintre greci și romani"],["Ascultă-mă din lecția despre daci"],["Cum bifez o lecție?"]]];
+ if(t(/ (bifez|bifa|marchez|progres\w*|seria|zile la rand|streak) /))return["<p>Deschide o lecție și bifează „Am învățat lecția”, jos în fereastra lecției. Poți bifa și direct pe cartonașul lecției.</p><p>Progresul și seria de zile apar sus, în panoul de progres. Se păstrează doar pe acest dispozitiv și în acest browser.</p>"];
+ if(t(/ (unde|cum) (e|este|gasesc|fac) testul | testul final | test din toata materia /))return["<p>La secțiunea Test găsești un test din toată materia și fișe pentru recapitulare. Fiecare lecție are și un mini-test. Te pot asculta și eu aici: scrie „Ascultă-mă din lecția despre…”.</p>",[["Mergi la Test",()=>astGo("#test")]]];
  if(t(/ (fise|fisele|flashcard\w*|cartonase) /))return["<p>Fișele sunt la secțiunea Test: vezi un termen, întorci fișa și afli explicația.</p>",[["Deschide fișele",()=>astGo("#test")]]];
  if(t(/ (instal\w*|aplicati\w*|offline|fara internet|ecranul de pornire) /))return["<p>Pe Android, în Chrome, apasă butonul „Instalează aplicația” de sus sau alege din meniu „Adaugă pe ecranul de pornire”. Pe iPhone, în Safari, apasă Partajează și apoi „Adaugă pe ecranul principal”.</p><p>După ce ai deschis Clio o dată, lecțiile încărcate se pot citi și fără internet.</p>"];
  if(t(/ (clasa (a )?(vi|vii|viii|ix|x|xi|xii|6|7|8|9|10|11|12)|liceu|alte clase) /))return["<p>Deocamdată Clio are lecțiile pentru clasa a V-a. Celelalte clase vor veni pe rând.</p>"];
  if(t(/ lecti\w* (zilei|de azi|e azi|azi|de astazi) | ce (invat|citesc) azi /))return["<p>Lecția zilei se schimbă în fiecare zi. Uite-o:</p>",[["Deschide lecția zilei",()=>{openToday();astClose(false)}]]];
  return null}
+/* Sugestii de continuare, doar cele la care lecția chiar are răspuns. */
+function astNext(i,type){const r=[];const pool=astPoolOf(i);
+ if(type!=="why"&&pool.some(o=>ASTRE.why.test(o.s)))r.push(["De ce?"]);
+ if(type!=="when"&&(SETS["5"].lessons[i].d.length||pool.some(o=>ASTRE.when.test(o.s))))r.push(["Când?"]);
+ if(pool.some(o=>!mem.said.has(o.s)))r.push(["Spune-mi mai mult"]);
+ r.push(["Ascultă-mă din lecție",()=>astQuiz(i)]);return astSugg(r.slice(0,4))}
+function astSetTopic(i){if(mem.i!==i){mem.i=i;mem.said=new Set()}}
+const astLessonCard=(i,sub)=>{const x=SETS["5"].lessons[i];return astHit(col(x.c),x.t,sub||"Citește toată lecția și fă mini-testul.","Deschide lecția",()=>astOpenL(i))};
+const astP=a=>a.map(s=>`<p>${esc(astCut(s))}</p>`).join("");
+const astSrc=i=>`<p class="src">Din lecția „${esc(SETS["5"].lessons[i].t)}”</p>`;
+/* Răspunsul propriu-zis, după tipul întrebării. */
+function astReply(i,qs,type,extra){const x=SETS["5"].lessons[i];astSetTopic(i);const said=mem.said;let html="",lead=extra||"";const said0=said.size;
+ const take=(arr,n)=>{const out=[];for(const r of arr){if(out.length>=n)break;if(said.has(r.o.s)||out.includes(r.o.s))continue;out.push(r.o.s)}out.forEach(s=>said.add(s));return out};
+ const titleAll=qs.length&&qs.every(q=>astIdx.ls[i].T.some(w=>astM(w,q)));
+ if(type==="when"){const open=!qs.length||titleAll;const ds=open?x.d:x.d.filter(d=>qs.some(q=>astHas(astStems(d[1]),q)));
+  const best=astRank(i,qs,"when").filter(r=>r.typed&&(open||r.hit===qs.length));
+  const dl=l=>l.slice(0,4).map(d=>`<p><b>${esc(yr(d))}</b>: ${esc(d[1])}</p>`).join("");
+  if(ds.length)html=dl(ds)+(best[0]&&!said.has(best[0].o.s)?astP(take(best,1)):"");
+  else if(best.length)html=astP(take(best,1));
+  else{const g=astGlobal(i,qs,"when");if(g){astSetTopic(g.i);mem.said.add(g.o.s);astSay("bot",lead+astP([g.o.s])+astSrc(g.i),[astLessonCard(g.i),astNext(g.i,"when")]);return}
+   html=x.d.length?"<p>Lecția nu spune exact asta, dar iată datele importante:</p>"+dl(x.d):"<p>Lecția nu dă o dată exactă pentru asta. Iată ce spune:</p>"+astP(take(astRank(i,qs,"gen"),1))}}
+ else if(type==="why"){const best=astRank(i,qs,"why").filter(r=>r.typed&&(r.hit||!qs.length||titleAll));
+  if(best.length)html=astP(take(best,2));
+  else{const g=astGlobal(i,qs,"why");
+   if(g){astSetTopic(g.i);mem.said.add(g.o.s);astSay("bot",lead+astP([g.o.s])+astSrc(g.i),[astLessonCard(g.i),astNext(g.i,"why")]);return}
+   const f0=astSplit(x.s)[0];said.add(f0);html="<p>Lecția nu dă un motiv anume, dar iată ce spune:</p>"+astP([f0,...take(astRank(i,qs,"gen"),1)])}}
+ else if(type==="where"||type==="num"||type==="how"){const best=astRank(i,qs,type).filter(r=>r.typed&&(r.hit||!qs.length||titleAll));
+  if(!best.length&&qs.length&&!titleAll){const g=astGlobal(i,qs,type);if(g){astSetTopic(g.i);mem.said.add(g.o.s);astSay("bot",lead+astP([g.o.s])+astSrc(g.i),[astLessonCard(g.i),astNext(g.i,type)]);return}}
+  const loose=best.length?best:astRank(i,qs,type).filter(r=>r.typed);html=astP(take(loose.length?loose:astRank(i,qs,"gen"),type==="how"?2:1))}
+ else if(type==="more"){const rest=astPoolOf(i).filter(o=>!said.has(o.s));
+  if(!rest.length){html="<p>Ți-am spus tot ce scrie în lecție despre asta. Vrei să te ascult din ea sau trecem la lecția următoare?</p>";
+   const nx=i+1<SETS["5"].lessons.length?i+1:null;astSay("bot",lead+html,[astSugg([["Ascultă-mă din lecție",()=>astQuiz(i)],...(nx!=null?[["Lecția următoare: "+SETS["5"].lessons[nx].t,()=>{astSay("me",`<p>${esc(SETS["5"].lessons[nx].t)}</p>`);astReply(nx,[],"gen")}]]:[])])]);return}
+  const two=rest.slice(0,2);two.forEach(o=>said.add(o.s));html=two.map(o=>`<p>${o.src==="w"?"<b>Știai că?</b> ":""}${esc(astCut(o.s))}</p>`).join("")}
+ else if(type==="simple"){const first=astSplit(x.s)[0];html=`<p>Pe scurt: ${esc(first)}</p>`+(x.f?`<p>Cuvântul important aici este <b>${esc(x.f[0])}</b>: ${esc(x.f[1].charAt(0).toLowerCase()+x.f[1].slice(1))}</p>`:"");said.add(first)}
+ else{if(titleAll||!qs.length){const ss=astSplit(x.s).filter(s=>!said.has(s));(ss.length?ss:astSplit(x.s)).forEach(s=>said.add(s));html=astP(ss.length?ss:astSplit(x.s))}
+  else{const best=astRank(i,qs,type==="who"||type==="what"?type:"gen").filter(r=>r.hit);html=astP(take(best.length?best:astRank(i,qs,"gen"),2))}}
+ if(!/<p>(?!<\/p>)/.test(html.replace(/<p>Lecția[^<]*<\/p>/,""))||html.replace(/<[^>]+>/g,"").trim().length<5){const rest=astPoolOf(i).filter(o=>!said.has(o.s)).slice(0,1);rest.forEach(o=>said.add(o.s));
+  html=rest.length?`<p>Despre asta ți-am spus deja ce scrie în lecție. Încă un lucru:</p>`+astP(rest.map(o=>o.s)):"<p>Ți-am spus deja tot ce scrie în lecție despre asta.</p>"}
+ astSay("bot",lead+html+astSrc(i),[astLessonCard(i),astNext(i,type)])}
+function astCompare(n,qs){const raw=n.replace(/ (diferent\w*|deosebir\w*|asemanar\w*|compar\w*|dintre|intre|care e|care este|e) /g," ").split(/ (?:si|vs|versus|fata de|cu) /).map(p=>astToks(p)).filter(p=>p.length);
+ if(raw.length<2)return false;const S=SETS["5"];
+ const hits=raw.slice(0,2).map(p=>{const qs2=p.map(astStem);
+  const ch=p.length<=2&&S.chapters.find(c=>!["intro","skill","teme","pers","mon","mit","bat","viata","alt"].includes(c[0])&&p.some(w=>astWords(c[1]).some(cw=>cw.length>=4&&w.length>=4&&cw.slice(0,3)===w.slice(0,3))));
+  if(ch){const li=S.lessons.findIndex(x=>x.c===ch[0]);if(li>=0)return {l:astIdx.ls[li],ch:ch[1]}}return astSearch(qs2).lh[0]}).filter(Boolean);
+ if(hits.length<2||hits[0].l.i===hits[1].l.i)return false;
+ const html=hits.map(h=>{const x=h.l.x;return `<p><b>${esc(h.ch||x.t)}</b>: ${esc(astSplit(x.s).slice(0,2).join(" "))}</p>`}).join("");
+ const art=(a=>a&&raw.slice(0,2).every(p=>p.some(w=>astStems(a.t).some(t=>astM(t,astStem(w))))))(astSearch(qs).ah)?astSearch(qs).ah:null;const cards=hits.map(h=>astLessonCard(h.l.i,"Citește toată lecția"));if(art)cards.push(astHit(col(art.c),"Articol: "+art.t,art.min+" min de citit","Citește articolul",()=>astOpenA(ARTS.indexOf(art))));
+ astSetTopic(hits[0].l.i);astSay("bot",html,cards);return true}
+function astQuiz(i){const all=genQuiz("5",i);if(!all.length){astSay("bot","<p>Nu am întrebări pentru lecția asta.</p>");return}
+ astSetTopic(i);mem.quiz={i,qs:all.slice(0,5),k:0,sc:0};astSay("bot",`<p>Bine! Te ascult din lecția „${esc(SETS["5"].lessons[i].t)}”: 5 întrebări. Alege răspunsul corect.</p>`);astQAsk()}
+function astQAsk(){const z=mem.quiz;if(!z)return;const c=z.qs[z.k];const m=astSay("bot",`<p class="src">Întrebarea ${z.k+1} din ${z.qs.length}</p><p><b>${esc(c.q)}</b></p>`);
+ const w=astH("div","astq");c.o.forEach((o,j)=>{const b=astH("button","",esc(o));b.type="button";b.onclick=()=>astQAns(j,w);w.append(b)});m.append(w)}
+function astQAns(j,w){const z=mem.quiz;if(!z||w.dataset.done)return;w.dataset.done="1";const c=z.qs[z.k],ok=j===c.a;if(ok)z.sc++;
+ [...w.children].forEach((b,k)=>{b.disabled=true;if(k===c.a)b.classList.add("ok");else if(k===j)b.classList.add("no")});
+ astSay("bot",`<p>${ok?astPick(["Corect!","Exact!","Bravo, așa e!","Foarte bine!"]):"Nu chiar. Răspunsul corect: <b>"+esc(c.o[c.a])+"</b>."} ${esc(c.x||"")}</p>`);z.k++;
+ if(z.k<z.qs.length){setTimeout(astQAsk,350);return}
+ const p=z.sc/z.qs.length;mem.quiz=null;
+ astSay("bot",`<p><b>${z.sc} din ${z.qs.length}</b>. ${p>=.8?"Excelent, știi lecția!":p>=.5?"Bine! Mai citește o dată lecția și o să știi tot.":"Recitește lecția și mai încearcă o dată."}</p>`,[astSugg([["Încă o rundă",()=>astQuiz(z.i)],["Deschide lecția",()=>astOpenL(z.i)],["Pe scurt, ce trebuie să știu?",()=>{astSay("me","<p>Pe scurt, ce trebuie să știu?</p>");astReply(z.i,[],"simple")}]])])}
 function astAnswer(q){const it=astIntent(q);if(it){const [html,s]=it;astSay("bot",html,s?[astSugg(s)]:null);return}
  if(!SETS["5"]){astSay("bot","<p>Lecțiile încă se încarcă. Încearcă din nou în câteva secunde.</p>");return}
  if(!astIdx||astIdx.as.length!==ARTS.length||!astIdx.ds.length&&DICT.length)astIdx=astBuild();
- const qs=astToks(q).map(astStem);const when=/\b(cand|ce an|ce secol|in ce perioada)\b/.test(nrm(q));
- if(!qs.length){astSay("bot","<p>Scrie-mi un cuvânt-cheie, de exemplu un nume sau un popor, și caut în lecții.</p>",[astSugg(ASTEX)]);return}
- const dh=astIdx.ds.filter(d=>d.T.every(t=>qs.some(q=>astM(t,q)||astM(q,t)))&&qs.filter(q=>d.T.some(t=>astM(t,q)||astM(q,t))).length*2>qs.length).sort((a,b)=>b.T.length-a.T.length||b.d.t.length-a.d.t.length)[0];
- let lh=astIdx.ls.map(l=>[astScore(l,qs),l]).filter(v=>v[0]>=1).sort((a,b)=>b[0]-a[0]).slice(0,3);if(lh.length&&lh[0][0]>=6)lh=lh.filter(v=>v[0]>=2.5);
- const ah=astIdx.as.map(a=>[astScore(a,qs),a]).filter(v=>v[0]>=6).sort((a,b)=>b[0]-a[0])[0];
- if(!dh&&!lh.length&&!ah){astSay("bot",`<p>N-am găsit nimic despre „${esc(q)}” în lecțiile Clio. Încearcă alt cuvânt, de exemplu un nume sau un loc.</p><p>Dacă vrei o lecție despre asta, spune-ne.</p>`,[astSugg([["Propune o lecție nouă",()=>{astShow("fb");$("#fbText").value="Aș vrea o lecție despre: "+q}],...ASTEX.slice(0,2)])]);return}
- const S=SETS["5"],cards=[];let html="";
- if(dh){const li=S.lessons.findIndex(x=>x.t===dh.d.l);html+=`<p><b>${esc(dh.d.t)}</b>: ${esc(dh.d.d)}</p>`;
-  cards.push(astHit("var(--sun)",`Dicționar: ${dh.d.t}`,`Din lecția „${dh.d.l}”`,"Vezi în dicționar",()=>astOpenD(dh.d.t)))}
- lh.forEach(([,l],k)=>{const snip=astSent(l.x,qs,when),full=k===0&&qs.every(q=>l.T.some(w=>astM(w,q)));if(!html&&k===0)html=`<p>${esc(full&&!when?l.x.s:snip)}</p><p class="src">Din lecția „${esc(l.x.t)}”</p>`;
-  cards.push(astHit(col(l.x.c),l.x.t,k===0&&!dh?(full&&!when?"Citește toată lecția și fă mini-testul.":l.x.s.split(/(?<=[.!?])\s/)[0]):snip,"Deschide lecția",()=>astOpenL(l.i)))});
- if(ah)cards.push(astHit(col(ah[1].a.c),"Articol: "+ah[1].a.t,ah[1].a.min+" min de citit","Citește articolul",()=>astOpenA(ah[1].i)));
- astSay("bot",html,cards)}
-function astAsk(q){q=String(q).trim().slice(0,200);if(!q)return;astSay("me",`<p>${esc(q)}</p>`);astIn.value="";setTimeout(()=>astAnswer(q),180)}
+ mem.quiz=null;const n=" "+nrm(q).replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim()+" ";const type=astType(n);
+ const fx=astFix(astToks(q));const qs=fx.toks.map(astStem);const lead=fx.fixed.length?`<p class="src">Am căutat „${esc(fx.fixed.join(", "))}”.</p>`:"";
+ const pron=astWords(q).some(w=>ASTPRON.has(w))||/^ (si|dar) /.test(n);const verbs=new Set([...n.matchAll(/ (?:a|au|am|ai|ati|s a|s au|se) ([a-z]{4,})/g)].map(m=>m[1]));
+ if(type==="cmp"&&astCompare(n,qs))return;
+ if(type==="quiz"){if(qs.length){const r=astSearch(qs);if(r.lh.length){astQuiz(r.lh[0].l.i);return}}if(mem.i>=0){astQuiz(mem.i);return}
+  astSay("bot","<p>Din ce lecție să te ascult? Scrie de exemplu „Ascultă-mă din lecția despre Egipt”.</p>",[astSugg([["Ascultă-mă din lecția zilei",()=>{const t=$("#todayT")&&$("#todayT").textContent;const k=SETS["5"].lessons.findIndex(x=>x.t===t);astQuiz(k>=0?k:0)}]])]);return}
+ if(!qs.length){if(mem.i>=0){astReply(mem.i,[],type==="gen"?"more":type,lead);return}
+  astSay("bot","<p>Despre ce vrei să afli? Scrie un nume, un popor sau un loc, de exemplu „Decebal” sau „piramidele”.</p>",[astSugg(ASTEX)]);return}
+ const r=astSearch(qs);
+ if(["why","when","where","num","how"].includes(type)&&r.lh.length>1){r.lh.forEach(o=>{const b=astRank(o.l.i,qs,type).find(x=>x.typed&&x.hit===qs.length);o.v+=b?4:0;if(type==="when"&&o.l.x.d.some(d=>qs.every(q=>astHas(astStems(d[1]),q))))o.v+=6});r.lh.sort((a,b)=>b.v-a.v)}
+ const top=r.lh[0];
+ /* Întrebare de continuare: „Când a murit el?”, „Și unde se afla?” — rămânem la subiectul de dinainte. */
+ if(mem.i>=0&&type!=="quiz"){const nouns=fx.toks.filter(t=>!verbs.has(t)&&!((g=>g&&g[0]!=="scris")(astAlts(astStem(t))))&&!(t.length>=5&&/(at|it|ut|eau|iau|ea|ise|ase)$/.test(t))).map(astStem),tl=astIdx.ls[mem.i],tw=[...tl.T,...tl.K,...tl.B];
+  const inTopic=nouns.every(q=>astHas(tw,q)),else2=top&&top.s>0&&top.l.i!==mem.i&&nouns.some(q=>astHas(top.l.T,q)||astHas(top.l.K,q));
+  const same=top&&top.s>0&&top.l.i===mem.i;
+  if(!same&&(!nouns.length||(pron&&!else2)||(inTopic&&!else2&&!(top&&top.s>0)))){astReply(mem.i,qs,type==="gen"&&!nouns.length?"more":type,lead);return}}
+ if(!top&&!r.dh){if(r.ah){astSay("bot",lead+`<p>Nu am o lecție despre asta, dar am un articol:</p>`,[astHit(col(r.ah.c),"Articol: "+r.ah.t,r.ah.min+" min de citit","Citește articolul",()=>astOpenA(ARTS.indexOf(r.ah)))]);return}
+  astSay("bot",lead+`<p>N-am găsit nimic despre „${esc(q)}” în lecțiile Clio. Eu știu doar istoria din lecțiile de clasa a V-a.</p><p>Încearcă alt cuvânt, de exemplu un nume sau un loc. Sau spune-ne ce lecție lipsește.</p>`,[astSugg([["Propune o lecție nouă",()=>{astShow("fb");$("#fbText").value="Aș vrea o lecție despre: "+q}],...ASTEX.slice(0,2)])]);return}
+ let pre="";if(r.dh&&(type==="what"||type==="who"||type==="gen")){pre=`<p><b>${esc(r.dh.d.t)}</b>: ${esc(r.dh.d.d)}</p>`}
+ astReply(top?top.l.i:SETS["5"].lessons.findIndex(x=>x.t===r.dh.d.l),qs,type,lead+pre);
+ const more=r.lh.slice(1).map(o=>astLessonCard(o.l.i,astCut(astRank(o.l.i,qs,"gen")[0].o.s)));if(r.ah)more.push(astHit(col(r.ah.c),"Articol: "+r.ah.t,r.ah.min+" min de citit","Citește articolul",()=>astOpenA(ARTS.indexOf(r.ah))));
+ if(more.length){const last=astLog.lastElementChild;const d=astH("details","alt",`<summary>Mai găsești în ${more.length===1?"încă o lecție sau un articol":more.length+" lecții și articole"}</summary>`);more.forEach(m=>d.append(m));last.append(d)}}
+function astAsk(q){q=String(q).trim().slice(0,200);if(!q)return;astSay("me",`<p>${esc(q)}</p>`);astIn.value="";
+ const ty=astSay("bot",'<span class="dots" aria-label="Se gândește"><i></i><i></i><i></i></span>');ty.classList.add("typing");
+ setTimeout(()=>{ty.remove();try{astAnswer(q)}catch(e){astSay("bot","<p>M-am încurcat la întrebarea asta. Încearcă s-o scrii altfel.</p>");console.error(e)}},380+Math.min(500,q.length*8))}
 function astShow(t){astTab=t;document.querySelectorAll("#ast .ast-st").forEach(s=>{s.textContent="";s.className="ast-st"});["ask","fb","bug"].forEach(k=>{const on=k===t,b=$("#tb-"+k);b.setAttribute("aria-selected",on);b.tabIndex=on?0:-1;$({ask:"#astAsk",fb:"#astFb",bug:"#astBug"}[k]).hidden=!on});
  $("#astQ").hidden=t!=="ask";
  if(t==="bug")$("#bugCtx").textContent="Împreună cu mesajul trimitem: "+(astCtx||"pagina principală")+" și dacă folosești telefon sau calculator. Nu scrie numele, emailul sau alte date personale.";
