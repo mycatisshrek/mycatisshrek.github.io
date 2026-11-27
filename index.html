@@ -332,24 +332,64 @@ details.alt{margin-top:8px}details.alt summary{cursor:pointer;color:var(--brandT
  .fab{right:14px;bottom:calc(max(10px,env(safe-area-inset-bottom)) + 80px);width:54px;height:54px}
  .ast{left:8px;right:8px;top:max(10px,env(safe-area-inset-top));bottom:max(8px,env(safe-area-inset-bottom));width:auto;height:auto;border-radius:24px}
 }
+/* ---- Cont pe dispozitiv ---- */
+.accb{margin-left:auto;display:flex;align-items:center;gap:8px;border:0;background:var(--card2);color:var(--ink);font:800 14px Nunito,sans-serif;padding:5px 12px 5px 6px;min-height:38px;border-radius:99px;cursor:pointer}
+.accb+.cta{margin-left:8px}
+.accb svg{width:22px;height:22px;margin-left:4px}
+.accb:hover{box-shadow:0 0 0 2px var(--brandT)}
+.accb:focus-visible{outline:3px solid var(--brandT);outline-offset:2px}
+.accav{width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;display:inline-grid;place-items:center;font:900 15px Nunito,sans-serif;flex:none}
+#acc .mbox{max-width:520px}
+.acchi{display:flex;align-items:center;gap:14px;margin-bottom:14px}.acchi .accav{width:52px;height:52px;font-size:26px}
+.acchi h3{margin:0;font-size:24px}.acchi p{margin:2px 0 0;color:var(--mute)}
+.accstats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 18px}
+.accstats div{background:var(--card2);border-radius:16px;padding:12px 14px}
+.accstats b{display:block;font-size:26px;font-weight:900;line-height:1.1}.accstats span{color:var(--mute);font-size:13.5px;font-weight:700}
+#acc h4{font-size:17px;font-weight:900;margin:16px 0 4px}
+.accsub{color:var(--mute);font-size:14.5px;margin:0 0 10px}
+.acccode{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.acccode code{flex:1 1 220px;background:var(--card2);border-radius:12px;padding:10px 12px;font:700 14px/1.5 ui-monospace,Menlo,Consolas,monospace;word-break:break-all;user-select:all}
+.accrow{display:flex;gap:8px;flex-wrap:wrap}.accrow input{flex:1 1 200px}
+#acc input[type=text],#acc input[type=password]{width:100%;border:0;background:var(--card2);color:var(--ink);font:600 16px Nunito,sans-serif;border-radius:14px;padding:12px 14px;box-shadow:0 0 0 1px var(--line) inset}
+#acc input:focus-visible{outline:3px solid var(--brandT);outline-offset:1px}
+.accform{display:grid;gap:6px;margin:8px 0 0}.accform label{font-weight:800;font-size:14.5px;margin-top:6px}.accform .btn{margin-top:12px}
+.acccheck{display:flex;gap:8px;align-items:center;font-weight:700!important}
+.acctabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--card2);border-radius:14px;padding:4px;margin-bottom:14px}
+.acctabs button{border:0;background:transparent;color:var(--mute);font:800 15px Nunito,sans-serif;padding:9px;border-radius:10px;cursor:pointer}
+.acctabs button[aria-selected=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.accnames{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.accname{display:flex;align-items:center;gap:8px;border:0;background:var(--card2);color:var(--ink);font:800 14px Nunito,sans-serif;padding:5px 12px 5px 5px;border-radius:99px;cursor:pointer}
+.accname:hover{box-shadow:0 0 0 2px var(--brandT)}
+.accmsg{min-height:1.4em;font-weight:800;font-size:14.5px;margin:10px 0 0}.accmsg.ok{color:var(--ok)}.accmsg.err{color:var(--bad)}
+.accnote{background:var(--card2);border-radius:14px;padding:10px 12px;font-size:13.5px;font-weight:600;color:var(--mute);margin:12px 0 8px}
+.accfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.accdel{border:0;background:none;color:var(--bad);font:800 14px Nunito,sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer;padding:6px}
+.accconfirm{background:color-mix(in srgb,var(--bad) 10%,var(--card));border-radius:16px;padding:14px;margin-top:16px;display:grid;gap:8px}
+.accconfirm p{margin:0}.accconfirm label{font-weight:800;font-size:14.5px}
+.btn.danger{background:var(--bad);box-shadow:0 4px 0 var(--bad2);color:#fff}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (max-width:699px){.accnm{display:none}.accb{padding:5px}.accb svg{margin:0 3px}}
+.lrtools{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.lrtools .btn[aria-pressed=true]{background:#ffd34d;color:#1a1a1a;border-color:#e0b400}
+@media print{body>*:not(#lr){display:none!important}#lr{position:static!important;display:block!important;background:none!important;overflow:visible!important}#lr .mbox{box-shadow:none!important;max-width:none!important;max-height:none!important;overflow:visible!important;margin:0!important;color:#000!important;background:#fff!important}#lr .mfoot,#lrClose,.lrtools{display:none!important}}
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap"><a class="logo" href="#"><i>C</i>Clio</a>
 <nav class="scroll" aria-label="Secțiuni"><a href="#lectii">Lecții</a><a href="#articole">Articole</a><a href="#dictionar">Dicționar</a><a href="#cronologie">Cronologie</a><a href="#test">Test</a><a href="#sfaturi">Cum înveți</a></nav>
-<button class="btn sm cta" id="goTop5">Începe</button></div></header>
+<button class="accb" id="accBtn" type="button"></button><button class="btn sm cta" id="goTop5">Începe</button></div></header>
 
 <section class="band" style="padding-top:8px"><div class="wrap bento">
 <div class="tile t-hero"><div style="position:relative">
 <h1>Istoria, ca o aventură.</h1>
-<p>Lecții scurte, mini-teste după fiecare lecție, articole și un dicționar, pentru gimnaziu și liceu. Clasa a V-a are deja 310 lecții.</p>
-<div class="row"><button class="btn white" id="go5">Lecțiile clasei a V-a</button><button class="btn ghost" id="goRec">Recapitulare pe epoci</button><button class="btn ghost" id="instBtn" hidden>Instalează aplicația</button></div>
+<p>Lecții scurte, mini-teste după fiecare lecție, articole și un dicționar, pentru gimnaziu și liceu. Clasele a V-a, a VI-a, a VII-a și a VIII-a au deja 1423 de lecții.</p>
+<div class="row"><button class="btn white" id="go5">Clasa a V-a</button><button class="btn white" id="go6">Clasa a VI-a</button><button class="btn white" id="go7">Clasa a VII-a</button><button class="btn white" id="go8">Clasa a VIII-a</button><button class="btn ghost" id="goRnd">Lecție la întâmplare</button><button class="btn ghost" id="goRec">Recapitulare</button><button class="btn ghost" id="instBtn" hidden>Instalează aplicația</button></div>
 <p id="iosTip" hidden>Pe iPhone: apasă butonul de partajare din Safari, apoi „Adaugă pe ecranul principal”. Clio apare ca aplicație.</p></div>
-<div class="stats"><span>310 lecții</span><span>20 de articole</span><span>310 termeni</span></div>
+<div class="stats"><span id="stL">1423 de lecții</span><span>20 de articole</span><span id="stT">peste 1000 de termeni</span></div>
 <svg class="deco" viewBox="0 0 300 300" aria-hidden="true"><circle cx="190" cy="190" r="150" fill="rgba(255,255,255,.08)"/><circle cx="190" cy="190" r="100" fill="rgba(255,255,255,.08)"/><path d="M70 250L170 80L270 250Z" fill="var(--sun)"/><path d="M170 80L270 250L200 250Z" fill="#e0a400"/><path d="M60 250h230" stroke="#fff" stroke-width="8" stroke-linecap="round"/><circle cx="250" cy="70" r="26" fill="#fff" opacity=".9"/></svg>
 </div>
 <div class="tile t-prog"><svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="ringFg" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="314.16" transform="rotate(-90 60 60)"/><text id="ringT" x="60" y="69" text-anchor="middle">0%</text></svg>
-<div><h3 id="startT">Începe cu clasa a V-a</h3><p id="startP">Bifează lecțiile pe care le-ai învățat și urmărește-ți progresul aici.</p><span class="streak" id="streak" hidden><svg viewBox="0 0 24 24" fill="#ff8a00" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg><b id="streakN"></b></span></div></div>
+<div><h3 id="startT">Începe cu clasa ta</h3><p id="startP">Bifează lecțiile pe care le-ai învățat și urmărește-ți progresul aici.</p><span class="streak" id="streak" hidden><svg viewBox="0 0 24 24" fill="#ff8a00" aria-hidden="true"><path d="M12 2c1 4 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg><b id="streakN"></b></span></div></div>
 <div class="tile t-today" id="today" tabindex="0" role="button" aria-label="Lecția zilei"><span class="k">Lecția zilei</span><h3 id="todayT">Se încarcă…</h3><p id="todayP"></p><button class="btn sm" tabindex="-1">Citește lecția</button></div>
 <div class="tile t-rib"><div class="head"><h2>Panglica timpului</h2><p class="note" id="ribCap">Toată istoria scrisă, la scara ei reală. Apasă pe o epocă pentru lecțiile ei.</p></div>
 <div class="fig" id="rib"></div>
@@ -365,6 +405,7 @@ details.alt{margin-top:8px}details.alt summary{cursor:pointer;color:var(--brandT
 <span id="lvlWrap"><span class="seg" role="group" aria-label="Nivel"><button data-l="g" aria-pressed="true">Gimnaziu</button><button data-l="l" aria-pressed="false">Liceu</button></span></span>
 <input type="search" id="q" placeholder="Caută: Decebal, 1918, Bizanț…" aria-label="Caută în lecții">
 <label class="chk"><input type="checkbox" id="onlyRo"> Doar istoria românilor</label>
+<label class="chk"><input type="checkbox" id="onlyFav"> Doar lecțiile salvate</label>
 </div>
 <div class="prog"><span id="progT"></span><span class="bar"><i id="progB"></i></span><span id="count"></span></div>
 <div class="toc" id="lessons"></div>
@@ -379,7 +420,7 @@ details.alt{margin-top:8px}details.alt summary{cursor:pointer;color:var(--brandT
 
 <section id="dictionar" class="band"><div class="wrap">
 <h2>Dicționar istoric</h2>
-<p class="note">Toți termenii din lecțiile clasei a V-a, în ordine alfabetică, cu lecția din care vin.</p>
+<p class="note">Toți termenii din lecțiile claselor a V-a, a VI-a, a VII-a și a VIII-a, în ordine alfabetică, cu lecția din care vin.</p>
 <div class="dbar"><input type="search" id="dq" placeholder="Caută un termen: polis, tarabostes…" aria-label="Caută în dicționar"><p id="dletters"></p></div>
 <div id="dict"><p class="empty">Se încarcă dicționarul…</p></div>
 </div></section>
@@ -418,6 +459,7 @@ details.alt{margin-top:8px}details.alt summary{cursor:pointer;color:var(--brandT
 <div id="arBody" class="art"></div></div></div>
 <div class="modal" id="lr" hidden role="dialog" aria-modal="true" aria-labelledby="lrTitle"><div class="mbox">
 <div class="mhead"><div><span class="tag" id="lrMeta"></span><h3 id="lrTitle"></h3></div><button class="btn sec sm" id="lrClose" aria-label="Închide lecția">Închide</button></div>
+<div class="lrtools"><button class="btn sec sm" id="lrFav" type="button" aria-pressed="false">☆ Salvează</button><button class="btn sec sm" id="lrSpeak" type="button">Ascultă lecția</button><button class="btn sec sm" id="lrPrint" type="button">Printează</button><button class="btn sec sm" id="lrRnd" type="button">La întâmplare</button></div>
 <div id="lrBody" class="art"></div>
 <div class="mfoot"><div class="lqrow"><button class="btn" id="lrQuiz">Fă mini-testul</button><label class="chk"><input type="checkbox" id="lrDone"> Am învățat lecția</label></div>
 <div class="lqrow nav"><button class="btn sec" id="lrPrev">← Anterioara</button><button class="btn sec" id="lrNext">Următoarea →</button></div><button class="ast-rep" id="lrRep" type="button" hidden>Ai găsit o greșeală în lecție? Spune-ne</button></div>
@@ -445,6 +487,9 @@ details.alt{margin-top:8px}details.alt summary{cursor:pointer;color:var(--brandT
 <small class="ctx" id="bugCtx"></small>
 <button class="btn" type="submit">Trimite raportul</button><p class="ast-st" role="status"></p></form></div>
 </section>
+<div class="modal" id="acc" hidden role="dialog" aria-modal="true" aria-labelledby="accTitle"><div class="mbox">
+<div class="mhead"><div><span class="tag">Contul meu</span></div><button class="btn sec sm" id="accClose" type="button" aria-label="Închide fereastra contului">Închide</button></div>
+<div id="accBody"></div></div></div>
 <script>
 {
 const ERAS=[["ant","Antichitate","până în 476"],["med","Evul Mediu","476–1492"],["mod","Epoca modernă","1492–1918"],["con","Contemporană","după 1918"]];
@@ -520,13 +565,15 @@ const $=s=>document.querySelector(s);
 const shuffle=a=>a.map(v=>[Math.random(),v]).sort((x,y)=>x[0]-y[0]).map(v=>v[1]);
 const SETS={rec:{name:"Recapitulare pe epoci",short:"Recapitulare",chapters:ERAS.map(e=>[e[0],e[1]]),lessons:L.map(x=>({...x,c:x.e})),quiz:Q.map(x=>({c:x.e,q:x.q,o:x.o,a:x.a,x:x.x})),flash:F}};
 const CLS=[["5","a V-a"],["6","a VI-a"],["7","a VII-a"],["8","a VIII-a"],["9","a IX-a"],["10","a X-a"],["11","a XI-a"],["12","a XII-a"]];
-const READY=["5"];
+const READY=["5","6","7","8"];
 const st={set:"rec",ch:"all",lvl:"g",ro:false,q:""};
 const cur=()=>SETS[st.set];
 let done={};try{done=JSON.parse(localStorage.getItem("clio-done2")||"{}")}catch(e){}
 const ICON={intro:"M4 19.5V5a2 2 0 0 1 2-2h14v14H6a2 2 0 0 0-2 2.5zM6 21h14M9 7h7",skill:"M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-5-5",pre:"M12 3c1 3.5 5 5 5 10a5 5 0 0 1-10 0c0-2.2 1.2-3.6 2.5-4.6.2 1.7 1 2.8 2.2 3.1C11 9 10.7 5.7 12 3z",ori:"M2.5 20h19L12 4zM12 4l3.2 16",gre:"M5 4h14l1 2H4zM7 6v12M12 6v12M17 6v12M4 18h16M3 21h18",rom:"M4 21V10a8 8 0 0 1 16 0v11M8.5 21v-9a3.5 3.5 0 0 1 7 0v9M3 21h18",dac:"M12 3l7 3v5.5c0 4.5-3 7.6-7 9.5-4-1.9-7-5-7-9.5V6zM12 8v8M8.5 12h7",alt:"M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM3 12h18M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z",viata:"M9 3h6M10 3v3.2C7.5 7.2 6 9.4 6 12.5 6 16.5 8.6 19.6 12 21c3.4-1.4 6-4.5 6-8.5 0-3.1-1.5-5.3-4-6.3V3",teme:"M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z",pers:"M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c.8-4 4-6 8-6s7.2 2 8 6",mon:"M3 9.5L12 4l9 5.5zM5.5 10v8M9.8 10v8M14.2 10v8M18.5 10v8M3 20.5h18",mit:"M13 2L4.5 13.5H11L10 22l8.5-11.5H12z",bat:"M4 4l10 10M4 4h3.5M4 4v3.5M20 4L10 14M20 4h-3.5M20 4v3.5M12.5 15.5l-3 3M11.5 15.5l3 3",med:"M4 21V9h3V6h2v3h2V6h2v3h2V6h2v3h3v12zM10 21v-4a2 2 0 0 1 4 0v4",mod:"M3 17l2 4h14l2-4zM12 3v14M12 4l6 9h-6M12 6l-5 7h5",con:"M5 21V7l7-4 7 4v14M9 21v-4h6v4M9 9h2M13 9h2M9 13h2M13 13h2",all:"M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z",scroll:"M7 3h10a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H7M7 3a2 2 0 0 0-2 2v2h4M7 21a2 2 0 0 1-2-2v-2h4M9 8h7M9 12h7M9 16h5",streak:"M12 3c1 3.5 5 5 5 10a5 5 0 0 1-10 0c0-2.2 1.2-3.6 2.5-4.6.2 1.7 1 2.8 2.2 3.1C11 9 10.7 5.7 12 3z"};
+Object.assign(ICON,{ev:ICON.scroll,migr:"M3 12h13M12 6l6 6-6 6M3 6h5M3 18h5",biz:"M4 20h16M6 20v-7a6 6 0 0 1 12 0v7M12 7V3M10 4.5h4",isl:"M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z",fr:ICON.teme,feud:"M3 21h18M5 21V11l7-6 7 6v10M9 21v-6h6v6",bis:"M12 3v18M7 8h10",cruc:ICON.bat,ors:ICON.con,regat:ICON.med,asia:ICON.alt,cult:ICON.intro,rmed:ICON.dac,ren:ICON.mod,em:ICON.scroll,abs:ICON.teme,ilu:"M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z",rev:"M5 21V4M5 4h11l-2 4 2 4H5",nap:ICON.bat,ind:"M3 21V10l5 3V10l5 3V6h4l1 15zM3 21h18",nat:"M5 21V4M5 4c3-1.5 6 1.5 9 0s4-1 5 0v8c-1-1-2-1.5-5 0s-6-1.5-9 0",lume:ICON.alt,rm18:ICON.dac,rm19:"M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z",soc:ICON.pers,rz1:"M4 20h16M6 20l2-9h8l2 9M9 11V7a3 3 0 0 1 6 0v4"});
+Object.assign(ICON,{intro8:ICON.intro,pre8:ICON.pre,geto:ICON.dac,dacrom:ICON.rom,etno:ICON.pers,smed:ICON.med,inst8:ICON.teme,culm:ICON.mon,sm8:ICON.nat,mod8:ICON.pers,mare8:ICON.rm19,interb:ICON.con,rz2:ICON.bat,com:"M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5zM12 15v2",rev89:ICON.rev,post:ICON.alt,rmd:ICON.migr,simb:ICON.nat});
 ICON.ant=ICON.ori;ICON.dict="M3 20L8 4h2l5 16M5 14h8M16 9h5M18.5 9v8";
-const CHC={intro:"#3355ff",skill:"#7c5cff",pre:"#ff8a3d",ori:"#e9a100",gre:"#2f80ed",rom:"#ff4b6e",dac:"#e8453c",alt:"#14b8a6",viata:"#22b35e",teme:"#0ea5e9",pers:"#a855f7",mon:"#f97316",mit:"#ec4899",bat:"#5b6b82",all:"#3355ff"};
+const CHC={intro:"#3355ff",skill:"#7c5cff",pre:"#ff8a3d",ori:"#e9a100",gre:"#2f80ed",rom:"#ff4b6e",dac:"#e8453c",alt:"#14b8a6",viata:"#22b35e",teme:"#0ea5e9",pers:"#a855f7",mon:"#f97316",mit:"#ec4899",bat:"#5b6b82",all:"#3355ff",ev:"#3355ff",migr:"#b45309",biz:"#7c3aed",isl:"#059669",fr:"#2563eb",feud:"#92400e",bis:"#9333ea",cruc:"#dc2626",ors:"#0d9488",regat:"#4f46e5",asia:"#ea580c",cult:"#db2777",rmed:"#e8453c",ren:"#0891b2",em:"#3355ff",abs:"#a16207",ilu:"#ca8a04",rev:"#dc2626",nap:"#1d4ed8",ind:"#475569",nat:"#16a34a",lume:"#0e7490",rm18:"#e8453c",rm19:"#c2410c",soc:"#9333ea",rz1:"#57534e",intro8:"#3355ff",pre8:"#ff8a3d",geto:"#e8453c",dacrom:"#ff4b6e",etno:"#a855f7",smed:"#4f46e5",inst8:"#a16207",culm:"#db2777",sm8:"#16a34a",mod8:"#0891b2",mare8:"#c2410c",interb:"#0d9488",rz2:"#57534e",com:"#b91c1c",rev89:"#dc2626",post:"#2563eb",rmd:"#059669",simb:"#ca8a04"};
 const col=c=>["ant","med","mod","con"].includes(c)?`var(--${c})`:(CHC[c]||"#3355ff");
 const ic=c=>`<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${ICON[c]||ICON.intro}"/></svg>`;
 let days=[];try{days=JSON.parse(localStorage.getItem("clio-days")||"[]")}catch(e){}
@@ -537,10 +584,12 @@ const save=()=>{try{localStorage.setItem("clio-done2",JSON.stringify(done))}catc
 const yr=(d)=>d[2]||(d[0]<0?(-d[0])+" î.Hr.":Math.floor(d[0])+"");
 const norm=s=>s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"");
 const chName=c=>(cur().chapters.find(x=>x[0]===c)||["",""])[1];
-function fromData(j,s){const ls=j.lessons.map(x=>({...x,ro:x.c==="dac"||/român/i.test(x.t)?1:0}));
+function fromData(j,s){const ls=j.lessons.map(x=>({...x,ro:s==="8"||["dac","rmed","rm18","rm19"].includes(x.c)||/român/i.test(x.t)?1:0}));
  return {name:j.title,short:"Clasa "+CLS.find(c=>c[0]===s)[1],chapters:j.chapters,lessons:ls,
  quiz:ls.flatMap(x=>[x.q,x.q2,x.q3].filter(Boolean).map(q=>({c:x.c,q:q[0],o:q[1],a:q[2],x:q[3]}))),flash:ls.filter(x=>x.f).map(x=>[x.c,x.f[0],x.f[1]])}}
-const vis=()=>cur().lessons.map((x,i)=>[x,i]).filter(([x])=>(st.ch==="all"||x.c===st.ch)&&(!st.ro||x.ro)&&(!st.q||norm(x.t+" "+x.s+" "+(x.p||[]).join(" ")+" "+(x.x||"")+" "+(x.w||"")+" "+x.d.map(d=>yr(d)+" "+d[1]).join(" ")+" "+x.k.join(" ")).includes(norm(st.q))));
+let fav={};try{fav=JSON.parse(localStorage.getItem("clio-fav")||"{}")||{}}catch(e){}
+const chIx=c=>{const k=cur().chapters.findIndex(x=>x[0]===c);return k<0?999:k};
+const vis=()=>cur().lessons.map((x,i)=>[x,i]).filter(([x])=>(st.ch==="all"||x.c===st.ch)&&(!st.ro||x.ro)&&(!st.fav||fav[st.set+":"+x.t])&&(!st.q||norm(x.t+" "+x.s+" "+(x.p||[]).join(" ")+" "+(x.x||"")+" "+(x.w||"")+" "+x.d.map(d=>yr(d)+" "+d[1]).join(" ")+" "+x.k.join(" ")).includes(norm(st.q)))).sort((p,q)=>chIx(p[0].c)-chIx(q[0].c)||p[1]-q[1]);
 const NOW=new Date().getFullYear(),ER={ant:[-3200,476],med:[476,1492],mod:[1492,1918],con:[1918,NOW]},ERT=NOW+3200,pct=e=>Math.max(1,Math.round((ER[e][1]-ER[e][0])/ERT*100));
 $("#eras").innerHTML=ERAS.map(e=>`<button data-e="${e[0]}" aria-pressed="false"><i style="background:var(--${e[0]})">${ic(e[0])}</i>${e[1]}<small>${e[2]}, ${pct(e[0])}% din panglică</small></button>`).join("");
 const SOON=CLS.filter(c=>!READY.includes(c[0]));
@@ -548,14 +597,15 @@ $("#sets").innerHTML=`<button data-s="rec" aria-pressed="true">Recapitulare</but
 function renderChaps(){const s=cur();$("#chaps").innerHTML=[["all","Toate capitolele"],...s.chapters].map(c=>{const n=c[0]==="all"?s.lessons.length:s.lessons.filter(x=>x.c===c[0]).length;return `<button data-c="${c[0]}" aria-pressed="${st.ch===c[0]}"><span class="ic" style="background:${col(c[0])}">${ic(c[0])}</span>${c[1]} <span>${n}</span></button>`}).join("");
  document.querySelectorAll("#eras button").forEach(b=>b.setAttribute("aria-pressed",st.set==="rec"&&b.dataset.e===st.ch));$("#allBtn").setAttribute("aria-pressed",st.set==="rec"&&st.ch==="all");
  $("#lvlWrap").hidden=st.set!=="rec";$("#setName").textContent=s.name;$("#quizSet").textContent=s.short;$("#flashSet").textContent=s.short}
+function deL(n){return n%100>=20||(n%100===0&&n>0)?"de ":""}
 function renderLessons(){
  const s=cur(),v=vis(),rec=st.set==="rec";
  const card=([x,i])=>{const key=st.set+":"+x.t,d0=x.d.length?x.d.slice().sort((p,q)=>p[0]-q[0])[0]:null;return `<article class="lc" data-r="${i}"><div class="top2"><span class="ic" style="background:${col(x.c)}">${ic(x.c)}</span><span class="num">Lecția ${i+1}${rec?`, cl. ${x.g} / ${x.l}`:""}</span><label class="tick" title="Am învățat lecția"><input type="checkbox" data-k="${key}" ${done[key]?"checked":""} aria-label="Am învățat lecția „${x.t}”"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8.5l3 3 7-7" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></label></div><h3><a href="#" class="lt" data-r="${i}">${x.t}</a></h3><p class="sum">${x.s}</p>${rec&&st.lvl==="l"?`<p class="ext"><b>Aprofundare:</b> ${x.x}</p>`:""}<div class="foot">${x.ro?'<span class="pill ro">Istoria românilor</span>':""}${d0?`<span class="pill">${yr(d0)}</span>`:""}${best[key]?`<span class="score">${best[key][0]}/${best[key][1]}</span>`:""}<button class="btn sec sm" data-q="${i}">Mini-test</button></div></article>`};
  const grp=st.ch==="all"&&!st.q&&!st.ro;
  $("#lessons").innerHTML=v.length?(grp?s.chapters.map(c=>{const L=v.filter(([x])=>x.c===c[0]);if(!L.length)return "";const dn=L.filter(([x])=>done[st.set+":"+x.t]).length;return `<div class="unit" style="background:${col(c[0])}"><span class="ic">${ic(c[0])}</span><div><h3>${c[1]}</h3><p>${L.length} ${L.length===1?"lecție":L.length>=20?"de lecții":"lecții"}, ${dn} ${dn===1?"învățată":"învățate"}</p></div><span class="uc">${dn} / ${L.length}</span></div>`+L.map(card).join("")}).join(""):v.map(card).join("")):'<p class="empty">Nicio lecție nu se potrivește. Încearcă alt cuvânt sau „Toate capitolele”.</p>';
  const n=s.lessons.filter(x=>done[st.set+":"+x.t]).length;
- $("#progT").textContent=`${s.short}: ai învățat ${n} din ${s.lessons.length} lecții`;$("#progB").style.width=(n/s.lessons.length*100)+"%";
- $("#count").textContent=`${v.length} ${v.length===1?"lecție afișată":"lecții afișate"}`;
+ $("#progT").textContent=`${s.short}: ai învățat ${n} din ${s.lessons.length} ${deL(s.lessons.length)}lecții`;$("#progB").style.width=(n/s.lessons.length*100)+"%";
+ $("#count").textContent=`${v.length} ${v.length===1?"lecție afișată":deL(v.length)+"lecții afișate"}`;
  const ds=v.flatMap(([x])=>x.d.map(d=>[d[0],yr(d),d[1],x.t])).sort((a,b)=>a[0]-b[0]);
  upStart();
  $("#tl").innerHTML=ds.length?ds.map(d=>`<li><b>${d[1]}</b><span>${d[2]}<em>${d[3]}</em></span></li>`).join(""):'<li><span class="empty">Nicio dată pentru filtrele alese.</span></li>';
@@ -563,7 +613,7 @@ function renderLessons(){
 function renderAll(){renderChaps();renderLessons();startQuiz();fi=0;renderFlash()}
 async function setSet(s,ch){
  if(!SETS[s]){$("#lessons").innerHTML='<p class="empty">Se încarcă lecțiile…</p>';
-  try{let r=await fetch("data/"+s+".json");if(!r.ok)r=await fetch(s+".json");if(!r.ok)throw new Error(r.status);SETS[s]=fromData(await r.json(),s)}
+  try{await getSet(s)}
   catch(e){$("#lessons").innerHTML='<p class="empty">Lecțiile nu s-au putut încărca. Reîncarcă pagina.</p>';return}}
  st.set=s;st.ch=ch||"all";document.querySelectorAll("#sets button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.s===s));
  try{localStorage.setItem("clio-set",s)}catch(e){}
@@ -576,6 +626,7 @@ $("#eras").addEventListener("click",ev=>{const b=ev.target.closest("button");if(
 $("#allBtn").addEventListener("click",()=>setSet("rec"));
 document.querySelectorAll(".seg[aria-label=Nivel] button").forEach(b=>b.addEventListener("click",()=>{st.lvl=b.dataset.l;document.querySelectorAll(".seg[aria-label=Nivel] button").forEach(c=>c.setAttribute("aria-pressed",c===b));renderLessons()}));
 $("#onlyRo").addEventListener("change",e=>{st.ro=e.target.checked;renderLessons()});
+$("#onlyFav").addEventListener("change",e=>{st.fav=e.target.checked;renderLessons()});
 $("#q").addEventListener("input",e=>{st.q=e.target.value.trim();renderLessons()});
 let qz={};
 function startQuiz(){const pool=shuffle(cur().quiz.filter(x=>st.ch==="all"||x.c===st.ch)).slice(0,10).map(c=>{const ord=shuffle([0,1,2,3]);return {...c,o:ord.map(j=>c.o[j]),a:ord.indexOf(c.a)}});qz={qs:pool,i:0,sc:0,ans:false};renderQuiz()}
@@ -671,9 +722,20 @@ function drawLR(){const S=SETS[lr.set],x=S.lessons[lr.i],key=lr.set+":"+x.t,rec=
  if(x.w){H("Știai că?");P(x.w)}
  if(x.f){H("Termen de reținut");const p=document.createElement("p");const bb=document.createElement("b");bb.textContent=x.f[0]+": ";p.append(bb,document.createTextNode(x.f[1]));b.append(p)}
  if(x.k.length){H("Cuvinte-cheie");const t=document.createElement("div");t.className="terms";x.k.forEach(k=>{const sp=document.createElement("span");sp.textContent=k;t.append(sp)});b.append(t)}
- $("#lrDone").checked=!!done[key];
+ $("#lrDone").checked=!!done[key];lrSpeakStop();const fv=!!fav[key];$("#lrFav").setAttribute("aria-pressed",fv);$("#lrFav").textContent=fv?"★ Salvată":"☆ Salvează";
  const pos=lr.list.indexOf(lr.i);$("#lrPrev").disabled=pos<=0;$("#lrNext").disabled=pos<0||pos>=lr.list.length-1}
-function closeLR(){$("#lr").hidden=true;document.body.style.overflow="";renderLessons()}
+const TTS="speechSynthesis" in window;let lrSpk=false;
+function lrSpeakStop(){if(TTS&&lrSpk){speechSynthesis.cancel()}lrSpk=false;const b=$("#lrSpeak");if(b)b.textContent="Ascultă lecția"}
+function lrSpeak(){if(!TTS)return;if(lrSpk){lrSpeakStop();return}const x=SETS[lr.set].lessons[lr.i];
+ const parts=[x.t,x.s,...(x.p||[]),x.w?"Știai că? "+x.w:""].filter(Boolean);
+ const vs=speechSynthesis.getVoices(),v=vs.find(v=>/^ro/i.test(v.lang));speechSynthesis.cancel();
+ parts.forEach((t,i)=>{const u=new SpeechSynthesisUtterance(t);u.lang="ro-RO";if(v)u.voice=v;u.rate=.95;if(i===parts.length-1)u.onend=()=>{lrSpk=false;$("#lrSpeak").textContent="Ascultă lecția"};speechSynthesis.speak(u)});
+ lrSpk=true;$("#lrSpeak").textContent="Oprește citirea"}
+$("#lrSpeak").hidden=!TTS;$("#lrSpeak").onclick=lrSpeak;
+$("#lrFav").onclick=()=>{const x=SETS[lr.set].lessons[lr.i],k=lr.set+":"+x.t;if(fav[k])delete fav[k];else fav[k]=1;try{localStorage.setItem("clio-fav",JSON.stringify(fav))}catch(e){}const fv=!!fav[k];$("#lrFav").setAttribute("aria-pressed",fv);$("#lrFav").textContent=fv?"★ Salvată":"☆ Salvează"};
+$("#lrPrint").onclick=()=>window.print();
+$("#lrRnd").onclick=()=>{const n=SETS[lr.set].lessons.length;let i=lr.i;if(n>1)while(i===lr.i)i=Math.floor(Math.random()*n);lr.i=i;drawLR();$("#lr").scrollTop=0};
+function closeLR(){lrSpeakStop();$("#lr").hidden=true;document.body.style.overflow="";renderLessons()}
 $("#lrClose").onclick=closeLR;$("#lr").addEventListener("click",ev=>{if(ev.target.id==="lr")closeLR()});
 $("#lrQuiz").onclick=()=>{const i=lr.i;$("#lr").hidden=true;openLQ(i)};
 $("#lrDone").onchange=ev=>{const x=SETS[lr.set].lessons[lr.i];done[lr.set+":"+x.t]=ev.target.checked;save()};
@@ -715,9 +777,14 @@ if(!DICT.length){$("#dict").innerHTML='<p class="empty">Dicționarul nu s-a putu
 if(!L.length){$("#dict").innerHTML='<p class="empty">Niciun termen găsit. Încearcă alt cuvânt.</p>';$("#dletters").innerHTML="";return}
 const g={};L.forEach(d=>{const k=nrm(d.t[0]).toUpperCase();(g[k]=g[k]||[]).push(d)});const ks=Object.keys(g).sort((a,b)=>a.localeCompare(b,"ro"));
 $("#dletters").innerHTML=ks.map(k=>`<a href="#dl-${k}">${k}</a>`).join("")+`<span>${L.length} termeni</span>`;
-$("#dict").innerHTML=ks.map(k=>`<div class="dg"><h3 id="dl-${k}">${k}</h3><dl>${g[k].map(d=>`<div class="de"><dt>${esc(d.t)}</dt><dd>${esc(d.d)}<small>Din lecția „${esc(d.l)}”</small></dd></div>`).join("")}</dl></div>`).join("")}
-async function loadDict(){try{let r=await fetch("data/5.json");if(!r.ok)r=await fetch("5.json");if(!r.ok)throw 0;const j=await r.json();const seen=new Set();
-if(!SETS["5"])SETS["5"]=fromData(j,"5");renderToday();upStart();DICT=j.lessons.filter(x=>x.f).map(x=>({t:x.f[0],d:x.f[1],l:x.t})).filter(d=>{const k=nrm(d.t);if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.t.localeCompare(b.t,"ro"))}catch(e){DICT=[]}renderDict()}
+$("#dict").innerHTML=ks.map(k=>`<div class="dg"><h3 id="dl-${k}">${k}</h3><dl>${g[k].map(d=>`<div class="de"><dt>${esc(d.t)}</dt><dd>${esc(d.d)}<small>Din lecția „${esc(d.l)}”, clasa ${clsN(d.s)}</small></dd></div>`).join("")}</dl></div>`).join("")}
+async function getSet(s){if(SETS[s])return SETS[s];let r=await fetch("data/"+s+".json");if(!r.ok)r=await fetch(s+".json");if(!r.ok)throw new Error(r.status);if(!SETS[s])SETS[s]=fromData(await r.json(),s);return SETS[s]}
+let AST=null;const clsN=s=>(CLS.find(c=>c[0]===s)||["",""])[1];
+function mkAST(){const ls=[],ch=[];READY.forEach(s=>{const S=SETS[s];if(!S)return;S.lessons.forEach((x,i)=>ls.push({...x,_s:s,_i:i}));S.chapters.forEach(c=>ch.push(c))});AST=ls.length?{lessons:ls,chapters:ch}:null;astIdx=null}
+const astFind=d=>AST?AST.lessons.findIndex(x=>x._s===d.s&&x._i===d.i):-1;
+async function loadDict(){await Promise.allSettled(READY.map(getSet));const seen=new Set();
+ DICT=READY.flatMap(s=>SETS[s]?SETS[s].lessons.map((x,i)=>x.f?{t:x.f[0],d:x.f[1],l:x.t,s,i}:null).filter(Boolean):[]).filter(d=>{const k=nrm(d.t);if(seen.has(k))return false;seen.add(k);return true}).sort((a,b)=>a.t.localeCompare(b.t,"ro"));{const sT=$("#stT");if(sT)sT.textContent=DICT.length+" de termeni"}
+ mkAST();renderToday();upStart();renderDict()}
 /* ---- Panglica timpului ---- */
 const EA=[[-2560,"Piramida lui Keops"],[106,"Dacia romană"],[-753,"Roma"],[-3200,"Apare scrisul"],[476,"Cade Roma"],[-490,"Maraton"],[-1754,"Hammurabi"],[-336,"Alexandru cel Mare"],[313,"Edictul de la Milano"],[-1274,"Kadeș"]];
 const EZ=[[1918,"Marea Unire"],[1859,"Unirea"],[1600,"Mihai Viteazul"],[1453,"Constantinopol"],[1989,"Revoluția"],[1330,"Posada"],[1492,"Columb"],[2007,"Intrarea în UE"],[1877,"Independența"],[1359,"Moldova"],[1821,"Tudor Vladimirescu"]];
@@ -743,16 +810,18 @@ const ribRO=new ResizeObserver(drawRib);ribRO.observe($("#rib"));
 $("#rib").addEventListener("click",ev=>{const g=ev.target.closest(".seg");if(g)pickEra(g.dataset.e)});
 $("#ribCap").textContent=`Toată istoria scrisă, la scara ei reală. Antichitatea ocupă singură ${pct("ant")}% din ea, așa că dedesubt perioada 1300 – azi e mărită ca sub lupă. Apasă pe o epocă.`;
 const nLec=n=>n===1?"o lecție":(n>=20&&(n%100>=20||n%100===0))?n+" de lecții":n+" lecții";
-function upStart(){const tot=(SETS["5"]&&SETS["5"].lessons.length)||310,n=Object.keys(done).filter(k=>done[k]&&k.startsWith("5:")).length,p=Math.min(1,n/tot);
+function upStart(){const tot=READY.reduce((t,s)=>t+((SETS[s]&&SETS[s].lessons.length)||0),0)||928,n=Object.keys(done).filter(k=>done[k]&&READY.some(s=>k.startsWith(s+":"))).length,p=Math.min(1,n/tot);
  $("#ringFg").setAttribute("stroke-dashoffset",(314.16*(1-p)).toFixed(1));$("#ringT").textContent=Math.round(p*100)+"%";
- $("#startT").textContent=n?`Ai învățat ${nLec(n)} din ${tot}`:"Începe cu clasa a V-a";
+ $("#startT").textContent=n?`Ai învățat ${nLec(n)} din ${tot}`:"Începe cu clasa ta";
  $("#startP").textContent=n?"Continuă de unde ai rămas. Mini-testul cu 80% bifează lecția automat.":"Bifează lecțiile pe care le-ai învățat și urmărește-ți progresul aici.";
  const s=streak();$("#streak").hidden=!s;$("#streakN").textContent=s===1?"1 zi la rând":`${s} ${s>=20?"de zile":"zile"} la rând`}
-let todayI=0;function renderToday(){const S=SETS["5"];if(!S)return;todayI=Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5)%S.lessons.length;const x=S.lessons[todayI];$("#todayT").textContent=x.t;$("#todayP").textContent=x.s}
-const openToday=async()=>{if(!SETS["5"])return;await setSet("5");openLR(todayI)};
+let todayI=0;function renderToday(){const S=AST;if(!S)return;todayI=Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5)%S.lessons.length;const x=S.lessons[todayI];$("#todayT").textContent=x.t;$("#todayP").textContent=x.s}
+const openToday=async()=>{if(!AST)return;const x=AST.lessons[todayI];await setSet(x._s);openLR(x._i)};
 $("#today").addEventListener("click",openToday);$("#today").addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openToday()}});
 document.querySelectorAll("[data-i]").forEach(e=>e.innerHTML=ic(e.dataset.i));
 $("#go5").onclick=$("#goTop5").onclick=async()=>{await setSet("5");$("#lectii").scrollIntoView()};
+$("#go6").onclick=async()=>{await setSet("6");$("#lectii").scrollIntoView()};$("#go7").onclick=async()=>{await setSet("7");$("#lectii").scrollIntoView()};$("#go8").onclick=async()=>{await setSet("8");$("#lectii").scrollIntoView()};
+$("#goRnd").onclick=async()=>{const s=READY[Math.floor(Math.random()*READY.length)];await setSet(s);const n=SETS[s].lessons.length;openLR(Math.floor(Math.random()*n))};
 $("#goRec").onclick=async()=>{await setSet("rec");$("#lectii").scrollIntoView()};
 loadArts();loadDict();$("#dq").addEventListener("input",renderDict);
 /* ---- Aplicația instalabilă ---- */
@@ -789,7 +858,7 @@ const astCount=(arr,q)=>{const a=astAlts(q)||[q];let n=0;for(const w of arr)if(a
 const astSplit=s=>{const P=String(s||"").replace(/(\d)\.(\d)/g,"$1§$2").replace(/î\.Hr\./g,"î§Hr§").replace(/d\.Hr\./g,"d§Hr§").replace(/\b(c|sec|mil|cl|n|aprox|sf|Sf)\./g,"$1§");
  return (P.match(/[^.!?…]+[.!?…]+(?=\s+[A-ZĂÂÎȘȚ„(]|\s*$)/g)||[P]).map(z=>z.trim().replace(/§/g,".")).filter(z=>z.length>8)};
 function astPool(x){const out=[];const add=(t,src)=>astSplit(t).forEach(s=>out.push({s,src,st:astStems(s)}));add(x.s,"s");(x.p||[]).forEach(p=>add(p,"p"));add(x.w,"w");out.forEach((o,k)=>o.k=k);return out}
-function astBuild(){const S=SETS["5"];if(!S)return null;
+function astBuild(){const S=AST;if(!S)return null;
  const ls=S.lessons.map((x,i)=>({i,x,T:astStems(x.t),K:astStems([...(x.k||[]),...(x.f?[x.f[0]]:[])].join(" ")),B:astStems([x.s,...(x.p||[]),x.w||""].join(" "))}));
  const as=ARTS.map((a,i)=>({i,a,T:astStems(a.t),B:astStems(a.p.join(" "))}));
  const ds=DICT.map(d=>({d,T:astToks(d.t).map(astStem)})).filter(d=>d.T.length);
@@ -797,7 +866,7 @@ function astBuild(){const S=SETS["5"];if(!S)return null;
  S.lessons.forEach(x=>{addV(x.t,20);addV((x.k||[]).join(" "),10);addV([x.s,...(x.p||[]),x.w||""].join(" "),1)});DICT.forEach(d=>addV(d.t,20));ARTS.forEach(a=>addV(a.t,10));
  const stems=new Set([...voc.keys()].map(astStem));
  return {ls,as,ds,voc,stems,pools:new Map()}}
-const astPoolOf=i=>{let p=astIdx.pools.get(i);if(!p){p=astPool(SETS["5"].lessons[i]);astIdx.pools.set(i,p)}return p};
+const astPoolOf=i=>{let p=astIdx.pools.get(i);if(!p){p=astPool(AST.lessons[i]);astIdx.pools.set(i,p)}return p};
 function astLev(a,b,max){if(Math.abs(a.length-b.length)>max)return max+1;let prev=Array.from({length:b.length+1},(_,j)=>j),pp=null;
  for(let i=1;i<=a.length;i++){const cur=[i];let lo=i;for(let j=1;j<=b.length;j++){let v=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));
   if(pp&&i>1&&j>1&&a[i-1]===b[j-2]&&a[i-2]===b[j-1])v=Math.min(v,pp[j-2]+1);cur.push(v);if(v<lo)lo=v}if(lo>max)return max+1;pp=prev;prev=cur}return prev[b.length]}
@@ -809,13 +878,14 @@ function astFix(toks){const fixed=[];const out=toks.map(t=>{const st=astStem(t);
   if(best&&bd<=max){fixed.push(best);return best}return t});return {toks:out,fixed}}
 const astLoose=(words,q)=>q.length>=6&&words.some(w=>w.length>=5&&w.slice(0,5)===q.slice(0,5));
 const astDF=new Map();function astIdf(q){if(!astDF.has(q)){let n=0;for(const l of astIdx.ls)if(astHas(l.T,q)||astHas(l.K,q)||astCount(l.B,q))n++;astDF.set(q,n)}const N=astIdx.ls.length,df=astDF.get(q);return (.5+Math.log(1+N/(1+df))/Math.log(1+N))**2}
+let astCurType="";const ASTBIO=/s-a născut|\((c\. )?\d{3,4}\s*[–-]\s*\d{3,4}\)/;
 function astScore(doc,qs){let sc=0,m=0,strong=0;for(const q of qs){const w8=qs.length>1?astIdf(q):1,s0=sc;if(doc.T.includes(q)){sc+=9;m++;strong++}else if(astHas(doc.T,q)){sc+=7;m++;strong++}else if(doc.K&&doc.K.includes(q)){sc+=6;m++;strong++}else if(doc.K&&astHas(doc.K,q)){sc+=5;m++;strong++}else if(astLoose(doc.T,q)){sc+=4;m++;strong++}else{const c=astCount(doc.B,q);if(c){sc+=1+Math.min(1,Math.log2(c));m++}}sc=s0+(sc-s0)*w8}
- if(!m)return [0,0];const need=qs.length<=1?1:Math.ceil(qs.length/2);if(m<need)return [0,0];return [sc*(.4+.6*m/qs.length)+(strong?1/doc.T.length:0)+(qs.length&&doc.T[0]&&astM(doc.T[0],qs[0])?1.5:0),strong]}
+ if(!m)return [0,0];const need=qs.length<=1?1:Math.ceil(qs.length/2);if(m<need)return [0,0];return [sc*(.4+.6*m/qs.length)+(strong?1/doc.T.length:0)+(qs.length&&doc.T[0]&&astM(doc.T[0],qs[0])?1.5:0)+(astCurType==="who"&&doc.x&&ASTBIO.test(doc.x.s)?2:0),strong]}
 function astSearch(qs){
  const dm=(t,q)=>t===q||astM(q,t)||(t.startsWith(q)&&t.length-q.length<=2);
  const dh=astIdx.ds.filter(d=>d.T.every(t=>qs.some(q=>dm(t,q)))&&qs.filter(q=>d.T.some(t=>dm(t,q))).length*2>qs.length).sort((a,b)=>b.T.length-a.T.length||b.d.t.length-a.d.t.length)[0];
  let lh=astIdx.ls.map(l=>{const [v,s]=astScore(l,qs);return {v,s,l}}).filter(o=>o.v>=1).sort((a,b)=>b.v-a.v).slice(0,3);if(lh.length&&lh[0].v>=6)lh=lh.filter(o=>o.v>=2.5);
- if(dh){const li=SETS["5"].lessons.findIndex(x=>x.t===dh.d.l);const full=lh[0]&&qs.every(q=>astHas(lh[0].l.T,q));if(li>=0&&!full){const k=lh.findIndex(o=>o.l.i===li);if(k<0)lh.unshift({v:99,s:1,l:astIdx.ls[li]});else if(k>0)lh.unshift(...lh.splice(k,1))}}
+ if(dh){const li=astFind(dh.d);const full=lh[0]&&qs.every(q=>astHas(lh[0].l.T,q));if(li>=0&&!full){const k=lh.findIndex(o=>o.l.i===li);if(k<0)lh.unshift({v:99,s:1,l:astIdx.ls[li]});else if(k>0)lh.unshift(...lh.splice(k,1))}}
  const ah=astIdx.as.map(a=>[astScore(a,qs)[0],a]).filter(v=>v[0]>=6).sort((a,b)=>b[0]-a[0])[0];
  return {dh,lh:lh.slice(0,3),ah:ah&&ah[1].a}}
 const astW=(alts,flags)=>new RegExp("(?:^|[\\s,;:(„“\"-])(?:"+alts+")(?=[\\s,.;:!?)”\"-]|$)",flags||"i");
@@ -828,8 +898,8 @@ const ASTRE={
  who:astW("a fost|era|este|rege|regele|regină|împărat|împăratul|conducător|poet|filosof|zeu|zeiță|general|arhitect"),
  how:astW("prin|folosind|cu ajutorul|astfel|mai întâi|apoi|după ce")};
 function astRank(i,qs,type,avoid){const pool=astPoolOf(i);return pool.map(o=>{let v=0,hit=0;qs.forEach(q=>{if(astHas(o.st,q)){v+=2;hit++}});
-  const re=ASTRE[type];if(re&&re.test(o.s))v+=type==="why"?(/pentru (?!că|ca)/i.test(o.s)&&!/(cauza|de aceea|ca să|ca sa|deoarece|fiindcă|a dus|datorită|pentru că)/i.test(o.s)?1.5:3):type==="when"||type==="where"?3:1.2;
-  v+=o.src==="s"?.5:o.src==="w"?-1:0;v-=o.k*.02;if(avoid&&avoid.has(o.s))v-=50;return {o,v,hit,typed:!!(re&&re.test(o.s))}}).sort((a,b)=>b.v-a.v)}
+  const re0=ASTRE[type],re=type==="why"&&o.src==="w"?null:re0;if(re&&re.test(o.s))v+=type==="why"?(/pentru (?!că|ca)/i.test(o.s)&&!/(cauza|de aceea|ca să|ca sa|deoarece|fiindcă|a dus|datorită|pentru că)/i.test(o.s)?1.5:3):type==="when"||type==="where"?3:1.2;
+  v+=o.src==="s"?.5:o.src==="w"?(type==="why"?-3:-1):0;v-=o.k*.02;if(avoid&&avoid.has(o.s))v-=50;return {o,v,hit,typed:!!(re&&re.test(o.s))}}).sort((a,b)=>b.v-a.v)}
 const astCut=s=>s.length>300?s.slice(0,290).replace(/\s+\S*$/,"")+"…":s;
 /* Caută răspunsul și în alte lecții care vorbesc despre același subiect. */
 function astGlobal(i,qs,type){return astGlobal1(i,qs,type,false)||astGlobal1(i,qs,type,true)}
@@ -846,14 +916,14 @@ function astSay(who,html,extra){const m=astH("div","msg "+who,html);if(extra)ext
 function astSugg(list){const w=astH("div","sugg");list.forEach(([t,fn])=>{const b=astH("button","",esc(t));b.type="button";b.onclick=fn||(()=>astAsk(t));w.append(b)});return w}
 function astHit(color,title,sub,act,fn){const b=astH("button","hit",`<b><i style="background:${color}"></i>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:""}<em>${esc(act)}</em>`);b.type="button";b.onclick=fn;return b}
 const astGo=id=>{astClose(false);if(!$("#lr").hidden)closeLR();if(!$("#ar").hidden)closeArt();$(id).scrollIntoView()};
-async function astOpenL(i){if(!$("#ar").hidden)closeArt();await setSet("5");openLR(i);if(!lr.list.includes(i)){lr.list=SETS["5"].lessons.map((_,k)=>k);drawLR()}astClose(false)}
+async function astOpenL(i){if(!$("#ar").hidden)closeArt();const x=AST.lessons[i],s=x._s,j=x._i;await setSet(s);openLR(j);if(!lr.list.includes(j)){lr.list=SETS[s].lessons.map((_,k)=>k);drawLR()}astClose(false)}
 function astOpenA(i){if(!$("#lr").hidden)closeLR();openArt(i);astClose(false)}
 function astOpenD(t){astGo("#dictionar");$("#dq").value=t;renderDict()}
 const mem={i:-1,said:new Set(),quiz:null,n:0};
 const astPick=a=>a[Math.floor(Math.random()*a.length)];
 const ASTEX=[["De ce au construit egiptenii piramide?"],["Cine a fost Burebista?"],["Diferența dintre Sparta și Atena"],["Ascultă-mă din lecția despre Roma"]];
 function astGreet(){if(astGreeted)return;astGreeted=true;
- astSay("bot","<p>Salut! Sunt asistentul Clio. Întreabă-mă orice din lecțiile de clasa a V-a: cine, când, unde sau de ce s-a întâmplat ceva.</p><p>Țin minte despre ce vorbim, așa că poți continua cu „De ce?” sau „Spune-mi mai mult”. Pot să te și ascult din lecție.</p>",[astSugg(ASTEX)])}
+ astSay("bot","<p>Salut"+(acc.cur&&acc.users[acc.cur]?", "+esc(acc.users[acc.cur].name):"")+"! Sunt asistentul Clio. Întreabă-mă orice din lecțiile claselor a V-a, a VI-a, a VII-a și a VIII-a: cine, când, unde sau de ce s-a întâmplat ceva.</p><p>Țin minte despre ce vorbim, așa că poți continua cu „De ce?” sau „Spune-mi mai mult”. Pot să te și ascult din lecție.</p>",[astSugg(ASTEX)])}
 function astType(n){const t=r=>r.test(n);
  if(t(/ (intreaba ma|testeaza ma|asculta ma|verifica ma|examineaza ma|da mi (o|niste|cateva) intrebar\w*|fa mi un test|vreau (un )?test|un quiz|quiz) /))return"quiz";
  if(t(/ (diferent\w*|deosebir\w*|asemanar\w*|compar\w*|versus|vs|fata de) /))return"cmp";
@@ -870,30 +940,30 @@ function astType(n){const t=r=>r.test(n);
 function astIntent(q){const n=" "+nrm(q).replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim()+" ";const t=r=>r.test(n);
  if(/\d\s*[-+*x:\/=]\s*\d/.test(q)||t(/ (cat face|ecuati\w*|matematic\w*) /))return["<p>Eu mă pricep doar la istorie, nu la matematică. Întreabă-mă ceva din lecții!</p>",ASTEX.slice(0,2)];
  if(t(/ (multumesc|mersi|merci|ms|mss) /))return["<p>Cu plăcere! Mai întreabă-mă oricând.</p>"];
- if(t(/ (esti|e) (un |o )?(ai|robot|om|inteligenta artificiala|chatgpt|bot) | cine esti | ce esti | chatgpt | cum gandesti | de unde stii /))return["<p>Sunt asistentul site-ului Clio. Nu inventez răspunsuri: înțeleg ce mă întrebi, caut în cele 310 lecții, în dicționar și în articole și compun răspunsul din ce scrie acolo. De aceea îți arăt mereu lecția din care vine informația.</p>"];
+ if(t(/ (esti|e) (un |o )?(ai|robot|om|inteligenta artificiala|chatgpt|bot) | cine esti | ce esti | chatgpt | cum gandesti | de unde stii /))return["<p>Sunt asistentul site-ului Clio. Nu inventez răspunsuri: înțeleg ce mă întrebi, caut în cele peste 1200 de lecții, în dicționar și în articole și compun răspunsul din ce scrie acolo. De aceea îți arăt mereu lecția din care vine informația.</p>"];
  if(t(/ (raport\w*|semnal\w*|eroare|bug|nu merge|nu functioneaza|nu se (vede|incarca|deschide)|am gasit o greseala|greseala in (lectie|site)) /))return["<p>Îmi pare rău că ceva nu merge. Spune-ne ce s-a întâmplat și o reparăm.</p>",[["Raportează o problemă",()=>astShow("bug")]]];
  if(t(/ (feedback|parere\w*|sugesti\w*|propunere\w*) /))return["<p>Ne bucurăm să aflăm ce crezi despre Clio.</p>",[["Lasă un feedback",()=>astShow("fb")]]];
  if(t(/^ (salut|buna|buna ziua|hei|hello|hi|servus|neata|ziua buna|ce faci|ce mai faci) $/))return["<p>Salut! Ce vrei să afli astăzi?</p>",ASTEX];
- if(t(/ (ce (poti|stii) (sa )?(faci)?|ajutor|help|cum te folosesc) /))return["<p>Pot să-ți răspund la întrebări despre lecțiile de clasa a V-a: cine, ce, când, unde, de ce. Țin minte subiectul, deci poți continua cu „De ce?”, „Când?” sau „Spune-mi mai mult”.</p><p>Mai pot compara două subiecte, îți pot explica mai simplu și te pot asculta din lecție.</p>",[["Diferența dintre greci și romani"],["Ascultă-mă din lecția despre daci"],["Cum bifez o lecție?"]]];
+ if(t(/ (ce (poti|stii) (sa )?(faci)?|ajutor|help|cum te folosesc) /))return["<p>Pot să-ți răspund la întrebări despre lecțiile claselor a V-a, a VI-a, a VII-a și a VIII-a: cine, ce, când, unde, de ce. Țin minte subiectul, deci poți continua cu „De ce?”, „Când?” sau „Spune-mi mai mult”.</p><p>Mai pot compara două subiecte, îți pot explica mai simplu și te pot asculta din lecție.</p>",[["Diferența dintre greci și romani"],["Ascultă-mă din lecția despre daci"],["Cum bifez o lecție?"]]];
  if(t(/ (bifez|bifa|marchez|progres\w*|seria|zile la rand|streak) /))return["<p>Deschide o lecție și bifează „Am învățat lecția”, jos în fereastra lecției. Poți bifa și direct pe cartonașul lecției.</p><p>Progresul și seria de zile apar sus, în panoul de progres. Se păstrează doar pe acest dispozitiv și în acest browser.</p>"];
  if(t(/ (unde|cum) (e|este|gasesc|fac) testul | testul final | test din toata materia /))return["<p>La secțiunea Test găsești un test din toată materia și fișe pentru recapitulare. Fiecare lecție are și un mini-test. Te pot asculta și eu aici: scrie „Ascultă-mă din lecția despre…”.</p>",[["Mergi la Test",()=>astGo("#test")]]];
  if(t(/ (fise|fisele|flashcard\w*|cartonase) /))return["<p>Fișele sunt la secțiunea Test: vezi un termen, întorci fișa și afli explicația.</p>",[["Deschide fișele",()=>astGo("#test")]]];
  if(t(/ (instal\w*|aplicati\w*|offline|fara internet|ecranul de pornire) /))return["<p>Pe Android, în Chrome, apasă butonul „Instalează aplicația” de sus sau alege din meniu „Adaugă pe ecranul de pornire”. Pe iPhone, în Safari, apasă Partajează și apoi „Adaugă pe ecranul principal”.</p><p>După ce ai deschis Clio o dată, lecțiile încărcate se pot citi și fără internet.</p>"];
- if(t(/ (clasa (a )?(vi|vii|viii|ix|x|xi|xii|6|7|8|9|10|11|12)|liceu|alte clase) /))return["<p>Deocamdată Clio are lecțiile pentru clasa a V-a. Celelalte clase vor veni pe rând.</p>"];
+ if(t(/ (clasa (a )?(ix|x|xi|xii|9|10|11|12)|liceu|alte clase) /))return["<p>Deocamdată Clio are lecțiile pentru clasele a V-a, a VI-a, a VII-a și a VIII-a. Celelalte clase vor veni pe rând.</p>"];
  if(t(/ lecti\w* (zilei|de azi|e azi|azi|de astazi) | ce (invat|citesc) azi /))return["<p>Lecția zilei se schimbă în fiecare zi. Uite-o:</p>",[["Deschide lecția zilei",()=>{openToday();astClose(false)}]]];
  return null}
 /* Sugestii de continuare, doar cele la care lecția chiar are răspuns. */
 function astNext(i,type){const r=[];const pool=astPoolOf(i);
  if(type!=="why"&&pool.some(o=>ASTRE.why.test(o.s)))r.push(["De ce?"]);
- if(type!=="when"&&(SETS["5"].lessons[i].d.length||pool.some(o=>ASTRE.when.test(o.s))))r.push(["Când?"]);
+ if(type!=="when"&&(AST.lessons[i].d.length||pool.some(o=>ASTRE.when.test(o.s))))r.push(["Când?"]);
  if(pool.some(o=>!mem.said.has(o.s)))r.push(["Spune-mi mai mult"]);
  r.push(["Ascultă-mă din lecție",()=>astQuiz(i)]);return astSugg(r.slice(0,4))}
 function astSetTopic(i){if(mem.i!==i){mem.i=i;mem.said=new Set()}}
-const astLessonCard=(i,sub)=>{const x=SETS["5"].lessons[i];return astHit(col(x.c),x.t,sub||"Citește toată lecția și fă mini-testul.","Deschide lecția",()=>astOpenL(i))};
+const astLessonCard=(i,sub)=>{const x=AST.lessons[i];return astHit(col(x.c),x.t,sub||"Citește toată lecția și fă mini-testul.","Deschide lecția",()=>astOpenL(i))};
 const astP=a=>a.map(s=>`<p>${esc(astCut(s))}</p>`).join("");
-const astSrc=i=>`<p class="src">Din lecția „${esc(SETS["5"].lessons[i].t)}”</p>`;
+const astSrc=i=>`<p class="src">Din lecția „${esc(AST.lessons[i].t)}”, clasa ${clsN(AST.lessons[i]._s)}</p>`;
 /* Răspunsul propriu-zis, după tipul întrebării. */
-function astReply(i,qs,type,extra){const x=SETS["5"].lessons[i];astSetTopic(i);const said=mem.said;let html="",lead=extra||"";const said0=said.size;
+function astReply(i,qs,type,extra){const x=AST.lessons[i];astSetTopic(i);const said=mem.said;let html="",lead=extra||"";const said0=said.size;
  const take=(arr,n)=>{const out=[];for(const r of arr){if(out.length>=n)break;if(said.has(r.o.s)||out.includes(r.o.s))continue;out.push(r.o.s)}out.forEach(s=>said.add(s));return out};
  const titleAll=qs.length&&qs.every(q=>astIdx.ls[i].T.some(w=>astM(w,q)));
  if(type==="when"){const open=!qs.length||titleAll;const ds=open?x.d:x.d.filter(d=>qs.some(q=>astHas(astStems(d[1]),q)));
@@ -913,7 +983,7 @@ function astReply(i,qs,type,extra){const x=SETS["5"].lessons[i];astSetTopic(i);c
   const loose=best.length?best:astRank(i,qs,type).filter(r=>r.typed);html=astP(take(loose.length?loose:astRank(i,qs,"gen"),type==="how"?2:1))}
  else if(type==="more"){const rest=astPoolOf(i).filter(o=>!said.has(o.s));
   if(!rest.length){html="<p>Ți-am spus tot ce scrie în lecție despre asta. Vrei să te ascult din ea sau trecem la lecția următoare?</p>";
-   const nx=i+1<SETS["5"].lessons.length?i+1:null;astSay("bot",lead+html,[astSugg([["Ascultă-mă din lecție",()=>astQuiz(i)],...(nx!=null?[["Lecția următoare: "+SETS["5"].lessons[nx].t,()=>{astSay("me",`<p>${esc(SETS["5"].lessons[nx].t)}</p>`);astReply(nx,[],"gen")}]]:[])])]);return}
+   const nx=i+1<AST.lessons.length?i+1:null;astSay("bot",lead+html,[astSugg([["Ascultă-mă din lecție",()=>astQuiz(i)],...(nx!=null?[["Lecția următoare: "+AST.lessons[nx].t,()=>{astSay("me",`<p>${esc(AST.lessons[nx].t)}</p>`);astReply(nx,[],"gen")}]]:[])])]);return}
   const two=rest.slice(0,2);two.forEach(o=>said.add(o.s));html=two.map(o=>`<p>${o.src==="w"?"<b>Știai că?</b> ":""}${esc(astCut(o.s))}</p>`).join("")}
  else if(type==="simple"){const first=astSplit(x.s)[0];html=`<p>Pe scurt: ${esc(first)}</p>`+(x.f?`<p>Cuvântul important aici este <b>${esc(x.f[0])}</b>: ${esc(x.f[1].charAt(0).toLowerCase()+x.f[1].slice(1))}</p>`:"");said.add(first)}
  else{if(titleAll||!qs.length){const ss=astSplit(x.s).filter(s=>!said.has(s));(ss.length?ss:astSplit(x.s)).forEach(s=>said.add(s));html=astP(ss.length?ss:astSplit(x.s))}
@@ -922,16 +992,16 @@ function astReply(i,qs,type,extra){const x=SETS["5"].lessons[i];astSetTopic(i);c
   html=rest.length?`<p>Despre asta ți-am spus deja ce scrie în lecție. Încă un lucru:</p>`+astP(rest.map(o=>o.s)):"<p>Ți-am spus deja tot ce scrie în lecție despre asta.</p>"}
  astSay("bot",lead+html+astSrc(i),[astLessonCard(i),astNext(i,type)])}
 function astCompare(n,qs){const raw=n.replace(/ (diferent\w*|deosebir\w*|asemanar\w*|compar\w*|dintre|intre|care e|care este|e) /g," ").split(/ (?:si|vs|versus|fata de|cu) /).map(p=>astToks(p)).filter(p=>p.length);
- if(raw.length<2)return false;const S=SETS["5"];
+ if(raw.length<2)return false;const S=AST;
  const hits=raw.slice(0,2).map(p=>{const qs2=p.map(astStem);
-  const ch=p.length<=2&&S.chapters.find(c=>!["intro","skill","teme","pers","mon","mit","bat","viata","alt"].includes(c[0])&&p.some(w=>astWords(c[1]).some(cw=>cw.length>=4&&w.length>=4&&cw.slice(0,3)===w.slice(0,3))));
+  const ch=p.length<=2&&S.chapters.find(c=>!["intro","skill","teme","pers","mon","mit","bat","viata","alt","ev","em"].includes(c[0])&&p.some(w=>astWords(c[1]).some(cw=>cw.length>=4&&w.length>=4&&astStem(cw)===astStem(w))));
   if(ch){const li=S.lessons.findIndex(x=>x.c===ch[0]);if(li>=0)return {l:astIdx.ls[li],ch:ch[1]}}return astSearch(qs2).lh[0]}).filter(Boolean);
  if(hits.length<2||hits[0].l.i===hits[1].l.i)return false;
  const html=hits.map(h=>{const x=h.l.x;return `<p><b>${esc(h.ch||x.t)}</b>: ${esc(astSplit(x.s).slice(0,2).join(" "))}</p>`}).join("");
  const art=(a=>a&&raw.slice(0,2).every(p=>p.some(w=>astStems(a.t).some(t=>astM(t,astStem(w))))))(astSearch(qs).ah)?astSearch(qs).ah:null;const cards=hits.map(h=>astLessonCard(h.l.i,"Citește toată lecția"));if(art)cards.push(astHit(col(art.c),"Articol: "+art.t,art.min+" min de citit","Citește articolul",()=>astOpenA(ARTS.indexOf(art))));
  astSetTopic(hits[0].l.i);astSay("bot",html,cards);return true}
-function astQuiz(i){const all=genQuiz("5",i);if(!all.length){astSay("bot","<p>Nu am întrebări pentru lecția asta.</p>");return}
- astSetTopic(i);mem.quiz={i,qs:all.slice(0,5),k:0,sc:0};astSay("bot",`<p>Bine! Te ascult din lecția „${esc(SETS["5"].lessons[i].t)}”: 5 întrebări. Alege răspunsul corect.</p>`);astQAsk()}
+function astQuiz(i){const all=genQuiz(AST.lessons[i]._s,AST.lessons[i]._i);if(!all.length){astSay("bot","<p>Nu am întrebări pentru lecția asta.</p>");return}
+ astSetTopic(i);mem.quiz={i,qs:all.slice(0,5),k:0,sc:0};astSay("bot",`<p>Bine! Te ascult din lecția „${esc(AST.lessons[i].t)}”: 5 întrebări. Alege răspunsul corect.</p>`);astQAsk()}
 function astQAsk(){const z=mem.quiz;if(!z)return;const c=z.qs[z.k];const m=astSay("bot",`<p class="src">Întrebarea ${z.k+1} din ${z.qs.length}</p><p><b>${esc(c.q)}</b></p>`);
  const w=astH("div","astq");c.o.forEach((o,j)=>{const b=astH("button","",esc(o));b.type="button";b.onclick=()=>astQAns(j,w);w.append(b)});m.append(w)}
 function astQAns(j,w){const z=mem.quiz;if(!z||w.dataset.done)return;w.dataset.done="1";const c=z.qs[z.k],ok=j===c.a;if(ok)z.sc++;
@@ -941,14 +1011,14 @@ function astQAns(j,w){const z=mem.quiz;if(!z||w.dataset.done)return;w.dataset.do
  const p=z.sc/z.qs.length;mem.quiz=null;
  astSay("bot",`<p><b>${z.sc} din ${z.qs.length}</b>. ${p>=.8?"Excelent, știi lecția!":p>=.5?"Bine! Mai citește o dată lecția și o să știi tot.":"Recitește lecția și mai încearcă o dată."}</p>`,[astSugg([["Încă o rundă",()=>astQuiz(z.i)],["Deschide lecția",()=>astOpenL(z.i)],["Pe scurt, ce trebuie să știu?",()=>{astSay("me","<p>Pe scurt, ce trebuie să știu?</p>");astReply(z.i,[],"simple")}]])])}
 function astAnswer(q){const it=astIntent(q);if(it){const [html,s]=it;astSay("bot",html,s?[astSugg(s)]:null);return}
- if(!SETS["5"]){astSay("bot","<p>Lecțiile încă se încarcă. Încearcă din nou în câteva secunde.</p>");return}
- if(!astIdx||astIdx.as.length!==ARTS.length||!astIdx.ds.length&&DICT.length)astIdx=astBuild();
- mem.quiz=null;const n=" "+nrm(q).replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim()+" ";const type=astType(n);
+ if(!AST){astSay("bot","<p>Lecțiile încă se încarcă. Încearcă din nou în câteva secunde.</p>");return}
+ if(!astIdx||astIdx.ls.length!==AST.lessons.length||astIdx.as.length!==ARTS.length||!astIdx.ds.length&&DICT.length)astIdx=astBuild();
+ mem.quiz=null;const n=" "+nrm(q).replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim()+" ";const type=astType(n);astCurType=type;
  const fx=astFix(astToks(q));const qs=fx.toks.map(astStem);const lead=fx.fixed.length?`<p class="src">Am căutat „${esc(fx.fixed.join(", "))}”.</p>`:"";
  const pron=astWords(q).some(w=>ASTPRON.has(w))||/^ (si|dar) /.test(n);const verbs=new Set([...n.matchAll(/ (?:a|au|am|ai|ati|s a|s au|se) ([a-z]{4,})/g)].map(m=>m[1]));
  if(type==="cmp"&&astCompare(n,qs))return;
  if(type==="quiz"){if(qs.length){const r=astSearch(qs);if(r.lh.length){astQuiz(r.lh[0].l.i);return}}if(mem.i>=0){astQuiz(mem.i);return}
-  astSay("bot","<p>Din ce lecție să te ascult? Scrie de exemplu „Ascultă-mă din lecția despre Egipt”.</p>",[astSugg([["Ascultă-mă din lecția zilei",()=>{const t=$("#todayT")&&$("#todayT").textContent;const k=SETS["5"].lessons.findIndex(x=>x.t===t);astQuiz(k>=0?k:0)}]])]);return}
+  astSay("bot","<p>Din ce lecție să te ascult? Scrie de exemplu „Ascultă-mă din lecția despre Egipt”.</p>",[astSugg([["Ascultă-mă din lecția zilei",()=>astQuiz(todayI)]])]);return}
  if(!qs.length){if(mem.i>=0){astReply(mem.i,[],type==="gen"?"more":type,lead);return}
   astSay("bot","<p>Despre ce vrei să afli? Scrie un nume, un popor sau un loc, de exemplu „Decebal” sau „piramidele”.</p>",[astSugg(ASTEX)]);return}
  const r=astSearch(qs);
@@ -960,9 +1030,9 @@ function astAnswer(q){const it=astIntent(q);if(it){const [html,s]=it;astSay("bot
   const same=top&&top.s>0&&top.l.i===mem.i;
   if(!same&&(!nouns.length||(pron&&!else2)||(inTopic&&!else2&&!(top&&top.s>0)))){astReply(mem.i,qs,type==="gen"&&!nouns.length?"more":type,lead);return}}
  if(!top&&!r.dh){if(r.ah){astSay("bot",lead+`<p>Nu am o lecție despre asta, dar am un articol:</p>`,[astHit(col(r.ah.c),"Articol: "+r.ah.t,r.ah.min+" min de citit","Citește articolul",()=>astOpenA(ARTS.indexOf(r.ah)))]);return}
-  astSay("bot",lead+`<p>N-am găsit nimic despre „${esc(q)}” în lecțiile Clio. Eu știu doar istoria din lecțiile de clasa a V-a.</p><p>Încearcă alt cuvânt, de exemplu un nume sau un loc. Sau spune-ne ce lecție lipsește.</p>`,[astSugg([["Propune o lecție nouă",()=>{astShow("fb");$("#fbText").value="Aș vrea o lecție despre: "+q}],...ASTEX.slice(0,2)])]);return}
+  astSay("bot",lead+`<p>N-am găsit nimic despre „${esc(q)}” în lecțiile Clio. Eu știu doar istoria din lecțiile claselor a V-a, a VI-a, a VII-a și a VIII-a.</p><p>Încearcă alt cuvânt, de exemplu un nume sau un loc. Sau spune-ne ce lecție lipsește.</p>`,[astSugg([["Propune o lecție nouă",()=>{astShow("fb");$("#fbText").value="Aș vrea o lecție despre: "+q}],...ASTEX.slice(0,2)])]);return}
  let pre="";if(r.dh&&(type==="what"||type==="who"||type==="gen")){pre=`<p><b>${esc(r.dh.d.t)}</b>: ${esc(r.dh.d.d)}</p>`}
- astReply(top?top.l.i:SETS["5"].lessons.findIndex(x=>x.t===r.dh.d.l),qs,type,lead+pre);
+ astReply(top?top.l.i:astFind(r.dh.d),qs,type,lead+pre);
  const more=r.lh.slice(1).map(o=>astLessonCard(o.l.i,astCut(astRank(o.l.i,qs,"gen")[0].o.s)));if(r.ah)more.push(astHit(col(r.ah.c),"Articol: "+r.ah.t,r.ah.min+" min de citit","Citește articolul",()=>astOpenA(ARTS.indexOf(r.ah))));
  if(more.length){const last=astLog.lastElementChild;const d=astH("details","alt",`<summary>Mai găsești în ${more.length===1?"încă o lecție sau un articol":more.length+" lecții și articole"}</summary>`);more.forEach(m=>d.append(m));last.append(d)}}
 function astAsk(q){q=String(q).trim().slice(0,200);if(!q)return;astSay("me",`<p>${esc(q)}</p>`);astIn.value="";
@@ -997,6 +1067,107 @@ $("#fbForm").addEventListener("submit",e=>{e.preventDefault();const f=e.target,r
 $("#bugForm").addEventListener("submit",e=>{e.preventDefault();const f=e.target,r=f.querySelector("[name=bgr]:checked"),t=f.querySelector("textarea").value.trim();
  if(!t){const st=f.querySelector(".ast-st");st.className="ast-st err";st.textContent="Scrie pe scurt ce s-a întâmplat.";return}astSend(f,"Problemă: "+(r?r.value:"Altceva"),t)});
 const lrRep=$("#lrRep");if(lrRep){lrRep.hidden=!astOn;lrRep.onclick=()=>{const x=SETS[lr.set].lessons[lr.i];astOpen("bug","lecția „"+x.t+"”");const r=$("#bugForm [value='Greșeală într-o lecție']");if(r)r.checked=true;$("#bugText").focus()}}
+/* ---- Conturi pe dispozitiv: nume de utilizator + parolă, păstrate doar în acest browser ---- */
+const ACC_KEYS=["clio-done2","clio-best","clio-days","clio-art"];
+let acc={users:{},cur:null,fail:{n:0,t:0}};try{acc=Object.assign(acc,JSON.parse(localStorage.getItem("clio-acc")||"{}"))}catch(e){}
+if(acc.cur&&!acc.users[acc.cur])acc.cur=null;
+const accSave=()=>{try{localStorage.setItem("clio-acc",JSON.stringify(acc))}catch(e){}};
+const accSlot=u=>u?"@u:"+u:"@guest";
+const accLS={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}}};
+function accSwap(to){const from=acc.cur;ACC_KEYS.forEach(k=>{accLS.set(k+accSlot(from),accLS.get(k));accLS.set(k,accLS.get(k+accSlot(to)))});acc.cur=to;accSave();location.reload()}
+const accB64=u8=>btoa(String.fromCharCode(...u8)),accUnB64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+async function accHash(pw,salt){const k=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveBits"]);
+ return accB64(new Uint8Array(await crypto.subtle.deriveBits({name:"PBKDF2",salt,iterations:150000,hash:"SHA-256"},k,256)))}
+const accKey=u=>u.trim().toLowerCase();
+const accOkName=u=>/^[A-Za-z0-9._-]{3,20}$/.test(u.trim());
+function accHasProgress(){return Object.values(done).some(Boolean)||Object.keys(best).length>0}
+/* Codul de progres: lecțiile bifate (clasele V–VIII și Recapitulare) și ultimele 32 de zile din serie. Versiunea 4; codurile mai vechi (v1, v2, v3) se citesc în continuare. */
+function accBits(set){const S=SETS[set];return S?S.lessons.map(x=>done[set+":"+x.t]?1:0):[]}
+function accPack(bits){const out=new Uint8Array(Math.ceil(bits.length/8));bits.forEach((b,i)=>{if(b)out[i>>3]|=1<<(i&7)});return [...out]}
+const ACC_SETS=["5","6","7","8"],ACC_V={1:["5"],3:["5","6","7"],4:["5","6","7","8"]};
+function accMakeCode(){let dm=0;for(let i=0;i<32;i++)if(days.includes(dkey(Date.now()-i*864e5)))dm|=(1<<i);
+ const raw=[4];ACC_SETS.forEach(s=>{const a=accBits(s);raw.push(a.length>>8,a.length&255,...accPack(a))});const r=accBits("rec");raw.push(r.length,...accPack(r),dm&255,(dm>>>8)&255,(dm>>>16)&255,(dm>>>24)&255);
+ raw.push(raw.reduce((s,b)=>(s+b)&255,0));const bytes=[2];for(let i=0;i<raw.length;i++){if(raw[i]===0){let n=1;while(raw[i+n]===0&&n<255)n++;bytes.push(0,n);i+=n-1}else bytes.push(raw[i])}
+ const s=accB64(new Uint8Array(bytes)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+ return "CLIO-"+s.match(/.{1,6}/g).join(" ")}
+function accReadCode(code){let s=String(code).replace(/^\s*CLIO-?/i,"").replace(/\s+/g,"").replace(/-/g,"+").replace(/_/g,"/");
+ while(s.length%4)s+="=";let b;try{b=[...accUnB64(s)]}catch(e){return null}
+ if(b[0]===2){const o=[];for(let i=1;i<b.length;i++){if(b[i]===0){const n=b[i+1]||0;for(let j=0;j<n;j++)o.push(0);i++}else o.push(b[i])}b=o}
+ if(b.length<8||!ACC_V[b[0]])return null;const sum=b.slice(0,-1).reduce((s,x)=>(s+x)&255,0);if(sum!==b[b.length-1])return null;
+ const bit=(arr,i)=>(arr[i>>3]>>(i&7))&1,sets={};let p=1;
+ for(const k of ACC_V[b[0]]){const la=(b[p]<<8)|b[p+1];p+=2;const A=b.slice(p,p+Math.ceil(la/8));p+=Math.ceil(la/8);sets[k]=Array.from({length:la},(_,i)=>bit(A,i))}
+ const lr2=b[p];p++;const R=b.slice(p,p+Math.ceil(lr2/8));p+=Math.ceil(lr2/8);sets.rec=Array.from({length:lr2},(_,i)=>bit(R,i));
+ const dm=(b[p]|(b[p+1]<<8)|(b[p+2]<<16)|(b[p+3]<<24))>>>0;if(p+4!==b.length-1)return null;
+ return {sets,dm}}
+function accApply(c){let n=0;Object.entries(c.sets).forEach(([set,bits])=>{const S=SETS[set];if(!S)return;bits.forEach((v,i)=>{const x=S.lessons[i];if(v&&x&&!done[set+":"+x.t]){done[set+":"+x.t]=true;n++}})});
+ for(let i=0;i<32;i++)if((c.dm>>>i)&1){const k=dkey(Date.now()-i*864e5);if(!days.includes(k))days.push(k)}
+ days.sort();accLS.set("clio-days",JSON.stringify(days.slice(-400)));save();return n}
+/* Fereastra contului */
+const accEl=$("#acc"),accBody=$("#accBody");let accMode="in",accLast=null;
+const accAv=u=>`<span class="accav" aria-hidden="true">${esc((u||"?").charAt(0).toUpperCase())}</span>`;
+function accHeader(){const u=acc.cur&&acc.users[acc.cur];$("#accBtn").innerHTML=u?accAv(u.name)+`<span class="accnm">${esc(u.name)}</span>`:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span class="accnm">Intră în cont</span>`;
+ $("#accBtn").setAttribute("aria-label",u?"Contul tău: "+u.name:"Intră în cont sau fă-ți un cont")}
+function accOpen(){accLast=document.activeElement;accEl.hidden=false;document.body.style.overflow="hidden";accDraw();const f=accEl.querySelector("input,button.btn");if(f&&matchMedia("(pointer:fine)").matches)f.focus()}
+function accClose(){accEl.hidden=true;document.body.style.overflow="";if(accLast)accLast.focus()}
+const accMsg=(t,ok)=>{const m=$("#accMsg");if(m){m.textContent=t;m.className="accmsg"+(ok?" ok":t?" err":"")}};
+const accNote=`<p class="accnote">Contul e salvat doar pe acest dispozitiv, în acest browser. Nu trimitem nimic nicăieri. Nu folosi numele tău real și nici o parolă pe care o folosești în altă parte.</p>`;
+function accDraw(){const u=acc.cur&&acc.users[acc.cur];
+ if(u){const tot=ACC_SETS.reduce((t,s)=>t+((SETS[s]&&SETS[s].lessons.length)||0),0)||928,n5=Object.keys(done).filter(k=>done[k]&&ACC_SETS.some(s=>k.startsWith(s+":"))).length,nr=Object.keys(done).filter(k=>done[k]&&k.startsWith("rec:")).length,s=streak(),nt=Object.keys(best).length;
+  accBody.innerHTML=`<div class="acchi">${accAv(u.name)}<div><h3 id="accTitle">Salut, ${esc(u.name)}!</h3><p>Ești în contul tău de pe acest dispozitiv.</p></div></div>
+  <div class="accstats"><div><b>${n5}</b><span>din ${tot} lecții, clasele V–VIII</span></div><div><b>${nr}</b><span>din 18 lecții de recapitulare</span></div><div><b>${s}</b><span>${s===1?"zi la rând":"zile la rând"}</span></div><div><b>${nt}</b><span>mini-teste făcute</span></div></div>
+  <h4>Codul tău de progres</h4><p class="accsub">Ca să-ți vezi progresul și pe alt telefon sau calculator: copiază codul, apoi pe celălalt dispozitiv lipește-l mai jos, la „Adaugă progres dintr-un cod”.</p>
+  <div class="acccode"><code id="accCode">Apasă „Arată codul”</code><button class="btn sm" id="accShow" type="button">Arată codul</button></div>
+  <h4>Adaugă progres dintr-un cod</h4><div class="accrow"><input id="accIn" type="text" autocomplete="off" spellcheck="false" placeholder="CLIO-…" aria-label="Codul de progres"><button class="btn sm sec" id="accAdd" type="button">Adaugă</button></div>
+  <p class="accmsg" id="accMsg" role="status"></p>
+  <div class="accfoot"><button class="btn sec" id="accOut" type="button">Ieși din cont</button><button class="accdel" id="accDel" type="button">Șterge contul</button></div>`;
+  $("#accShow").onclick=()=>{if(!AST){accMsg("Lecțiile încă se încarcă. Încearcă din nou în câteva secunde.");return}const c=accMakeCode();$("#accCode").textContent=c;$("#accShow").textContent="Copiază";
+   $("#accShow").onclick=()=>{(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>accMsg("Am copiat codul.",true)).catch(()=>accMsg("Selectează codul și copiază-l manual."))}};
+  $("#accAdd").onclick=accImport;$("#accIn").onkeydown=e=>{if(e.key==="Enter")accImport()};
+  $("#accOut").onclick=()=>accSwap(null);$("#accDel").onclick=accAskDelete;return}
+ const names=Object.values(acc.users).map(x=>x.name);
+ accBody.innerHTML=`<div class="acctabs" role="tablist"><button type="button" role="tab" aria-selected="${accMode==="in"}" data-m="in">Intră în cont</button><button type="button" role="tab" aria-selected="${accMode==="new"}" data-m="new">Cont nou</button></div>
+ <h3 id="accTitle" class="vh">${accMode==="in"?"Intră în cont":"Fă-ți un cont"}</h3>
+ ${accMode==="in"&&names.length?`<p class="accsub">Conturi de pe acest dispozitiv:</p><div class="accnames">${names.map(n=>`<button type="button" class="accname" data-n="${esc(n)}">${accAv(n)}${esc(n)}</button>`).join("")}</div>`:""}
+ ${accMode==="in"&&!names.length?`<p class="accsub">Încă nu există niciun cont pe acest dispozitiv. Fă-ți unul la „Cont nou”.</p>`:""}
+ <form id="accForm" class="accform" novalidate>
+ <label for="accU">Nume de utilizator</label><input id="accU" type="text" autocomplete="username" autocapitalize="off" spellcheck="false" maxlength="20" placeholder="de exemplu: vulturul_dac">
+ <label for="accP">Parolă</label><input id="accP" type="password" autocomplete="${accMode==="in"?"current-password":"new-password"}" maxlength="64" placeholder="cel puțin 4 caractere">
+ ${accMode==="new"?`<label for="accP2">Scrie parola din nou</label><input id="accP2" type="password" autocomplete="new-password" maxlength="64">
+ ${accHasProgress()?`<label class="acccheck"><input type="checkbox" id="accMove" checked> Mută în contul nou progresul de acum</label>`:""}`:""}
+ <button class="btn" type="submit">${accMode==="in"?"Intră":"Fă contul"}</button></form>
+ <p class="accmsg" id="accMsg" role="status"></p>${accNote}
+ <p class="accsub">Fără cont poți folosi site-ul la fel; progresul se salvează tot pe acest dispozitiv.</p>`;
+ accBody.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{accMode=b.dataset.m;accDraw();$("#accU").focus()});
+ accBody.querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{$("#accU").value=b.dataset.n;$("#accP").focus()});
+ $("#accForm").onsubmit=e=>{e.preventDefault();accMode==="in"?accLogin():accCreate()}}
+async function accCreate(){const name=$("#accU").value.trim(),pw=$("#accP").value,pw2=$("#accP2").value;
+ if(!accOkName(name)){accMsg("Numele trebuie să aibă 3–20 de caractere: litere fără diacritice, cifre, punct, liniuță sau _.");return}
+ if(acc.users[accKey(name)]){accMsg("Există deja un cont cu acest nume pe dispozitiv. Alege alt nume.");return}
+ if(pw.length<4){accMsg("Parola trebuie să aibă cel puțin 4 caractere.");return}
+ if(pw!==pw2){accMsg("Parolele nu sunt la fel. Scrie-le din nou.");return}
+ if(!(window.crypto&&crypto.subtle)){accMsg("Browserul tău nu poate păstra parola în siguranță. Încearcă alt browser.");return}
+ accMsg("Se creează contul…",true);const salt=crypto.getRandomValues(new Uint8Array(16));const hash=await accHash(pw,salt);
+ const k=accKey(name);acc.users[k]={name,salt:accB64(salt),hash,made:Date.now()};
+ const move=$("#accMove")&&$("#accMove").checked;
+ if(move){ACC_KEYS.forEach(x=>accLS.set(x+accSlot(null),null));acc.cur=k;accSave();location.reload()}else accSwap(k)}
+async function accLogin(){const name=$("#accU").value.trim(),pw=$("#accP").value,u=acc.users[accKey(name)];
+ const wait=Math.ceil((acc.fail.t-Date.now())/1000);if(wait>0){accMsg(`Prea multe încercări. Așteaptă ${wait} secunde.`);return}
+ if(!u||!pw){accFail();return}
+ if(!(window.crypto&&crypto.subtle)){accMsg("Browserul tău nu poate verifica parola. Încearcă alt browser.");return}
+ accMsg("Se verifică…",true);const h=await accHash(pw,accUnB64(u.salt));
+ if(h!==u.hash){accFail();return}acc.fail={n:0,t:0};accSwap(accKey(name))}
+function accFail(){acc.fail.n=(acc.fail.n||0)+1;if(acc.fail.n>=5){acc.fail={n:0,t:Date.now()+30000};accMsg("Nume sau parolă greșită. Ai greșit de 5 ori, așteaptă 30 de secunde.")}else accMsg("Nume sau parolă greșită.");accSave()}
+function accImport(){const c=accReadCode($("#accIn").value);if(!c){accMsg("Codul nu e corect. Verifică dacă l-ai copiat întreg.");return}
+ if(!AST){accMsg("Lecțiile încă se încarcă. Încearcă din nou în câteva secunde.");return}
+ const n=accApply(c);renderLessons();upStart();accDraw();accMsg(n?`Am adăugat ${nLec(n)} învățate.`:"Ai deja tot progresul din acest cod.",true)}
+function accAskDelete(){const u=acc.users[acc.cur];accBody.querySelector(".accfoot").outerHTML=`<div class="accconfirm"><p><b>Ștergi contul „${esc(u.name)}”?</b> Se șterge și tot progresul lui de pe acest dispozitiv. Nu se mai poate recupera, decât dacă ai păstrat codul de progres.</p>
+ <label for="accDP">Scrie parola ca să confirmi</label><input id="accDP" type="password" autocomplete="current-password"><div class="accrow"><button class="btn danger" id="accDY" type="button">Șterge definitiv</button><button class="btn sec" id="accDN" type="button">Renunță</button></div></div>`;
+ $("#accDN").onclick=accDraw;$("#accDP").focus();
+ $("#accDY").onclick=async()=>{const h=await accHash($("#accDP").value,accUnB64(u.salt));if(h!==u.hash){accMsg("Parola nu e corectă.");return}
+  const k=acc.cur;ACC_KEYS.forEach(x=>{accLS.set(x+accSlot(k),null);accLS.set(x,accLS.get(x+accSlot(null)))});delete acc.users[k];acc.cur=null;accSave();location.reload()}}
+$("#accBtn").onclick=accOpen;$("#accClose").onclick=accClose;accEl.addEventListener("click",e=>{if(e.target===accEl)accClose()});
+accEl.addEventListener("keydown",e=>{if(e.key==="Escape"){e.stopPropagation();accClose()}});
+accHeader();
 }
 </script>
 </body>

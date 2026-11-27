@@ -1,9 +1,9 @@
 // Clio: lucrează și fără internet după prima vizită.
 // Paginile și lecțiile se iau întâi de pe internet (ca să fie mereu la zi),
 // iar dacă nu e conexiune, din copia salvată pe telefon.
-const CACHE = "clio-v1";
+const CACHE = "clio-v3";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
-const DATA = ["5.json", "articole.json", "data/5.json", "data/articole.json"];
+const DATA = ["5.json", "6.json", "7.json", "8.json", "articole.json", "data/5.json", "data/6.json", "data/7.json", "data/8.json", "data/articole.json"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil((async () => {
